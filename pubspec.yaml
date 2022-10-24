@@ -47,6 +47,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_svg: ^1.1.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -60,9 +61,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -75,6 +75,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+      - family: SFProRegular
+        fonts:
+              - asset: assets/fonts/SFProText-Regular.ttf
+      - family: SFProTextBold
+        fonts:
+              - asset: assets/fonts/SF-Pro-Text-Bold.ttf
+      - family: SedgwickAveDisplay
+        fonts:
+              - asset: assets/fonts/SedgwickAveDisplay-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

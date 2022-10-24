@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:waitech/screens/Home/home_screen.dart';
+import 'package:waitech/screens/basket/basket_screen.dart';
+import 'package:waitech/screens/checkout/checkout_screen.dart';
+import 'package:waitech/screens/delivery_time/delivery_time_screen.dart';
+import 'package:waitech/screens/filter/filter_screen.dart';
+import 'package:waitech/screens/location/location_screen.dart';
+import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
+import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
+import 'package:waitech/screens/screens.dart' as screens;
+import 'package:waitech/screens/voucher/voucher_screen.dart';
+
+import '../screens/splash/splashScreen.dart';
+
+class AppRouter {
+  static Route onGenerateRoute(RouteSettings settings) {
+    print('The Router is: ${settings.name}');
+
+    switch (settings.name) {
+      case '/':
+        return HomeScreen.route();
+      case HomeScreen.routeName:
+        return HomeScreen.route();
+      case LocationScreen.routeName:
+        return LocationScreen.route();
+      case BasketScreen.routeName:
+        return BasketScreen.route();
+      case CheckoutScreen.routeName:
+        return CheckoutScreen.route();
+      case DeliveryTimeScreen.routeName:
+        return DeliveryTimeScreen.route();
+      case FilterScreen.routeName:
+        return FilterScreen.route();
+      case RestaurantDetailScreen.routeName:
+        return RestaurantDetailScreen.route();
+      case RestaurantListingScreen.routeName:
+        return RestaurantListingScreen.route();
+      case VoucherScreen.routeName:
+        return VoucherScreen.route();
+      case MySplashScreen.routeName:
+        return MySplashScreen.route();
+      default:
+        return _errorRoute();
+    }
+  }
+
+  static Route _errorRoute() {
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: Text('error')),
+      ),
+      settings: RouteSettings(name: '/error'),
+    );
+  }
+}
