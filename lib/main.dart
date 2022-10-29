@@ -14,10 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Delivery By Bike',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromARGB(255, 105, 150, 255),
+        primaryColorDark: Color.fromARGB(255, 87, 14, 245),
+        primaryColorLight: Color(0xFFBDBFFF),
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Color(0xFFf5f5f5),
+        ),
+        fontFamily: 'SFProRegular',
       ),
+      title: 'Delivery By Bike',
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: MySplashScreen.routeName,
     );
