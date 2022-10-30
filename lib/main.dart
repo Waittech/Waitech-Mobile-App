@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waitech/config/app_router.dart';
-import 'package:waitech/screens/Home/home_screen.dart';
+
 import 'package:waitech/screens/screens.dart';
 
 void main() async {
@@ -14,11 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color.fromARGB(255, 105, 150, 255),
         primaryColorDark: Color.fromARGB(255, 87, 14, 245),
         primaryColorLight: Color(0xFFBDBFFF),
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Color(0xFFF5F5F9),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: Color(0xFFf5f5f5),
         ),

@@ -9,6 +9,8 @@ import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
 import 'package:waitech/screens/screens.dart' as screens;
 import 'package:waitech/screens/voucher/voucher_screen.dart';
+import 'package:waitech/tab_bar_page/qr_code.dart';
+import 'package:waitech/tab_bar_page/tab_bar_index.dart';
 
 import '../screens/splash/splashScreen.dart';
 
@@ -39,6 +41,10 @@ class AppRouter {
         return VoucherScreen.route();
       case MySplashScreen.routeName:
         return MySplashScreen.route();
+      case TabBarIndex.routeName:
+        return TabBarIndex.route();
+      case QrCode.routeName:
+        return QrCode.route();
       default:
         return _errorRoute();
     }

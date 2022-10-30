@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-
 class MySplashScreen extends StatefulWidget {
   static const String routeName = '/splash';
 
@@ -20,8 +19,8 @@ class MySplashScreen extends StatefulWidget {
 
 class _MySplashScreenState extends State<MySplashScreen> {
   startTimer() {
-    Timer(Duration(seconds: 4), () async {
-      Navigator.pushNamed(context, '/');
+    Timer(Duration(seconds: 3), () async {
+      Navigator.pushNamed(context, '/tab_bar_index');
     });
   }
 
@@ -48,7 +47,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
               const SizedBox(
                 height: 10,
               ),
-
             ],
           ),
         ),
