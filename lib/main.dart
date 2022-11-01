@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waitech/config/app_router.dart';
-import 'package:waitech/screens/Home/home_screen.dart';
+
 import 'package:waitech/screens/screens.dart';
 import 'package:waitech/screens/login_sign-up/login_page.dart';
 import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
@@ -17,15 +17,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Delivery By Bike',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromARGB(255, 105, 150, 255),
+        primaryColorDark: Color.fromARGB(255, 87, 14, 245),
+        primaryColorLight: Color(0xFFBDBFFF),
+        scaffoldBackgroundColor: Color(0xFFF5F5F9),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Color(0xFFf5f5f5),
+        ),
+        fontFamily: 'SFProRegular',
       ),
-      home:LoginPage()
-
-
-
-
+      title: 'Delivery By Bike',
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: MySplashScreen.routeName,
     );
   }
 }

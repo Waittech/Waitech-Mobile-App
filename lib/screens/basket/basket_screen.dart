@@ -14,13 +14,13 @@ class BasketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Basket')),
-      body: ElevatedButton(
-        child: Text('Home Screen'),
-        onPressed: () {
-          Navigator.pushNamed(context, '/');
-        },
-      ),
-    );
+        appBar: AppBar(title: Text('Sepet')),
+        body: Container(
+          alignment: Alignment.center,
+          child: Text(
+            'Sepet',
+            style: TextStyle(fontSize: 20),
+          ),
+        ));
   }
 }
