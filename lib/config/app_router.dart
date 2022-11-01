@@ -5,6 +5,7 @@ import 'package:waitech/screens/checkout/checkout_screen.dart';
 import 'package:waitech/screens/delivery_time/delivery_time_screen.dart';
 import 'package:waitech/screens/filter/filter_screen.dart';
 import 'package:waitech/screens/location/location_screen.dart';
+import 'package:waitech/screens/login_sign-up/forgot_password.dart';
 import 'package:waitech/screens/login_sign-up/login_page.dart';
 import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 import 'package:waitech/screens/qr_code/qr_code_screen.dart';
@@ -55,6 +56,8 @@ class AppRouter {
       //   return QrCode.route();
       case TabBarIndex.routeName:
         return TabBarIndex.route();
+      case forgotPassword.routeName:
+        return forgotPassword.route();
 
       default:
         return _errorRoute();

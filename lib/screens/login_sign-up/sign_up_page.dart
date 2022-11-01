@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:waitech/screens/login_sign-up/login_page.dart';
+import 'package:waitech/config/app_router.dart';
+import 'package:waitech/screens/login_sign-up/forgot_password.dart';
 
 class SignUpPage extends StatefulWidget{
   static const String routeName = '/sign-up';
@@ -21,12 +23,13 @@ class _SignUpPageState extends State<SignUpPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      appBar: AppBar(),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: Column(
             children:[
-              const SizedBox(height: 80),
+              const SizedBox(height: 50),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -36,13 +39,15 @@ class _SignUpPageState extends State<SignUpPage>{
 
               ),
 
-              SizedBox(height: 80),
+              SizedBox(height: 40),
 
               Text(
                   'Create Account',
-                style: GoogleFonts.bebasNeue(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 52,
+                  fontSize: 42,
+                  fontFamily: 'Segoe_UI',
+                  color: Theme.of(context).primaryColorLight,
                 ),
               ),
 
@@ -53,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage>{
                 child: Container(
                   decoration: BoxDecoration(
 
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -78,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage>{
                 child: Container(
                   decoration: BoxDecoration(
 
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -102,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage>{
                 child: Container(
                   decoration: BoxDecoration(
 
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -126,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage>{
                 child: Container(
                   decoration: BoxDecoration(
 
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -150,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage>{
               const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(color: Colors.indigo,
+                  decoration: BoxDecoration(color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Center(
@@ -165,11 +170,17 @@ class _SignUpPageState extends State<SignUpPage>{
               ),
 
               const SizedBox(height: 10),
-
+              TextButton(onPressed: (){
+                Navigator.pushNamed(context, '/forgot_password');},
+                child: Text('Şifrenizi mi unuttunuz?',
+              style: TextStyle(
+                fontSize: 15,
+                color:Theme.of(context).primaryColor,
+              ),
+              ),
+              ),
             ],
           ),
-
-
         ),
       ),
     );

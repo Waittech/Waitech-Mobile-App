@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:waitech/screens/login_sign-up/login_page.dart';
+import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 import 'package:waitech/tab_bar_page/profile.dart';
 import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 
@@ -167,7 +169,7 @@ class _TabBarIndexState extends State<TabBarIndex> {
                         minWidth: 60,
                         onPressed: () {
                           setState(() {
-                            currentScreen = Profile();
+                            currentScreen = LoginPage();
                             currentTab = 3;
                           });
                         },

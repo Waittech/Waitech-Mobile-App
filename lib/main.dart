@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
           color: Color(0xff696cff),
         ),
-        primaryColor: Color(0xff696cff),
-        primaryColorDark: Color.fromARGB(255, 87, 14, 245),
-        primaryColorLight: Color(0xFFBDBFFF),
+        primaryColor: Color(0xff696cff), //button rengi ve appbar rengi
+        primaryColorDark: Color(0xfff5f5f9) , //background rengi
+        primaryColorLight: Color(0xff697a8d), //login ve sign-up page yazı renkleri (gri)
         scaffoldBackgroundColor: Color(0xFFF5F5F9),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: Color(0xFFf5f5f5),

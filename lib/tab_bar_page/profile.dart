@@ -15,6 +15,8 @@ class _ProfileState extends State<Profile> {
         title: Text('Profile'),
       ),
       body: Center(child: Text('Profile')),
+
     );
+
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waitech/main.dart';
+import 'package:waitech/config/app_router.dart';
+import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 
 
 
@@ -24,7 +27,8 @@ class _LoginPageState extends State<LoginPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Color(0xfff5f5f9),
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -37,20 +41,17 @@ class _LoginPageState extends State<LoginPage>{
                 ),
 
               ),
-              SizedBox(height: 30),
-
-              SizedBox(height: 20),
+              SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Center(
                   child: Text(
                     'Welcome back you have been missed!',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.asap(
+                    style: TextStyle(
                       color: Color(0xff697a8d),
-                      fontWeight: FontWeight.bold,
                       fontSize: 24,
-
+                      fontFamily: "Segoe_UI",
                     ),
                   ),
                 ),
@@ -64,7 +65,7 @@ class _LoginPageState extends State<LoginPage>{
                 child: Container(
                   decoration: BoxDecoration(
 
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -72,13 +73,14 @@ class _LoginPageState extends State<LoginPage>{
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
                       decoration: InputDecoration(
+                        filled:true,
+                        fillColor: Colors.white,
                         border : InputBorder.none,
                         hintText: 'Email',
                       ),
                     ),
                   ),
                 ),
-
               ),
               SizedBox(height: 15),
 
@@ -89,21 +91,23 @@ class _LoginPageState extends State<LoginPage>{
                 child: Container(
                   decoration: BoxDecoration(
 
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Padding(
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
+                      cursorColor: Colors.white,
                       decoration: InputDecoration(
+                        filled:true,
+                        fillColor: Colors.white,
                         border : InputBorder.none,
                         hintText: "Password",
                       ),
                     ),
                   ),
                 ),
-
               ),
               const SizedBox(height: 25),
 
@@ -112,45 +116,50 @@ class _LoginPageState extends State<LoginPage>{
               const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   padding: EdgeInsets.all(25),
-                  decoration: BoxDecoration(color: Color(0xff696cff),
+                  decoration: BoxDecoration(color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Center(
                     child:Text(
+
                       "Sign in",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
 
-
-
-              Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left:29.0),
-                    child: Text('Üye değil misiniz?',
+              Padding(
+                padding: const EdgeInsets.only(left: 55.0),
+                child: Row(
+                  children: [
+                    Text('Üye değil misiniz?',
                     style: TextStyle(
-                      color:Color(0xff697a8d)
-                    ),),
-
-                  ),
-                  Text(' Hesap oluşturun',
-                    style: TextStyle(
-                      color: Color(0xff696cff),
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'Segoe_UI',
+                      color: Theme.of(context).primaryColorLight,
 
                     ),
-
-                  ),
-                ],
+                    ),
+                    TextButton(onPressed:() => Navigator.pushNamed(context,'/sign-up' ),
+                      child: Text(
+                        'Olmak için tıklayın',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Segoe_UI',
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-
-
         ),
       ),
     );

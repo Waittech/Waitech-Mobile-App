@@ -10,17 +10,33 @@ class BasketScreen extends StatelessWidget {
   }
 
   const BasketScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Sepet')),
-        body: Container(
-          alignment: Alignment.center,
-          child: Text(
-            'Sepet',
-            style: TextStyle(fontSize: 20),
-          ),
-        ));
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Sepet'),
+          actions: <Widget>[
+            IconButton(onPressed: (){}, icon: Icon(Icons.delete))
+          ],
+        ),
+      body: SafeArea(
+        child: Row(
+          children: [
+            Text('Sepet',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Segoe_IU',
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+
+
+
+    );
   }
 }
