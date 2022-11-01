@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waitech/tab_bar_page/profile.dart';
-import 'package:waitech/tab_bar_page/qr_code.dart';
+import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 
 import '../screens/Home/home_screen.dart';
 import '../screens/basket/basket_screen.dart';
@@ -23,7 +23,7 @@ class TabBarIndex extends StatefulWidget {
 class _TabBarIndexState extends State<TabBarIndex> {
   int currentTab = 0;
 
-  final List<Widget> screen = [Profile(), QrCode(), BasketScreen()];
+  final List<Widget> screen = [Profile(), BasketScreen()];
 
   final PageStorageBucket bucket = PageStorageBucket();
 

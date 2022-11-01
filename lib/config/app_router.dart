@@ -7,12 +7,13 @@ import 'package:waitech/screens/filter/filter_screen.dart';
 import 'package:waitech/screens/location/location_screen.dart';
 import 'package:waitech/screens/login_sign-up/login_page.dart';
 import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
+import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
 import 'package:waitech/screens/screens.dart' as screens;
 import 'package:waitech/screens/voucher/voucher_screen.dart';
 import 'package:waitech/screens/login_sign-up/login_page.dart';
-import 'package:waitech/tab_bar_page/qr_code.dart';
+
 import 'package:waitech/tab_bar_page/tab_bar_index.dart';
 
 import '../screens/splash/splashScreen.dart';
@@ -44,6 +45,17 @@ class AppRouter {
         return VoucherScreen.route();
       case MySplashScreen.routeName:
         return MySplashScreen.route();
+      case LoginPage.routeName:
+        return LoginPage.route();
+      case SignUpPage.routeName:
+        return SignUpPage.route();
+      case QRCodeScanner.routeName:
+        return QRCodeScanner.route();
+      // case QrCode.routeName:
+      //   return QrCode.route();
+      case TabBarIndex.routeName:
+        return TabBarIndex.route();
+
       default:
         return _errorRoute();
     }
