@@ -14,6 +14,8 @@ import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dar
 import 'package:waitech/screens/screens.dart' as screens;
 import 'package:waitech/screens/voucher/voucher_screen.dart';
 import 'package:waitech/screens/login_sign-up/login_page.dart';
+import 'package:waitech/screens/basket/pay_screen.dart';
+import 'package:waitech/screens/basket/basket_screen.dart';
 
 import 'package:waitech/tab_bar_page/tab_bar_index.dart';
 
@@ -58,6 +60,8 @@ class AppRouter {
         return TabBarIndex.route();
       case forgotPassword.routeName:
         return forgotPassword.route();
+      case PayScreen.routeName:
+        return PayScreen.route();
 
       default:
         return _errorRoute();
