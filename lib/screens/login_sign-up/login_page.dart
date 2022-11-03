@@ -155,7 +155,19 @@ class _LoginPageState extends State<LoginPage>{
                         ),
                       ),
                     ),
+
+
                   ],
+                ),
+              ),
+              TextButton(onPressed:() => Navigator.pushNamed(context,'/profile' ),
+                child: Text(
+                  'Profile Ekranı',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Segoe_UI',
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
             ],

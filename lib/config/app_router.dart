@@ -8,6 +8,7 @@ import 'package:waitech/screens/location/location_screen.dart';
 import 'package:waitech/screens/login_sign-up/forgot_password.dart';
 import 'package:waitech/screens/login_sign-up/login_page.dart';
 import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
+import 'package:waitech/screens/profile/profile_screen.dart';
 import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
@@ -62,6 +63,8 @@ class AppRouter {
         return forgotPassword.route();
       case PayScreen.routeName:
         return PayScreen.route();
+      case ProfileScreen.routeName:
+        return ProfileScreen.route();
 
       default:
         return _errorRoute();
