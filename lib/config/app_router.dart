@@ -12,7 +12,7 @@ import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
 import 'package:waitech/screens/screens.dart' as screens;
 import 'package:waitech/screens/voucher/voucher_screen.dart';
-import 'package:waitech/screens/login_sign-up/login_page.dart';
+import 'package:waitech/screens/login_sign-up/login_page2.dart';
 
 import 'package:waitech/tab_bar_page/tab_bar_index.dart';
 
