@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:waitech/main.dart';
-import 'package:waitech/config/app_router.dart';
-import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 
 
 

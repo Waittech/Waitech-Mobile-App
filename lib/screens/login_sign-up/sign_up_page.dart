@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:waitech/screens/login_sign-up/login_page.dart';
-import 'package:waitech/config/app_router.dart';
-import 'package:waitech/screens/login_sign-up/forgot_password.dart';
-
 class SignUpPage extends StatefulWidget{
   static const String routeName = '/sign-up';
 
@@ -23,6 +18,7 @@ class _SignUpPageState extends State<SignUpPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(

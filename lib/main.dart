@@ -4,8 +4,6 @@ import 'package:grock/grock.dart';
 import 'package:waitech/config/app_router.dart';
 
 import 'package:waitech/screens/screens.dart';
-import 'package:waitech/screens/login_sign-up/login_page.dart';
-import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 
 void main() async {
   runApp(const ProviderScope(child: MyApp()));

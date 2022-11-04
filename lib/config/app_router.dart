@@ -5,14 +5,13 @@ import 'package:waitech/screens/checkout/checkout_screen.dart';
 import 'package:waitech/screens/delivery_time/delivery_time_screen.dart';
 import 'package:waitech/screens/filter/filter_screen.dart';
 import 'package:waitech/screens/location/location_screen.dart';
-import 'package:waitech/screens/login_sign-up/login_page.dart';
 import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
 import 'package:waitech/screens/screens.dart' as screens;
 import 'package:waitech/screens/voucher/voucher_screen.dart';
-import 'package:waitech/screens/login_sign-up/login_page.dart';
+import 'package:waitech/screens/login_sign-up/login_page2.dart';
 import 'package:waitech/screens/basket/pay_screen.dart';
 import 'package:waitech/screens/basket/basket_screen.dart';
 import 'package:waitech/screens/login_sign-up/login_page2.dart';
@@ -48,8 +47,6 @@ class AppRouter {
         return VoucherScreen.route();
       case MySplashScreen.routeName:
         return MySplashScreen.route();
-      case LoginPage.routeName:
-        return LoginPage.route();
       case SignUpPage.routeName:
         return SignUpPage.route();
       case QRCodeScanner.routeName:
@@ -58,6 +55,11 @@ class AppRouter {
       //   return QrCode.route();
       case TabBarIndex.routeName:
         return TabBarIndex.route();
+      case LoginPage.routeName:
+        return LoginPage.route();
+      case PayScreen.routeName:
+        return PayScreen.route();
+
 
       default:
         return _errorRoute();

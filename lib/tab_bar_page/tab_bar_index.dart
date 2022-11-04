@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:waitech/screens/login_sign-up/login_page.dart';
-import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
+import 'package:waitech/screens/login_sign-up/login_page2.dart';
 import 'package:waitech/tab_bar_page/profile.dart';
-import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 
 import '../screens/Home/home_screen.dart';
 import '../screens/basket/basket_screen.dart';

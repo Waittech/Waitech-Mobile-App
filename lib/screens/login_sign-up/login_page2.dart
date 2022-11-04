@@ -14,15 +14,21 @@ class LoginPage extends ConsumerStatefulWidget {
 
   const LoginPage({super.key});
 
+
+
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
+    bool _obscureText=true;
     return Scaffold(
-      backgroundColor: Color(0xfff5f5f9),
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Color(0xfff5f5f9),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -89,14 +95,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     child: TextField(
                       controller: ref.read(loginRiverpod).password,
                       decoration: InputDecoration(
+                        suffixIcon: GestureDetector(onTap: (){
+                          setState(() {
+                            _obscureText= !_obscureText;
+                          });
+                        },
+                        child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off
+                        ),
+                        ),
                         border: InputBorder.none,
                         hintText: "Password",
                       ),
+                        obscureText: _obscureText,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
 
               //Login button and (register now)
               Padding(
@@ -104,31 +119,51 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 child: Container(
                   padding: EdgeInsets.all(25),
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                            )
+                        ),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+
+                    ),
                     onPressed: () => ref.read(loginRiverpod).fetch(),
-                    child: Text("Giriş Yap"),
+                    child: Text("Giriş Yap",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
 
-              Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 29.0),
-                    child: Text(
-                      'Üye değil misiniz?',
-                      style: TextStyle(color: Color(0xff697a8d)),
+              Padding(
+                padding: const EdgeInsets.only(left: 55.0),
+                child: Row(
+                  children: [
+                    Text('Üye değil misiniz?',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Segoe_UI',
+                        color: Theme.of(context).primaryColorLight,
+
+                      ),
                     ),
-                  ),
-                  Text(
-                    ' Hesap oluşturun',
-                    style: TextStyle(
-                      color: Color(0xff696cff),
-                      fontWeight: FontWeight.bold,
+                    TextButton(onPressed:() => Navigator.pushNamed(context,'/sign-up' ),
+                      child: Text(
+                        'Olmak için tıklayın',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Segoe_UI',
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+
             ],
           ),
         ),

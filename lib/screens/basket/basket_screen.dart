@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:waitech/config/theme.dart';
-import 'package:waitech/config/app_router.dart';
-import 'package:waitech/screens/basket/pay_screen.dart';
 
 class BasketScreen extends StatefulWidget {
   static const String routeName = '/basket';
@@ -20,12 +17,16 @@ class BasketScreen extends StatefulWidget {
 
 class _BasketState extends State<BasketScreen>{
   late var itemNumbers=1;
-  var itemRow=4;
+  late var itemRow=3;
    addItems() => itemNumbers++;
   removeItems() {
     itemNumbers--;
     if(itemNumbers==0){
-      itemRow--;
+      setState(() {
+        itemRow--;
+
+      });
+
     }
     else if(itemNumbers<=0){
       itemRow=0;
@@ -114,6 +115,17 @@ class _BasketState extends State<BasketScreen>{
                     ),
                   );
                 }),
+            SizedBox(height: 20),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white, borderRadius:BorderRadius.circular(15),
+
+              ),
+              child: Text('Toplam sepet tutarınız: 14.97\$',style: TextStyle(
+                fontSize: 22,
+              ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top:30.0),
               child: Row(
@@ -138,7 +150,6 @@ class _BasketState extends State<BasketScreen>{
           ],
         ),
       ),
-      
     );
   }
 }
