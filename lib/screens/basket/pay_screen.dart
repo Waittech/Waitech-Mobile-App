@@ -49,7 +49,6 @@ class _PayScreenState extends State<PayScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).primaryColorDark,
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(title: Text('Ödeme Ekranı',style: TextStyle(color: Colors.black),),
         backgroundColor: Colors.white),
         body: Container(

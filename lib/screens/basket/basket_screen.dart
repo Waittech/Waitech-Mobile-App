@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class BasketScreen extends StatefulWidget {
   static const String routeName = '/basket';
@@ -16,22 +17,32 @@ class BasketScreen extends StatefulWidget {
 }
 
 class _BasketState extends State<BasketScreen>{
-  late var itemNumbers=1;
-  late var itemRow=3;
-   addItems() => itemNumbers++;
+  int number=0;
+  int itemNumbers=1;
+  int itemRow=1;
+  int totalPrice=5;
+   addItems() {
+     setState(() {
+       itemNumbers++;
+     });
+     totalPrice=itemNumbers*5;
+     print(totalPrice);
+   }
   removeItems() {
-    itemNumbers--;
-    if(itemNumbers==0){
-      setState(() {
-        itemRow--;
+     setState(() {
+       itemNumbers--;
+       if(itemNumbers==0){
+           itemRow--;
+       }
+       else if(itemNumbers<=0){
+         itemRow=0;
+       }
 
-      });
-
-    }
-    else if(itemNumbers<=0){
-      itemRow=0;
-    }
+     });
+     totalPrice=itemNumbers*5;
+     print(totalPrice);
   }
+
 
 
   @override
@@ -44,7 +55,9 @@ class _BasketState extends State<BasketScreen>{
         title: Text('Sepet'),
         actions: <Widget>[
           IconButton(onPressed: (){
-            itemRow=0;
+            setState((){
+              itemRow=0;
+            });
           }, icon: Icon(Icons.delete))
         ],
       ),
@@ -90,7 +103,7 @@ class _BasketState extends State<BasketScreen>{
                                 fontSize: 18,
                               ),
                             ),
-                            Text('4.99\$',
+                            Text('5\$',
                               style: TextStyle(
                                 fontFamily: 'Monoton-Regular',
                                 fontSize: 18,
@@ -121,7 +134,7 @@ class _BasketState extends State<BasketScreen>{
                 color: Colors.white, borderRadius:BorderRadius.circular(15),
 
               ),
-              child: Text('Toplam sepet tutarınız: 14.97\$',style: TextStyle(
+              child: Text('ürünlerin fiyatı:$totalPrice',style: TextStyle(
                 fontSize: 22,
               ),
               ),
@@ -150,6 +163,7 @@ class _BasketState extends State<BasketScreen>{
           ],
         ),
       ),
+
     );
   }
 }

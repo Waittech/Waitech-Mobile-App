@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 class SignUpPage extends StatefulWidget{
   static const String routeName = '/sign-up';
@@ -18,14 +20,13 @@ class _SignUpPageState extends State<SignUpPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: Column(
             children:[
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -35,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage>{
 
               ),
 
-              SizedBox(height: 40),
+              SizedBox(height: 30),
 
               Text(
                   'Create Account',
@@ -47,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage>{
                 ),
               ),
 
-              SizedBox(height:40),
+              SizedBox(height:30),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -63,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage>{
                     child: TextField(
                       decoration: InputDecoration(
                         border : InputBorder.none,
-                        hintText: 'Full Name',
+                        hintText: 'Ad ve Soyad',
                       ),
                     ),
                   ),
@@ -112,8 +113,9 @@ class _SignUpPageState extends State<SignUpPage>{
                     child: TextField(
                       decoration: InputDecoration(
                         border : InputBorder.none,
-                        hintText: "Password",
+                        hintText: "Şifre",
                       ),
+                      obscureText: true,
                     ),
                   ),
                 ),
@@ -136,8 +138,9 @@ class _SignUpPageState extends State<SignUpPage>{
                     child: TextField(
                       decoration: InputDecoration(
                         border : InputBorder.none,
-                        hintText: "Password (Again)",
+                        hintText: "Tekrar Şifre",
                       ),
+                      obscureText: true,
                     ),
                   ),
                 ),

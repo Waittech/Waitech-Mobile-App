@@ -27,9 +27,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     bool _obscureText=true;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xfff5f5f9),
-      body: SafeArea(
+      backgroundColor: Color(0xfff5f5f9),
+
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
