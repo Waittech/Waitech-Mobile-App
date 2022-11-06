@@ -14,9 +14,9 @@ class FilterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Filter')),
+      appBar: AppBar(title: const Text('Filter')),
       body: ElevatedButton(
-        child: Text('Home Screen'),
+        child: const Text('Home Screen'),
         onPressed: () {
           Navigator.pushNamed(context, '/');
         },

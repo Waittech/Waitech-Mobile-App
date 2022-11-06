@@ -1,11 +1,11 @@
-
 import 'package:flutter/material.dart';
-import 'package:waitech/config/app_router.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 
 class PayScreen extends StatefulWidget {
   static const String routeName = '/pay_screen';
+
+  const PayScreen({super.key});
 
 
   static Route route() {
@@ -49,7 +49,7 @@ class _PayScreenState extends State<PayScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Theme.of(context).primaryColorDark,
-        appBar: AppBar(title: Text('Ödeme Ekranı',style: TextStyle(color: Colors.black),),
+        appBar: AppBar(title: const Text('Ödeme Ekranı',style: TextStyle(color: Colors.black),),
         backgroundColor: Colors.white),
         body: Container(
           decoration: BoxDecoration(

@@ -9,20 +9,15 @@ import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
-import 'package:waitech/screens/screens.dart' as screens;
 import 'package:waitech/screens/voucher/voucher_screen.dart';
 import 'package:waitech/screens/login_sign-up/login_page2.dart';
 import 'package:waitech/screens/basket/pay_screen.dart';
-import 'package:waitech/screens/basket/basket_screen.dart';
-import 'package:waitech/screens/login_sign-up/login_page2.dart';
-
 import 'package:waitech/tab_bar_page/tab_bar_index.dart';
-
 import '../screens/splash/splashScreen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    print('The Router is: ${settings.name}');
+    ('The Router is: ${settings.name}');
 
     switch (settings.name) {
       case '/':

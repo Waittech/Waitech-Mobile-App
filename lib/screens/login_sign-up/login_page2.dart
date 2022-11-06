@@ -40,7 +40,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   child: Image.asset("assets/images/Waitech_logo.png"),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               SizedBox(height: 20),
               Padding(
@@ -68,10 +68,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(left: 20.0),
+                    padding: const EdgeInsets.only(left: 20.0),
                     child: TextField(
                       controller: ref.read(loginRiverpod).email,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Email',
                       ),
@@ -79,7 +79,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
 
               //Password
               Padding(
@@ -95,9 +95,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     child: TextField(
                       controller: ref.read(loginRiverpod).password,
                       decoration: InputDecoration(
-                        suffixIcon: GestureDetector(onTap: (){
+                        suffixIcon: GestureDetector(
+                          onTap: (){
                           setState(() {
-                            _obscureText= !_obscureText;
+                            _obscureText=!_obscureText;
                           });
                         },
                         child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off
@@ -129,7 +130,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     ),
                     onPressed: () => ref.read(loginRiverpod).fetch(),
-                    child: Text("Giriş Yap",
+                    child: const Text("Giriş Yap",
                     style: TextStyle(
                       fontSize: 20,
                     ),),

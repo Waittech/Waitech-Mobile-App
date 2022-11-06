@@ -1,6 +1,9 @@
 
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:waitech/services/sign_up_services.dart';
 class SignUpPage extends StatefulWidget{
   static const String routeName = '/sign-up';
 
@@ -10,10 +13,24 @@ class SignUpPage extends StatefulWidget{
         settings: const RouteSettings(name: routeName));
   }
 
-
   @override
   State<SignUpPage> createState() => _SignUpPageState();
+
 }
+//POST KISMI
+final String baseUrl = "https://jsonplaceholder.typicode.com/posts";
+final dio = Dio();
+
+void postRequest() async {
+  try {
+    var response = await Dio().post('$baseUrl',
+        data: {'firma-adı': 'mete' ,'ad-soyad':'mete','email':'mete2@gmail.com','password':'123456'});
+    print(response);
+  } catch (e) {
+    print(e);
+  }
+}
+//
 
 
 class _SignUpPageState extends State<SignUpPage>{
@@ -178,6 +195,7 @@ class _SignUpPageState extends State<SignUpPage>{
               ),
               ),
               ),
+              FloatingActionButton(onPressed: postRequest,child: Icon(Icons.add))
             ],
           ),
         ),

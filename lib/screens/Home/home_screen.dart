@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(8, 40, 8, 0),
               child: SearchingBox(),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(8),
               child: Align(
                 alignment: Alignment.topLeft,
@@ -72,7 +72,7 @@ class RestaurantCard extends StatelessWidget {
                   image: NetworkImage(restaurant.imageUrl), fit: BoxFit.cover),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Padding(
@@ -82,7 +82,7 @@ class RestaurantCard extends StatelessWidget {
               children: [
                 Text(
                   restaurant.name,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text('${restaurant.tags}'),
               ],

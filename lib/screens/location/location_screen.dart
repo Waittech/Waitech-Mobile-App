@@ -14,9 +14,9 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Location')),
+      appBar: AppBar(title: const Text('Location')),
       body: ElevatedButton(
-        child: Text('Home Screen'),
+        child: const Text('Home Screen'),
         onPressed: (){
           Navigator.pushNamed(context, '/');
         },

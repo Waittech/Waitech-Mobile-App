@@ -1,20 +1,20 @@
-/*
 import 'package:dio/dio.dart';
+import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
 
-import '../models/login_model.dart';
-
-class SignUpService {
+class SignUpService{
   final String baseUrl = "https://haunted-ghost-08609.herokuapp.com/api/";
   final dio = Dio();
-  Future<LoginModel?> loginCall(
-      {required String email, required String password}) async {
-    Map<String, dynamic> json = {"email": email, "password": password};
-    var response = await dio.post(baseUrl + "login", data: json);
-    if (response.statusCode == 200) {
-      var result = LoginModel.fromJson(response.data);
-      return result;
-    } else {
-      throw ("Bir sorun oluştu ${response.statusCode}");
+
+  void postRequest() async {
+    try {
+      var response = await Dio().post('$baseUrl',
+      data: {'firma-adı': 'mete' ,'ad-soyad':'mete','email':'mete2@gmail.com','password':'123456'});
+      print(response);
+    } catch (e) {
+      print(e);
     }
   }
-}*/
+
+
+
+}

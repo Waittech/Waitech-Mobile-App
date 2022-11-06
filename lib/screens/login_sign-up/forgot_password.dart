@@ -28,9 +28,9 @@ class _forgotPassword extends State<forgotPassword> {
         child: Center(
           child: Container(
             child: Column(
-              children: [
+              children: const [
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
+                  padding: EdgeInsets.only(top: 50.0),
                   child: Text('Şifrenizi unutmuşsunuz',
                   style: TextStyle(
                     fontSize: 30,
@@ -41,7 +41,7 @@ class _forgotPassword extends State<forgotPassword> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(30.0),
+                  padding: EdgeInsets.all(30.0),
                   child: TextField(
                     decoration: InputDecoration(
                       filled:true,

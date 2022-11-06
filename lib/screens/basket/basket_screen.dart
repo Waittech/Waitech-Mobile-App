@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 class BasketScreen extends StatefulWidget {
   static const String routeName = '/basket';
@@ -40,7 +39,14 @@ class _BasketState extends State<BasketScreen>{
 
      });
      totalPrice=itemNumbers*5;
-     print(totalPrice);
+  }
+  removeAllItems(){
+     setState((){
+
+       itemRow=0;
+       totalPrice=0;
+
+     });
   }
 
 
@@ -52,12 +58,10 @@ class _BasketState extends State<BasketScreen>{
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Sepet'),
+        title: const Text('Sepet'),
         actions: <Widget>[
           IconButton(onPressed: (){
-            setState((){
-              itemRow=0;
-            });
+            removeAllItems();
           }, icon: Icon(Icons.delete))
         ],
       ),
@@ -65,7 +69,7 @@ class _BasketState extends State<BasketScreen>{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Ürünler',
               style: TextStyle(
                 fontSize: 20,
@@ -73,7 +77,7 @@ class _BasketState extends State<BasketScreen>{
                 color:Colors.black38,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ListView.builder(
                 shrinkWrap: true,
                 itemCount: itemRow,
@@ -91,7 +95,7 @@ class _BasketState extends State<BasketScreen>{
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
 
                       Expanded(
                         child:
@@ -112,7 +116,7 @@ class _BasketState extends State<BasketScreen>{
                           ],
                         ),
                       ),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Row(
                         children: [
                           IconButton(onPressed: removeItems,
@@ -128,15 +132,28 @@ class _BasketState extends State<BasketScreen>{
                     ),
                   );
                 }),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white, borderRadius:BorderRadius.circular(15),
 
               ),
-              child: Text('ürünlerin fiyatı:$totalPrice',style: TextStyle(
-                fontSize: 22,
-              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Column(
+                  children: [
+                    Center(
+                      child: Text('Toplam Fiyat: $totalPrice\$',
+                        style: const TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Monoton-Regular',
+
+
+                      ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -146,12 +163,12 @@ class _BasketState extends State<BasketScreen>{
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        fixedSize: Size(340, 70),
-                        shape: StadiumBorder(),
+                        fixedSize: const Size(340, 70),
+                        shape: const StadiumBorder(),
                         backgroundColor: Theme.of(context).primaryColor
                     ),
                     onPressed: ()=>Navigator.pushNamed(context, '/pay_screen'),
-                    child: Text('Ödeme ekranına git',
+                    child: const Text('Ödeme ekranına git',
                       style: TextStyle(
                         fontSize: 25,
                       ),
