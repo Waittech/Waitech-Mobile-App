@@ -6,6 +6,7 @@ import 'package:waitech/config/app_router.dart';
 import 'package:waitech/screens/screens.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const ProviderScope(child: MyApp()));
 }
 

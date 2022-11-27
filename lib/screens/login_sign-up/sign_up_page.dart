@@ -1,57 +1,38 @@
-
-
-import 'package:dio/dio.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:waitech/services/sign_up_services.dart';
-class SignUpPage extends StatefulWidget{
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waitech/riverpod/signup_riverpod.dart';
+
+import '../../riverpod/riverpod_management.dart';
+
+class SignUpPage extends ConsumerStatefulWidget{
   static const String routeName = '/sign-up';
+
 
   static Route route() {
     return MaterialPageRoute(
         builder: (_) => SignUpPage(),
         settings: const RouteSettings(name: routeName));
   }
+  const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpPageState();
 
 }
-//POST KISMI
-final String baseUrl = "https://jsonplaceholder.typicode.com/posts";
-final dio = Dio();
+class _SignUpPageState extends ConsumerState<SignUpPage>{
 
-void postRequest() async {
-  try {
-    var response = await Dio().post('$baseUrl',
-        data: {'firma-adı': 'mete' ,'ad-soyad':'mete','email':'mete2@gmail.com','password':'123456'});
-    print(response);
-  } catch (e) {
-    print(e);
-  }
-}
-//
-
-
-class _SignUpPageState extends State<SignUpPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             children:[
-              const SizedBox(height: 20),
+               SizedBox(height: 20),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  child: Image.asset("assets/images/Waitech_logo.png"),
-                ),
-
-              ),
 
               SizedBox(height: 30),
 
@@ -68,7 +49,7 @@ class _SignUpPageState extends State<SignUpPage>{
               SizedBox(height:30),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
 
@@ -76,9 +57,10 @@ class _SignUpPageState extends State<SignUpPage>{
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
+                      controller:ref.read(signUpRiverpod).name ,
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: 'Ad ve Soyad',
@@ -93,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage>{
 
               //Password
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
 
@@ -101,9 +83,10 @@ class _SignUpPageState extends State<SignUpPage>{
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
+                      controller:ref.read(signUpRiverpod).email ,
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: "Email",
@@ -117,7 +100,7 @@ class _SignUpPageState extends State<SignUpPage>{
               SizedBox(height: 10),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding:  EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
 
@@ -125,12 +108,15 @@ class _SignUpPageState extends State<SignUpPage>{
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
+
+                      controller:ref.read(signUpRiverpod).password ,
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: "Şifre",
+                        suffixIcon: Icon(Icons.visibility)
                       ),
                       obscureText: true,
                     ),
@@ -139,10 +125,11 @@ class _SignUpPageState extends State<SignUpPage>{
 
               ),
 
-              const SizedBox(height: 10),
+
+               SizedBox(height: 10),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding:  EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   decoration: BoxDecoration(
 
@@ -150,12 +137,13 @@ class _SignUpPageState extends State<SignUpPage>{
                     border:Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Padding(
+                  child:  Padding(
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: "Tekrar Şifre",
+                        suffixIcon: Icon(Icons.visibility)
                       ),
                       obscureText: true,
                     ),
@@ -163,29 +151,25 @@ class _SignUpPageState extends State<SignUpPage>{
                 ),
 
               ),
+             /* _signUpModel == null ? Container():
+                  Text("${_signUpModel!.name} is created succesfully"),*/
 
               SizedBox(height: 10),
 
               //Login button and (register now)
-              Padding(padding:
-              const EdgeInsets.symmetric(horizontal: 25.0),
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Center(
-                    child:Text(
-                      "Create Account",
-                      style: TextStyle(color: Colors.white,
-                      fontSize: 24,
-                      ),
+                  padding: EdgeInsets.all(25),
+                  child:ElevatedButton(
+                    onPressed:()=> ref.read(signUpRiverpod).fetch(),
+                    child: const Text(
+                      "Kayıt Ol"
                     ),
                   ),
                 ),
               ),
-
-              const SizedBox(height: 10),
+               SizedBox(height: 10),
               TextButton(onPressed: (){
                 Navigator.pushNamed(context, '/forgot_password');},
                 child: Text('Şifrenizi mi unuttunuz?',
@@ -195,7 +179,6 @@ class _SignUpPageState extends State<SignUpPage>{
               ),
               ),
               ),
-              FloatingActionButton(onPressed: postRequest,child: Icon(Icons.add))
             ],
           ),
         ),

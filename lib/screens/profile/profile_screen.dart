@@ -1,5 +1,11 @@
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
+// Create storage
+final storage = FlutterSecureStorage();
+
+
+
+
 
 class ProfileScreen extends StatefulWidget{
   static const String routeName = '/profile';
@@ -18,6 +24,7 @@ class ProfileScreen extends StatefulWidget{
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   String FullName='Metehan Gürgentepe';
 
   @override

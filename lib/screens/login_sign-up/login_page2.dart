@@ -14,18 +14,16 @@ class LoginPage extends ConsumerStatefulWidget {
 
   const LoginPage({super.key});
 
-
-
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+  bool _obscureText=true;
 
   @override
   Widget build(BuildContext context) {
-    bool _obscureText=true;
+
     return Scaffold(
       backgroundColor: Color(0xfff5f5f9),
 
@@ -101,7 +99,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             _obscureText=!_obscureText;
                           });
                         },
-                        child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off
+                        child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off,
                         ),
                         ),
                         border: InputBorder.none,
@@ -127,7 +125,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             )
                         ),
                         backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-
                     ),
                     onPressed: () => ref.read(loginRiverpod).fetch(),
                     child: const Text("Giriş Yap",
