@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waitech/models/restaurant_model.dart';
 import 'package:waitech/screens/Home/home_screen.dart';
 import 'package:waitech/screens/basket/basket_screen.dart';
 import 'package:waitech/screens/checkout/checkout_screen.dart';
@@ -35,7 +36,8 @@ class AppRouter {
       case FilterScreen.routeName:
         return FilterScreen.route();
       case RestaurantDetailScreen.routeName:
-        return RestaurantDetailScreen.route();
+        return RestaurantDetailScreen.route(
+            restaurant: settings.arguments as Restaurant);
       case RestaurantListingScreen.routeName:
         return RestaurantListingScreen.route();
       case VoucherScreen.routeName:
@@ -54,7 +56,6 @@ class AppRouter {
         return LoginPage.route();
       case PayScreen.routeName:
         return PayScreen.route();
-
 
       default:
         return _errorRoute();

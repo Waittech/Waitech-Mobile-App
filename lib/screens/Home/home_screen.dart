@@ -3,6 +3,8 @@ import 'package:waitech/config/theme.dart';
 import 'package:waitech/models/restaurant_model.dart';
 import 'package:waitech/widgets/searching_box.dart';
 
+import '../../widgets/restaurant_card.dart';
+
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
 
@@ -52,47 +54,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class RestaurantCard extends StatelessWidget {
-  final Restaurant restaurant;
-  const RestaurantCard({super.key, required this.restaurant});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              image: DecorationImage(
-                  image: NetworkImage(restaurant.imageUrl), fit: BoxFit.cover),
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  restaurant.name,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text('${restaurant.tags}'),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
 
 // Stack(
 //         // ignore: prefer_const_literals_to_create_immutables
