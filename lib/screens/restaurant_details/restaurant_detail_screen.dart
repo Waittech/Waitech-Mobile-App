@@ -47,10 +47,9 @@ class RestaurantDetailScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                       onPressed: () { Navigator.pushNamed(context, '/basket'); },
-                      child:Text(
+                      child:Center(child:Text(
                         "Sepete git".toUpperCase(),
-                    style: const TextStyle(fontSize: 12,color: Colors.white),)
-
+                        style: const TextStyle(fontSize: 20,color: Colors.white)))
                   ),
                 )
               ],

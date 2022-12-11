@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
 
 class BasketScreen extends StatefulWidget {
@@ -18,38 +19,8 @@ class BasketScreen extends StatefulWidget {
 }
 
 class _BasketState extends State<BasketScreen>{
-  int number=0;
-  int itemNumbers=1;
-  int itemRow=1;
-  int totalPrice=5;
-   addItems() {
-     setState(() {
-       itemNumbers++;
-     });
-     totalPrice=itemNumbers*5;
-     print(totalPrice);
-   }
-  removeItems() {
-     setState(() {
-       itemNumbers--;
-       if(itemNumbers==0){
-           itemRow--;
-       }
-       else if(itemNumbers<=0){
-         itemRow=0;
-       }
 
-     });
-     totalPrice=itemNumbers*5;
-  }
-  removeAllItems(){
-     setState((){
 
-       itemRow=0;
-       totalPrice=0;
-
-     });
-  }
 
 
 
@@ -61,11 +32,80 @@ class _BasketState extends State<BasketScreen>{
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Sepet'),
+
         actions: <Widget>[
-          IconButton(onPressed: (){
-            removeAllItems();
-          }, icon: Icon(Icons.delete))
+          BlocBuilder<BasketBloc,BasketState>(
+              builder: (context,state){
+                if(state is BasketLoading){
+                  return Center(
+                    child: Text('ürün yok'),
+                  );
+                }
+                if(state is BasketLoaded){
+                 return IconButton(onPressed: (){
+                    for(int i=0;i<state.basket.itemQuantity(state.basket.items).length;i++){
+                      context.read<BasketBloc>()..add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(i)));
+                    }
+                    }, icon: Icon(Icons.delete));
+                }
+                else{return Text('ürün yok');}
+
+    }
+              )
+
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          margin: EdgeInsets.fromLTRB(0, 8, 11, 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              BlocBuilder<BasketBloc, BasketState>(
+                builder: (context, state) {
+                  if (state is BasketLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is BasketLoaded &&
+                      state.basket
+                          .itemQuantity(state.basket.items)
+                          .isNotEmpty) {
+                    return Text(
+                      'Toplam Fiyat: ${state.basket.totalString}₺',
+                      style: GoogleFonts.openSans(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )
+                    );
+                  } else {
+                    return Text('');
+                  }
+                },
+              ),
+              OutlinedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Theme.of(context).canvasColor,
+                  fixedSize: const Size(120, 40),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                ),
+                child: TextButton(
+                    onPressed: () { Navigator.pushNamed(context, '/pay_screen'); },
+                    child:Text(
+                      "Devam".toUpperCase(),
+                      style: const TextStyle(fontSize: 18,color: Colors.white),)
+
+                ),
+              )
+            ],
+          ),
+        ),
       ),
       body: Padding(padding:  EdgeInsets.all(20.0),
         child: Column(
@@ -99,8 +139,11 @@ class _BasketState extends State<BasketScreen>{
                           borderRadius: BorderRadius.circular(5)),
                       child:Row(
                         children: [
-                          Text('no items in the basket',
-                            textAlign: TextAlign.left,
+                          Text('Sepetinizde ürün bulunmamaktadır',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.actor(
+                              fontSize: 20,
+                            ),
 
                           )
                         ],
@@ -141,7 +184,7 @@ class _BasketState extends State<BasketScreen>{
                                           fontSize: 18,
                                         ),
                                       ),
-                                      Text('${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).price}',
+                                      Text('${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).price}₺',
                                         style: TextStyle(
                                           fontFamily: 'Monoton-Regular',
                                           fontSize: 18,
@@ -179,7 +222,7 @@ class _BasketState extends State<BasketScreen>{
             }),
 
             const SizedBox(height: 20),
-            Container(
+            /*Container(
               decoration: BoxDecoration(
                 color: Colors.white, borderRadius:BorderRadius.circular(15),
 
@@ -192,16 +235,16 @@ class _BasketState extends State<BasketScreen>{
                       child: CircularProgressIndicator(),
                     );
                   }
-                  if (state is BasketLoaded){
+                  if (state is BasketLoaded && state.basket.itemQuantity(state.basket.items).isNotEmpty){
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Column(
                         children: [
                           Center(
-                            child: Text('Toplam Fiyat: ${state.basket.totalString}\$',
-                              style: const TextStyle(
+                            child: Text('Toplam Fiyat: ${state.basket.totalString}₺',
+                              style: GoogleFonts.openSans(
                                 fontSize: 22,
-                                fontFamily: 'Monoton-Regular',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -210,22 +253,26 @@ class _BasketState extends State<BasketScreen>{
                     );
                   }
                   else{
-                    return Text('something went wrong');
+                    return Text('');
                   }
 
                 },
               )
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top:30.0),
+            ),*/
+            /*Container(
+              height: 50,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         fixedSize: const Size(340, 70),
                         shape: const StadiumBorder(),
-                        backgroundColor: Theme.of(context).primaryColor
+                        backgroundColor: Theme.of(context).primaryColor,
                     ),
                     onPressed: ()=>Navigator.pushNamed(context, '/pay_screen'),
                     child: const Text('Ödeme ekranına git',
@@ -236,7 +283,7 @@ class _BasketState extends State<BasketScreen>{
                   ),
                 ],
               ),
-            ),
+            ),*/
           ],
         ),
       ),
