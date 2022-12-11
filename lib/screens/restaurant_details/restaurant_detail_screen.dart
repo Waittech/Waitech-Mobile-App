@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:waitech/blocs/basket/basket_bloc.dart';
+import 'package:waitech/models/menu_item_model.dart';
 import 'package:waitech/widgets/restaurant_information.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/restaurant_model.dart';
 
@@ -8,10 +12,12 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   static Route route({required Restaurant restaurant}) {
     return MaterialPageRoute(
-        builder: (_) =>  RestaurantDetailScreen(restaurant: restaurant,),
+        builder: (_) =>  RestaurantDetailScreen(restaurant: restaurant),
         settings: const RouteSettings(name: routeName));
   }
   final Restaurant restaurant;
+  List<String> basketItems=[];
+
 
    RestaurantDetailScreen({Key? key, required this.restaurant}) : super(key: key);
 
@@ -39,9 +45,12 @@ class RestaurantDetailScreen extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
                   ),
-                  child: Text(
-                    "Sepete Ekle".toUpperCase(),
-                    style: const TextStyle(fontSize: 12),
+                  child: TextButton(
+                      onPressed: () { Navigator.pushNamed(context, '/basket'); },
+                      child:Text(
+                        "Sepete git".toUpperCase(),
+                    style: const TextStyle(fontSize: 12,color: Colors.white),)
+
                   ),
                 )
               ],
@@ -50,8 +59,7 @@ class RestaurantDetailScreen extends StatelessWidget {
         ),
         extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
+          child:  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
@@ -83,7 +91,9 @@ class RestaurantDetailScreen extends StatelessWidget {
                 itemBuilder:  (context, index) {}) */
             ],
           ),
-        ));
+        )
+
+        );
   }
 
   Widget _buildMenuItems(
@@ -119,7 +129,16 @@ class RestaurantDetailScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                             Text('${menuItem.price} \u{20BA}'),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.add_circle, color: Theme.of(context).primaryColor,))
+                              BlocBuilder<BasketBloc, BasketState>(builder: (context, state){
+                                return IconButton(icon: Icon(Icons.add_circle, color: Theme.of(context).primaryColor,),
+                                  onPressed: () {
+                                  context.read<BasketBloc>()
+                                      ..add(AddItem(menuItem));
+
+                                },
+                                );
+                              })
+
                           ],),
                         ),
                       ),

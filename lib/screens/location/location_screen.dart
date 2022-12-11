@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class LocationScreen extends StatelessWidget {
   static const String routeName = '/location';
 
