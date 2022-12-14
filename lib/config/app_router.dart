@@ -39,7 +39,7 @@ class AppRouter {
         return RestaurantDetailScreen.route(
             restaurant: settings.arguments as Restaurant);
       case RestaurantListingScreen.routeName:
-        return RestaurantListingScreen.route();
+        return RestaurantListingScreen.route(restaurants: []);
       case VoucherScreen.routeName:
         return VoucherScreen.route();
       case MySplashScreen.routeName:

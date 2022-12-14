@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/restaurant_model.dart';
 
@@ -38,9 +39,9 @@ class RestaurantCard extends StatelessWidget {
                 children: [
                   Text(
                     restaurant.name,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                   ),
-                  Text('${restaurant.tags}'),
+                  Text(restaurant.tags.join(', '),style: GoogleFonts.openSans(),),
                 ],
               ),
             )

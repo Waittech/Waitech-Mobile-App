@@ -6,7 +6,7 @@ class Category extends Equatable {
   final String name;
   final Image image;
 
-  Category({required this.id, required this.name, required this.image});
+  const Category({required this.id, required this.name, required this.image});
 
   @override
   List<Object?> get props => [id, name, image];
@@ -14,27 +14,27 @@ class Category extends Equatable {
   static List<Category> categories = [
     Category(
       id: 1,
-      name: 'Pizza',
+      name: 'Pizzalar',
       image: Image.asset('assets/images/BikeAnimated.png'),
     ),
     Category(
-      id: 1,
-      name: 'Burger',
+      id: 2,
+      name: 'Burgerlar',
       image: Image.asset('assets/images/BikeAnimated.png'),
     ),
     Category(
-      id: 1,
-      name: 'Salad',
+      id: 3,
+      name: 'Salatalar',
       image: Image.asset('assets/images/BikeAnimated.png'),
     ),
     Category(
-      id: 1,
-      name: 'Desser',
+      id: 4,
+      name: 'Tatlılar',
       image: Image.asset('assets/images/BikeAnimated.png'),
     ),
     Category(
-      id: 1,
-      name: 'Drink',
+      id: 5,
+      name: 'Çorbalar',
       image: Image.asset('assets/images/BikeAnimated.png'),
     ),
   ];

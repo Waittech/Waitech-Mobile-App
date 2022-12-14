@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grock/grock.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
+import 'package:waitech/blocs/filter/filter_bloc.dart';
 import 'package:waitech/config/app_router.dart';
 
 import 'package:waitech/screens/screens.dart';
@@ -14,7 +15,6 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -23,11 +23,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
             providers: [
-              BlocProvider(create: (context) =>
-              BasketBloc()
-                ..add(StartBasket(),
+              BlocProvider(
+                create: (context) =>
+                BasketBloc()
+                  ..add(StartBasket(),
                 ),
-              )
+              ),
+              BlocProvider(
+                create: (context)=>
+                FiltersBloc()
+                  ..add(FilterLoad()),
+              ),
             ],
             child: MaterialApp(
               navigatorKey: Grock.navigationKey,

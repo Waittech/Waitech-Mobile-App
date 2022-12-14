@@ -1,8 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:waitech/models/restaurant_model.dart';
-import '../../widgets/restaurant_card.dart';
+
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/';
@@ -15,23 +16,25 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
 
   List<Restaurant> searchRestaurant = [];
+  bool isSearch=false;
+  late FocusNode _focusNode;
+
+  TextEditingController searchWord = TextEditingController();
 
   void searchFunc(String value) {
-    for (var restaurant in Restaurant.restaurants) {
-      if (restaurant.name.toLowerCase().trim().contains(value.trim().toLowerCase())) {
-        searchRestaurant.add(restaurant);
-        log(searchRestaurant[0].name);
+    Restaurant.restaurants.forEach((company) {
+      if(company!.name!.toLowerCase().trim().contains(value.toLowerCase().trim())){
+        searchRestaurant.add(company);
         setState(() {
-          log(searchRestaurant[0].name);
+          log(company.name);
         });
       }
-    }
+    });
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Text("Konum",
               style: TextStyle(color: Colors.white,
                   fontSize: 14.0),),
-
-
           ),
         ],
       ),
@@ -56,30 +57,41 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-
-
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
-              child:CupertinoTextField(
+              child: CupertinoTextField(
+                controller: searchWord,
+                prefix: Icon(Icons.search,color: Theme.of(context).primaryColor,),
+                suffix: IconButton(onPressed:(){
+                  searchWord.clear();
+                  setState(() {
+                    for(int i=0; i<searchRestaurant.length;i++){
+                      log(searchWord.text);
+                      searchRestaurant.removeRange(0,searchRestaurant.length);
+                    }
+                  });
+                }, icon: searchIconClear()),
+                keyboardType: TextInputType.name,
                 placeholder: 'Restaurant Ara',
-                padding:  EdgeInsets.symmetric(horizontal: 10.0),
-                onChanged:(value){
-                  searchFunc(value);
-                  log(searchRestaurant.length.toString());
+                padding:  const EdgeInsets.symmetric(horizontal: 10.0),
+                onSubmitted: (searchWord){
+                    searchFunc(searchWord);
                 },
               ),
-
-
             ),
-            const Padding(
+
+             Padding(
               padding: EdgeInsets.all(8),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Restaurantlar',
-                  style: TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.bold),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Restaurantlar',
+                    style: TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  IconButton(onPressed: ()=> Navigator.pushNamed(context, '/filter'), icon: Icon(Icons.filter_list))
+                ],
               ),
             ),
             Padding(
@@ -89,16 +101,62 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return RestaurantCard(
-
-                      restaurant: Restaurant.restaurants[index]);
+                  var item = searchRestaurant.length>0 ? searchRestaurant[index]! : Restaurant.restaurants[index]!;
+                  return InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/restaurant-detail', arguments: item);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              image: DecorationImage(
+                                  image: NetworkImage(item.imageUrl), fit: BoxFit.cover),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.name,
+                                  style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                                ),
+                                Text(item.tags.join(', '),style: GoogleFonts.openSans(),),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 },
-                itemCount: searchRestaurant.isNotEmpty ? searchRestaurant.length : Restaurant.restaurants.length,
-              ),)
-
+                itemCount: searchRestaurant.length>0 ? searchRestaurant.length : Restaurant.restaurants.length,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
+  Widget searchIconClear(){
+  if(searchWord.text.isNotEmpty){
+    return Icon(Icons.clear,color: Theme.of(context).primaryColor);
+  }
+  else{
+    return const Icon(null);
+  }
 }
+}
+
