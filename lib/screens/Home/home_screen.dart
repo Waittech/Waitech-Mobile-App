@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/widgets/restaurant_card_2.dart';
 import '../../widgets/restaurant_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -59,10 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
+              padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
               child:CupertinoTextField(
                 placeholder: 'Restaurant Ara',
-                padding:  EdgeInsets.symmetric(horizontal: 10.0),
+                padding:  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                 onChanged:(value){
                   searchFunc(value);
                   log(searchRestaurant.length.toString());
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             ),
             const Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(15),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
@@ -83,13 +84,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding:const EdgeInsets.all(10),
+              padding:const EdgeInsets.all(2),
               child:ListView.builder(
                 physics:  NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return RestaurantCard(
+                  return RestaurantCard2(
 
                       restaurant: Restaurant.restaurants[index]);
                 },
