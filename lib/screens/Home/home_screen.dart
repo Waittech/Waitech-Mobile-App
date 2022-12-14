@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waitech/models/restaurant_model.dart';
-
+import '../../widgets/restaurant_card.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/';
@@ -30,11 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
       if(company!.name!.toLowerCase().trim().contains(value.toLowerCase().trim())){
         searchRestaurant.add(company);
         setState(() {
-          log(company.name);
+          log(searchRestaurant[0].name);
         });
       }
-    });
+    }
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Text("Konum",
               style: TextStyle(color: Colors.white,
                   fontSize: 14.0),),
+
+
           ),
         ],
       ),
@@ -57,6 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+
+
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
               child: CupertinoTextField(
@@ -78,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     searchFunc(searchWord);
                 },
               ),
-            ),
+
 
              Padding(
               padding: EdgeInsets.all(8),
@@ -141,9 +147,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
-                itemCount: searchRestaurant.length>0 ? searchRestaurant.length : Restaurant.restaurants.length,
-              ),
-            ),
+                itemCount: searchRestaurant.isNotEmpty ? searchRestaurant.length : Restaurant.restaurants.length,
+              ),)
+
           ],
         ),
       ),
@@ -158,5 +164,3 @@ class _HomeScreenState extends State<HomeScreen> {
     return const Icon(null);
   }
 }
-}
-
