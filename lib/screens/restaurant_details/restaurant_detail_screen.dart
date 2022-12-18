@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
 import 'package:waitech/models/menu_item_model.dart';
 import 'package:waitech/widgets/restaurant_information.dart';
@@ -23,6 +24,7 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool addedSomething = false;
 
     return Scaffold(
         appBar: AppBar(
@@ -33,8 +35,21 @@ class RestaurantDetailScreen extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.fromLTRB(0, 8, 11, 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Container(
+                  child:GestureDetector(
+                   /* onTap: (){
+                      if(addedSomething==true){
+                        _controller.forward();
+                      }else{
+
+                      }
+
+                    },*/
+
+             child: Lottie.network('https://assets9.lottiefiles.com/packages/lf20_xkraio55.json',height: 70),
+                  )),
                 OutlinedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -48,7 +63,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                   child: TextButton(
                       onPressed: () { Navigator.pushNamed(context, '/basket'); },
                       child:Center(child:Text(
-                        "Sepete git".toUpperCase(),
+                        "Sepet".toUpperCase(),
                         style: const TextStyle(fontSize: 20,color: Colors.white)))
                   ),
                 )

@@ -44,8 +44,8 @@ class FilterScreen extends StatelessWidget {
                             .toList();
                         print(categories);
                         List<Restaurant> index = Restaurant.restaurants
-                            .where((restaurants) => categories.any((category) =>
-                                restaurants.tags.contains(category)))
+                            .where((restaurant) => categories.any((category) =>
+                                restaurant.tags.contains(category)))
                             .toList();
                         Navigator.pushNamed(context, '/restaurant-listing',
                             arguments: index);

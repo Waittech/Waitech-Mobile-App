@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +22,7 @@ class BasketScreen extends StatefulWidget {
 class _BasketState extends State<BasketScreen>{
 
 
-
+  TextEditingController notController = TextEditingController();
 
 
   @override
@@ -44,7 +45,7 @@ class _BasketState extends State<BasketScreen>{
                 if(state is BasketLoaded){
                  return IconButton(onPressed: (){
                     for(int i=0;i<state.basket.itemQuantity(state.basket.items).length;i++){
-                      context.read<BasketBloc>()..add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(i)));
+                      context.read<BasketBloc>().add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(i)));
                     }
                     }, icon: Icon(Icons.delete));
                 }
@@ -222,72 +223,21 @@ class _BasketState extends State<BasketScreen>{
             }),
 
             const SizedBox(height: 20),
-            /*Container(
-              decoration: BoxDecoration(
-                color: Colors.white, borderRadius:BorderRadius.circular(15),
-
-              ),
-
-              child:BlocBuilder<BasketBloc, BasketState>(
-                builder: (context, state){
-                  if(state is BasketLoading){
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is BasketLoaded && state.basket.itemQuantity(state.basket.items).isNotEmpty){
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Text('Toplam Fiyat: ${state.basket.totalString}₺',
-                              style: GoogleFonts.openSans(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  else{
-                    return Text('');
-                  }
-
-                },
-              )
-            ),*/
-            /*Container(
-              height: 50,
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(340, 70),
-                        shape: const StadiumBorder(),
-                        backgroundColor: Theme.of(context).primaryColor,
-                    ),
-                    onPressed: ()=>Navigator.pushNamed(context, '/pay_screen'),
-                    child: const Text('Ödeme ekranına git',
-                      style: TextStyle(
-                        fontSize: 25,
-                      ),
-                    ),
+          const SizedBox(
+                height: 300,
+                child:TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                    hintText: 'Not Bırakın',
+                    border: OutlineInputBorder(),
+                    alignLabelWithHint: true,
                   ),
-                ],
-              ),
-            ),*/
-          ],
-        ),
-      ),
-
+                )
+          )
+      ])
+    )
     );
+
+
   }
 }

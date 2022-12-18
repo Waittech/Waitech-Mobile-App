@@ -20,20 +20,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   List<Restaurant> searchRestaurant = [];
-  bool isSearch=false;
+  bool isSearch = false;
   late FocusNode _focusNode;
 
   TextEditingController searchWord = TextEditingController();
 
   void searchFunc(String value) {
     Restaurant.restaurants.forEach((company) {
-      if(company!.name!.toLowerCase().trim().contains(value.toLowerCase().trim())){
+      if (company!.name!.toLowerCase().trim().contains(
+          value.toLowerCase().trim())) {
         searchRestaurant.add(company);
         setState(() {
           log(searchRestaurant[0].name);
         });
       }
-    }
+    });
   }
 
 
@@ -67,26 +68,29 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
               child: CupertinoTextField(
                 controller: searchWord,
-                prefix: Icon(Icons.search,color: Theme.of(context).primaryColor,),
-                suffix: IconButton(onPressed:(){
+                prefix: Icon(Icons.search, color: Theme
+                    .of(context)
+                    .primaryColor,),
+                suffix: IconButton(onPressed: () {
                   searchWord.clear();
                   setState(() {
-                    for(int i=0; i<searchRestaurant.length;i++){
+                    for (int i = 0; i < searchRestaurant.length; i++) {
                       log(searchWord.text);
-                      searchRestaurant.removeRange(0,searchRestaurant.length);
+                      searchRestaurant.removeRange(0, searchRestaurant.length);
                     }
                   });
                 }, icon: searchIconClear()),
                 keyboardType: TextInputType.name,
                 placeholder: 'Restaurant Ara',
-                padding:  const EdgeInsets.symmetric(horizontal: 10.0),
-                onSubmitted: (searchWord){
-                    searchFunc(searchWord);
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                onSubmitted: (searchWord) {
+                  searchFunc(searchWord);
                 },
               ),
+            ),
 
 
-             Padding(
+            Padding(
               padding: EdgeInsets.all(8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,58 +100,95 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                         fontSize: 25, fontWeight: FontWeight.bold),
                   ),
-                  IconButton(onPressed: ()=> Navigator.pushNamed(context, '/filter'), icon: Icon(Icons.filter_list))
+                  IconButton(
+                      onPressed: () => Navigator.pushNamed(context, '/filter'),
+                      icon: Icon(Icons.filter_list))
                 ],
               ),
             ),
             Padding(
-              padding:const EdgeInsets.all(10),
-              child:ListView.builder(
-                physics:  NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(10),
+              child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  var item = searchRestaurant.length>0 ? searchRestaurant[index]! : Restaurant.restaurants[index]!;
+                  var item = searchRestaurant.length > 0
+                      ? searchRestaurant[index]!
+                      : Restaurant.restaurants[index]!;
                   return InkWell(
                     onTap: (){
                       Navigator.pushNamed(context, '/restaurant-detail', arguments: item);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              image: DecorationImage(
-                                  image: NetworkImage(item.imageUrl), fit: BoxFit.cover),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item.name,
-                                  style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 3,
+                        shape:
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        child: InkWell(
+                          onTap: (){Navigator.pushNamed(context, '/restaurant-detail', arguments: item);},
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Stack(
+                                children: [
+                                  Ink.image(
+                                    //image: const NetworkImage("assets/slider/2.jpg"),
+                                    image:  NetworkImage(item.imageUrl,),
+                                    height: 150,
+                                    fit: BoxFit.cover,
+                                    child: InkWell(
+                                      onTap: () {Navigator.pushNamed(context, '/restaurant-detail', arguments: item);},
+                                    ),
+                                  ),
+
+
+                                  Container(
+                                    alignment: Alignment.bottomLeft,
+                                    padding: const EdgeInsets.all(12),
+                                    child: Text(
+                                      ' ',
+                                      style: TextStyle(fontSize: 25, color: Colors.white),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.black.withOpacity(0),
+                                              Colors.black.withOpacity(0.1)
+                                            ])),
+                                  ),
+
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 15, left: 15, right: 15 , bottom: 15),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(item.name, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                                    SizedBox(height: 3,),
+                                    Text('${item.tags.join(' ')}' , style: TextStyle(fontSize: 11, ),),
+
+                                  ],
                                 ),
-                                Text(item.tags.join(', '),style: GoogleFonts.openSans(),),
-                              ],
-                            ),
-                          )
-                        ],
+                              ),
+                            ],
+                          ),
+
+                        ),
                       ),
                     ),
                   );
                 },
-                itemCount: searchRestaurant.isNotEmpty ? searchRestaurant.length : Restaurant.restaurants.length,
+                itemCount: searchRestaurant.isNotEmpty
+                    ? searchRestaurant.length
+                    : Restaurant.restaurants.length,
               ),)
 
           ],
@@ -156,11 +197,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget searchIconClear(){
-  if(searchWord.text.isNotEmpty){
-    return Icon(Icons.clear,color: Theme.of(context).primaryColor);
-  }
-  else{
-    return const Icon(null);
+  Widget searchIconClear() {
+    if (searchWord.text.isNotEmpty) {
+      return Icon(Icons.clear, color: Theme
+          .of(context)
+          .primaryColor);
+    }
+    else {
+      return const Icon(null);
+    }
   }
 }
