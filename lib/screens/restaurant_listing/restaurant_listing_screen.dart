@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:waitech/blocs.dart';
 import 'package:waitech/screens/filter/filter_screen.dart';
+import '../../blocs/filter/filter_bloc.dart';
 import '../../models/models.dart';
 import '../../models/restaurant_model.dart';
 import '../../widgets/restaurant_card.dart';
@@ -17,25 +20,23 @@ class RestaurantListingScreen extends StatelessWidget {
 
   final List<Restaurant> restaurants;
 
-  const RestaurantListingScreen({super.key,
+  const RestaurantListingScreen({
+    super.key,
     required this.restaurants,
   });
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as FilterScreen;
-
     return Scaffold(
-      appBar: AppBar(title: Text('Restaurants')),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: restaurants.length,
-          itemBuilder: (context,arguments) {
-            return RestaurantCard(restaurant: restaurants[arguments]);
-          },
-        ),
-      ),
-    );
+        appBar: AppBar(title: Text('Restaurants')),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:ListView.builder(
+              itemCount: restaurants.length,
+              itemBuilder: (context, index) {
+                return RestaurantCard(restaurant: restaurants[index]);
+              },
+            )
+        ));
   }
 }

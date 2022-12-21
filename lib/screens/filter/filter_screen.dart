@@ -48,7 +48,7 @@ class FilterScreen extends StatelessWidget {
                                 restaurant.tags.contains(category)))
                             .toList();
                         Navigator.pushNamed(context, '/restaurant-listing',
-                            arguments: index);
+                            arguments: Restaurant.restaurants);
                         print(index);
                       },
                       child: Text('Uygula'));

@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import '../models/sign_up_model.dart';
 
 class SignUpService {
-  final String baseUrl = "https://haunted-ghost-08609.herokuapp.com/api/";
+  final String baseUrl = "https://amazing-gauss.213-142-157-85.plesk.page/api/";
   final dio = Dio();
   Future<SignUpModel?> signUpCall(
       {required String name,required String email, required String password}) async {

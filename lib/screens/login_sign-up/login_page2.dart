@@ -111,7 +111,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
               ),
               const SizedBox(height: 15),
-
               //Login button and (register now)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),

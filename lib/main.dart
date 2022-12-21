@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
               ),
               title: 'Delivery By Bike',
               onGenerateRoute: AppRouter.onGenerateRoute,
-              initialRoute: HomeScreen.routeName,
+              initialRoute: MySplashScreen.routeName,
             ));
   }
 }
