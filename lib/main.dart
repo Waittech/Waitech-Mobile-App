@@ -9,6 +9,9 @@ import 'package:waitech/screens/screens.dart';
 import 'package:waitech/simple_bloc_observer.dart';
 
 final tokenString = Provider((_) =>'');
+final companyId= Provider((ref) => 0);
+final tableId= Provider((ref) => 0);
+
 
 
 void main() async {

@@ -60,10 +60,22 @@ class _QRCodeScanner extends State<QRCodeScanner> {
     );
   }
 
+  Widget buildQrView(BuildContext context)=> QRView(
+      key: qrKey, onQRViewCreated: _onQrViewCreated,
+    overlay: QrScannerOverlayShape(
+      borderColor: Theme.of(context).primaryColor,
+      borderRadius: 10,
+      borderLength: 20,
+      borderWidth: 10,
+      cutOutSize: MediaQuery.of(context).size.width*0.8,
+    ),
+  );
+
   void _onQrViewCreated(QRViewController controller) {
     this.controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
+        print(result);
         result = scanData;
       });
     });

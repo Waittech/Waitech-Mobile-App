@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Text(
                                 'Geçmiş Siparişlerim',
                                 style: TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 15,
                                   fontFamily: 'Monoton-Regular',
                                   color: Colors.black,
                                 ),
@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             'Ödeme Yöntemlerim',
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 15,
                               fontFamily: 'Monoton-Regular',
                               color: Colors.black,
                             ),
@@ -131,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             'Hesap Ayarları',
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 15,
                               fontFamily: 'Monoton-Regular',
                               color: Colors.black,
                             ),
@@ -163,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             'Çıkış Yap',
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 15,
                               fontFamily: 'Monoton-Regular',
 
                               color: Colors.black,

@@ -62,8 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-
-
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
               child: CupertinoTextField(
@@ -88,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-
 
             Padding(
               padding: EdgeInsets.all(8),
