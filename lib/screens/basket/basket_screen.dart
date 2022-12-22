@@ -30,6 +30,7 @@ class _BasketState extends State<BasketScreen>{
 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Sepet'),
@@ -45,8 +46,9 @@ class _BasketState extends State<BasketScreen>{
                 if(state is BasketLoaded){
                  return IconButton(onPressed: (){
                     for(int i=0;i<state.basket.itemQuantity(state.basket.items).length;i++){
-                      context.read<BasketBloc>().add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(i)));
+                      context.read<BasketBloc>()..add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(i)));
                     }
+
                     }, icon: Icon(Icons.delete));
                 }
                 else{return Text('ürün yok');}
@@ -143,7 +145,7 @@ class _BasketState extends State<BasketScreen>{
                           Text('Sepetinizde ürün bulunmamaktadır',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.actor(
-                              fontSize: 20,
+                              fontSize: 16,
                             ),
 
                           )

@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io';
 
-class QRCodeScanner extends StatefulWidget {
+import 'package:waitech/main.dart';
+import 'package:waitech/models/restaurant_model.dart';
+
+class QRCodeScanner extends ConsumerStatefulWidget {
   static const String routeName = '/qr_code';
 
   static Route route() {
@@ -13,10 +17,11 @@ class QRCodeScanner extends StatefulWidget {
   }
 
   @override
-  State<QRCodeScanner> createState() => _QRCodeScanner();
+  ConsumerState<QRCodeScanner> createState() => _QRCodeScanner();
 }
 
-class _QRCodeScanner extends State<QRCodeScanner> {
+class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
+
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
@@ -75,11 +80,31 @@ class _QRCodeScanner extends State<QRCodeScanner> {
     this.controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
-        print(result);
+        print(result!.code);
+
+        String? url = result!.code;
+        url =ref.read(baseUrl);
+        url!.split('/')[6] = ref.read(companyId);
+        url!.split('/')[8] = ref.read(tableId);
+        print(ref.read(companyId));
         result = scanData;
+        if(isNumeric(ref.read(companyId))&&isNumeric(ref.read(tableId))){
+          Navigator.pushNamed(context, 'restaurant-detail',arguments:Restaurant.restaurants);
+        }
+        else{
+
+        }
       });
     });
   }
+
+  bool isNumeric(String string) {
+    final numericRegex =
+    RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
+
+    return numericRegex.hasMatch(string);
+  }
+
 
   @override
   void dispose() {
