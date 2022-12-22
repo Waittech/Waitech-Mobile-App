@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:waitech/screens/login_sign-up/login_page2.dart';
-import 'package:waitech/tab_bar_page/profile.dart';
-
 import '../screens/Home/home_screen.dart';
 import '../screens/basket/basket_screen.dart';
+import '../screens/profile/profile_screen.dart';
 
 class TabBarIndex extends StatefulWidget {
   static const String routeName = '/tab_bar_index';
@@ -23,7 +22,7 @@ class TabBarIndex extends StatefulWidget {
 class _TabBarIndexState extends State<TabBarIndex> {
   int currentTab = 0;
 
-  final List<Widget> screen = [Profile(), BasketScreen()];
+  final List<Widget> screen = [ProfileScreen(), BasketScreen()];
 
   final PageStorageBucket bucket = PageStorageBucket();
 
@@ -167,7 +166,7 @@ class _TabBarIndexState extends State<TabBarIndex> {
                         minWidth: 60,
                         onPressed: () {
                           setState(() {
-                            currentScreen = LoginPage();
+                            currentScreen = ProfileScreen();
                             currentTab = 3;
                           });
                         },

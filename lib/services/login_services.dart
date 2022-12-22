@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-
+import 'package:waitech/main.dart';
 import '../models/login_model.dart';
 
 class LoginService {
@@ -11,6 +11,7 @@ class LoginService {
     var response = await dio.post(baseUrl + "login", data: json);
     if (response.statusCode == 200) {
       var result = LoginModel.fromJson(response.data);
+      print(response.data.toString());
       return result;
     } else {
       throw ("Bir sorun oluştu ${response.statusCode}");

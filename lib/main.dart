@@ -5,9 +5,11 @@ import 'package:grock/grock.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
 import 'package:waitech/blocs/filter/filter_bloc.dart';
 import 'package:waitech/config/app_router.dart';
-
 import 'package:waitech/screens/screens.dart';
 import 'package:waitech/simple_bloc_observer.dart';
+
+final tokenString = Provider((_) =>'');
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
