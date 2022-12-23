@@ -4,11 +4,11 @@ import 'menu_item_model.dart';
 
 class Basket extends Equatable{
   final List<MenuItems> items;
-  final bool cutlery;
+
 
   Basket({
   this.items = const <MenuItems>[],
-  this.cutlery=false
+
 });
 
   Basket copyWith({
@@ -17,12 +17,12 @@ class Basket extends Equatable{
 }){
     return Basket(
       items: items ?? this.items,
-      cutlery: cutlery ?? this.cutlery,
+
     );
   }
 
   @override
-  List<Object?> get props => [items, cutlery];
+  List<Object?> get props => [items];
 
   Map itemQuantity(items) {
     var quantity = Map();

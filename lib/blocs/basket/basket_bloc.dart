@@ -71,7 +71,6 @@ class BasketBloc extends Bloc<BasketEvent, BasketState>{
         if(state is BasketLoaded){
           try{
             yield BasketLoaded(basket: state.basket.copyWith(
-              cutlery: !state.basket.cutlery,
             ),
             );
           } catch(_){}

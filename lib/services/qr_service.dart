@@ -1,21 +1,20 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:waitech/main.dart';
-import '../models/qr_model.dart';
+/*
+import 'dart:convert';
 
-class QRService extends ChangeNotifier{
-  final String baseUrl = "https://amazing-gauss.213-142-157-85.plesk.page/api/qr/company/$companyId/table/$tableId";
-  final dio = Dio();
-  Future<QrModel> qrCall(
-      {required String companyId, required String tableId,required String tableName}) async {
-    Map<String, dynamic> json = {"companyId": companyId, "tableId": tableId,"tableName": tableName};
-    var response = await dio.post(baseUrl, data: json);
-    if (response.statusCode == 200) {
-      var result = QrModel.fromJson(response.data);
-      print(response.data.toString());
-      return result;
-    } else {
-      throw ("Bir sorun oluştu ${response.statusCode}");
-    }
-  }
+import '';
+import '../models/qr_model.dart';
+import 'package:http/http.dart' as http;
+
+
+Future<http.Response> getTable(){
+  return http.get(Uri.parse(apiUrl));
 }
+Future<QrModel> fetchQr() async{
+  final response = await http.get(Uri.parse(apiUrl));
+  if (response.statusCode==200){
+    return QrModel.fromJson(jsonDecode(response.body));
+  }
+  else{
+    throw Exception('Failed to load QR');
+  }
+}*/

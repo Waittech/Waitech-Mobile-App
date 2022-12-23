@@ -1,8 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
+import 'package:waitech/models/basket_model.dart';
+
 
 class BasketScreen extends StatefulWidget {
   static const String routeName = '/basket';
@@ -39,14 +42,14 @@ class _BasketState extends State<BasketScreen>{
           BlocBuilder<BasketBloc,BasketState>(
               builder: (context,state){
                 if(state is BasketLoading){
-                  return Center(
+                  return const Center(
                     child: Text('ürün yok'),
                   );
                 }
                 if(state is BasketLoaded){
                  return IconButton(onPressed: (){
                     for(int i=0;i<state.basket.itemQuantity(state.basket.items).length;i++){
-                      context.read<BasketBloc>()..add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(i)));
+                      context.read<BasketBloc>().add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(i)));
                     }
 
                     }, icon: Icon(Icons.delete));
@@ -99,7 +102,11 @@ class _BasketState extends State<BasketScreen>{
                   ),
                 ),
                 child: TextButton(
-                    onPressed: () { Navigator.pushNamed(context, '/pay_screen'); },
+                    onPressed: () {
+                      postOrder();
+
+
+                      Navigator.pushNamed(context, '/pay_screen'); },
                     child:Text(
                       "Devam".toUpperCase(),
                       style: const TextStyle(fontSize: 18,color: Colors.white),)
@@ -238,8 +245,19 @@ class _BasketState extends State<BasketScreen>{
           )
       ])
     )
+
+
+
     );
+}
 
-
+  void postOrder() async {
+    try{
+      var response = await Dio().post('https://amazing-gauss.213-142-157-85.plesk.page/api/orders');
+    print(response);
+    }
+    catch(e){
+      print(e);
+    }
   }
 }

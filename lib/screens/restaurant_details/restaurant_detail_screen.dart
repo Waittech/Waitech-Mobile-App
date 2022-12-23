@@ -156,7 +156,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                           ],),
                         ),
                       ),
-                      Divider(height: 2,)
+                      Divider(height: 2)
                     ],
                   )).toList(),
         ),

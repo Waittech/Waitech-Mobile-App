@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'menu_item_model.dart';
 
 class Restaurant extends Equatable {
-  final int id;
+  final int? id;
   final String name;
   final String imageUrl;
   final List<String> tags;
