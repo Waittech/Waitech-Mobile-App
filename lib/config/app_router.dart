@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/models/restaurant_model2.dart';
 import 'package:waitech/screens/Home/home_screen.dart';
 import 'package:waitech/screens/basket/basket_screen.dart';
 import 'package:waitech/screens/checkout/checkout_screen.dart';
@@ -7,7 +7,7 @@ import 'package:waitech/screens/delivery_time/delivery_time_screen.dart';
 import 'package:waitech/screens/filter/filter_screen.dart';
 import 'package:waitech/screens/location/location_screen.dart';
 import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
-import 'package:waitech/screens/qr_code/qr_code_screen.dart';
+import 'package:waitech/screens/qr_code/qr-code.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
 import 'package:waitech/screens/voucher/voucher_screen.dart';

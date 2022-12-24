@@ -13,7 +13,7 @@ import 'package:waitech/main.dart';
 import 'package:waitech/models/basket_model.dart';
 import 'package:waitech/models/menu_list.dart';
 import 'package:waitech/models/order_model.dart';
-import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/models/restaurant_model2.dart';
 
 
 class BasketScreen extends ConsumerStatefulWidget {

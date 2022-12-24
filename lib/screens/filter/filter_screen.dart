@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waitech/blocs/filter/filter_bloc.dart';
 import 'package:waitech/models/categor_filter_model.dart';
-import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/models/restaurant_model2.dart';
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
 
 class FilterScreen extends StatelessWidget {

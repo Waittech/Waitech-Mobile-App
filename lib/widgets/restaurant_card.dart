@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../models/restaurant_model.dart';
+import '../models/restaurant_model2.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;

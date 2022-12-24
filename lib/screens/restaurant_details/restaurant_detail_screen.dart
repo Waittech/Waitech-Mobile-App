@@ -6,7 +6,7 @@ import 'package:waitech/models/menu_item_model.dart';
 import 'package:waitech/widgets/restaurant_information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../models/restaurant_model.dart';
+import '../../models/restaurant_model2.dart';
 
 class RestaurantDetailScreen extends StatelessWidget {
   static const String routeName = '/restaurant-detail';

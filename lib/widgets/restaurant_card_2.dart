@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../models/restaurant_model.dart';
+import '../models/restaurant_model2.dart';
 
 class RestaurantCard2 extends StatelessWidget {
   final Restaurant restaurant;

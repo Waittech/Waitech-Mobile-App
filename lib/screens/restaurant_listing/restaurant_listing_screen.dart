@@ -4,7 +4,7 @@ import 'package:waitech/blocs.dart';
 import 'package:waitech/screens/filter/filter_screen.dart';
 import '../../blocs/filter/filter_bloc.dart';
 import '../../models/models.dart';
-import '../../models/restaurant_model.dart';
+import '../../models/restaurant_model2.dart';
 import '../../widgets/restaurant_card.dart';
 import '../../widgets/restaurant_card_2.dart';
 

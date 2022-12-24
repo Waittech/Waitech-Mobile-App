@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:waitech/widgets/restaurant_tags.dart';
 
-import '../models/restaurant_model.dart';
+import '../models/restaurant_model2.dart';
 
 class RestaurantInformation extends StatelessWidget {
   final Restaurant restaurant;

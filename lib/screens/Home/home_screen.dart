@@ -2,7 +2,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/models/restaurant_model2.dart';
+import '../../services/restaurant_service.dart';
 import '../../widgets/restaurant_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,7 +11,8 @@ class HomeScreen extends StatefulWidget {
 
   static Route route() {
     return MaterialPageRoute(
-        builder: (_) => HomeScreen(), settings: const RouteSettings(name: routeName));
+        builder: (_) => HomeScreen(),
+        settings: const RouteSettings(name: routeName));
   }
 
   @override
@@ -18,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  ApiController apiController = ApiController();
+  final scrollController = ScrollController();
 
   List<Restaurant> searchRestaurant = [];
   bool isSearch = false;
@@ -27,8 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void searchFunc(String value) {
     Restaurant.restaurants.forEach((company) {
-      if (company!.name!.toLowerCase().trim().contains(
-          value.toLowerCase().trim())) {
+      if (company!.name!
+          .toLowerCase()
+          .trim()
+          .contains(value.toLowerCase().trim())) {
         searchRestaurant.add(company);
         setState(() {
           log(searchRestaurant[0].name);
@@ -36,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               Navigator.pushNamed(context, 'location');
             },
-            child: const Text("Konum",
-              style: TextStyle(color: Colors.white,
-                  fontSize: 14.0),),
-
-
+            child: const Text(
+              "Konum",
+              style: TextStyle(color: Colors.white, fontSize: 14.0),
+            ),
           ),
         ],
       ),
@@ -66,18 +70,22 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
               child: CupertinoTextField(
                 controller: searchWord,
-                prefix: Icon(Icons.search, color: Theme
-                    .of(context)
-                    .primaryColor,),
-                suffix: IconButton(onPressed: () {
-                  searchWord.clear();
-                  setState(() {
-                    for (int i = 0; i < searchRestaurant.length; i++) {
-                      log(searchWord.text);
-                      searchRestaurant.removeRange(0, searchRestaurant.length);
-                    }
-                  });
-                }, icon: searchIconClear()),
+                prefix: Icon(
+                  Icons.search,
+                  color: Theme.of(context).primaryColor,
+                ),
+                suffix: IconButton(
+                    onPressed: () {
+                      searchWord.clear();
+                      setState(() {
+                        for (int i = 0; i < searchRestaurant.length; i++) {
+                          log(searchWord.text);
+                          searchRestaurant.removeRange(
+                              0, searchRestaurant.length);
+                        }
+                      });
+                    },
+                    icon: searchIconClear()),
                 keyboardType: TextInputType.name,
                 placeholder: 'Restaurant Ara',
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -94,100 +102,142 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const Text(
                     'Restaurantlar',
-                    style: TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   IconButton(
                       onPressed: () => Navigator.pushNamed(context, '/filter'),
                       icon: Icon(Icons.filter_list))
                 ],
               ),
-            ),
+            ), // restaurantlar texti
             Padding(
               padding: const EdgeInsets.all(10),
-              child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  var item = searchRestaurant.length > 0
-                      ? searchRestaurant[index]!
-                      : Restaurant.restaurants[index]!;
-                  return InkWell(
-                    onTap: (){
-                      Navigator.pushNamed(context, '/restaurant-detail', arguments: item);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 3,
-                        shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        child: InkWell(
-                          onTap: (){Navigator.pushNamed(context, '/restaurant-detail', arguments: item);},
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(
-                                children: [
-                                  Ink.image(
-                                    //image: const NetworkImage("assets/slider/2.jpg"),
-                                    image:  NetworkImage(item.imageUrl,),
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                    child: InkWell(
-                                      onTap: () {Navigator.pushNamed(context, '/restaurant-detail', arguments: item);},
-                                    ),
+              child: FutureBuilder(
+                  future: apiController.getProductData(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      print('data var');
+                      return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var item = searchRestaurant.length > 0
+                              ? searchRestaurant[index]!
+                              : Restaurant.restaurants[index]!;
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/restaurant-detail',
+                                  arguments: snapshot.data[index]);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                clipBehavior: Clip.antiAlias,
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/restaurant-detail',
+                                        arguments: snapshot.data[index]);
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          Ink.image(
+                                            //image: const NetworkImage("assets/slider/2.jpg"),
+                                            image: NetworkImage(
+                                              snapshot.data[index].image,
+                                            ),
+                                            height: 150,
+                                            fit: BoxFit.cover,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(context,
+                                                    '/restaurant-detail',
+                                                    arguments: snapshot.data[index]);
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.bottomLeft,
+                                            padding: const EdgeInsets.all(12),
+                                            child: Text(
+                                              ' ',
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  color: Colors.white),
+                                            ),
+                                            decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                  Colors.black.withOpacity(0),
+                                                  Colors.black.withOpacity(0.1)
+                                                ])),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 15,
+                                            left: 15,
+                                            right: 15,
+                                            bottom: 15),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              snapshot.data[index].name,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            SizedBox(
+                                              height: 3,
+                                            ),
+                                            Text(
+                                              '${snapshot.data[index].description.join(' ').replaceAll(' ', ', ')}',
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-
-
-                                  Container(
-                                    alignment: Alignment.bottomLeft,
-                                    padding: const EdgeInsets.all(12),
-                                    child: Text(
-                                      ' ',
-                                      style: TextStyle(fontSize: 25, color: Colors.white),
-                                    ),
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Colors.black.withOpacity(0),
-                                              Colors.black.withOpacity(0.1)
-                                            ])),
-                                  ),
-
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 15, left: 15, right: 15 , bottom: 15),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(item.name, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                                    SizedBox(height: 3,),
-                                    Text('${item.tags.join(' ').replaceAll(' ', ', ')}' , style: TextStyle(fontSize: 11, ),),
-
-                                  ],
                                 ),
                               ),
+                            ),
+                          );
+                        },
+                        itemCount: searchRestaurant.isNotEmpty
+                            ? searchRestaurant.length
+                            : Restaurant.restaurants.length,
+                      );
+                    } else
+                      return Container(
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text('loading...'),
                             ],
                           ),
-
                         ),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: searchRestaurant.isNotEmpty
-                    ? searchRestaurant.length
-                    : Restaurant.restaurants.length,
-              ),)
-
+                      );
+                  }),
+            )
           ],
         ),
       ),
@@ -196,11 +246,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget searchIconClear() {
     if (searchWord.text.isNotEmpty) {
-      return Icon(Icons.clear, color: Theme
-          .of(context)
-          .primaryColor);
-    }
-    else {
+      return Icon(Icons.clear, color: Theme.of(context).primaryColor);
+    } else {
       return const Icon(null);
     }
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/restaurant_model.dart';
+import '../models/restaurant_model2.dart';
 
 class RestaurantTags extends StatelessWidget {
   final Restaurant restaurant;
