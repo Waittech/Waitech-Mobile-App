@@ -1,13 +1,22 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:waitech/main.dart';
 import 'package:waitech/models/basket_model.dart';
+import 'package:waitech/models/menu_list.dart';
+import 'package:waitech/models/order_model.dart';
+import 'package:waitech/models/restaurant_model.dart';
 
 
-class BasketScreen extends StatefulWidget {
+class BasketScreen extends ConsumerStatefulWidget {
   static const String routeName = '/basket';
 
   const BasketScreen({super.key});
@@ -19,17 +28,20 @@ class BasketScreen extends StatefulWidget {
   }
 
   @override
-  State<BasketScreen> createState() => _BasketState();
+  ConsumerState<BasketScreen> createState() => _BasketState();
 }
 
-class _BasketState extends State<BasketScreen>{
+class _BasketState extends ConsumerState<BasketScreen>{
 
 
-  TextEditingController notController = TextEditingController();
+
+
+
 
 
   @override
   Widget build(BuildContext context) {
+
 
 
     return Scaffold(
@@ -63,11 +75,9 @@ class _BasketState extends State<BasketScreen>{
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          margin: EdgeInsets.fromLTRB(0, 8, 11, 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
               BlocBuilder<BasketBloc, BasketState>(
                 builder: (context, state) {
                   if (state is BasketLoading) {
@@ -80,6 +90,7 @@ class _BasketState extends State<BasketScreen>{
                           .itemQuantity(state.basket.items)
                           .isNotEmpty) {
                     return Text(
+
                       'Toplam Fiyat: ${state.basket.totalString}₺',
                       style: GoogleFonts.openSans(
                         fontSize: 20,
@@ -91,28 +102,67 @@ class _BasketState extends State<BasketScreen>{
                   }
                 },
               ),
-              OutlinedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  foregroundColor: Theme.of(context).canvasColor,
-                  fixedSize: const Size(120, 40),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
-                ),
-                child: TextButton(
+              BlocBuilder<BasketBloc,BasketState>(builder: (context,state) {
+                if (state is BasketLoaded &&
+                    state.basket
+                        .itemQuantity(state.basket.items).isNotEmpty) {
+                  return OutlinedButton(
+
                     onPressed: () {
-                      postOrder();
+                      String price=state.basket.totalString;
+                      print(price.split('.')[0]);
+                      postOrder(price.split('.')[0]);
 
 
-                      Navigator.pushNamed(context, '/pay_screen'); },
-                    child:Text(
-                      "Devam".toUpperCase(),
-                      style: const TextStyle(fontSize: 18,color: Colors.white),)
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme
+                          .of(context)
+                          .primaryColor,
+                      foregroundColor: Theme
+                          .of(context)
+                          .canvasColor,
+                      fixedSize: const Size(170, 40),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                    ),
+                    child: TextButton(
+                        onPressed: () {
+                          print(state.basket.itemQuantity(state.basket.items));
 
-                ),
+                          String price =state.basket.totalString.replaceAll('.00', '');
+
+                          postOrder(price);
+
+
+
+                        },
+                        child: Text(
+                            "Devam".toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.white))
+
+                    ),
+                  );
+                }
+                else if (state is BasketLoaded &&
+                    state.basket
+                        .itemQuantity(state.basket.items).isEmpty) {
+                  return Row(
+                    children: [
+                      Icon(Icons.shopping_basket,size: 50),
+                      Text('0',style: TextStyle(fontSize: 40),)
+                    ],
+                  );
+
+                }
+                else{
+                  return CircularProgressIndicator();
+                }
+              }
               )
+
             ],
           ),
         ),
@@ -232,9 +282,10 @@ class _BasketState extends State<BasketScreen>{
             }),
 
             const SizedBox(height: 20),
-          const SizedBox(
+           SizedBox(
                 height: 300,
                 child:TextField(
+                  controller: ref.read(notController),
                     decoration: InputDecoration(
                       filled: true,
                     hintText: 'Not Bırakın',
@@ -250,14 +301,39 @@ class _BasketState extends State<BasketScreen>{
 
     );
 }
+  Future<OrderModel> postOrder(String price) async {
+    final response = await http.post(
+      Uri.parse('https://amazing-gauss.213-142-157-85.plesk.page/api/orders?total_price=$price'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'table_id': ref.read(tableId).toString(),
+        'company_id': ref.read(companyId).toString(),
+        'note': ref.read(notController).text,
+        'total_price': price,
+/*
+        'foods':,
+*/
 
-  void postOrder() async {
-    try{
-      var response = await Dio().post('https://amazing-gauss.213-142-157-85.plesk.page/api/orders');
-    print(response);
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      log('burda');
+      return OrderModel.fromJson(jsonDecode(response.body));
     }
-    catch(e){
-      print(e);
+    if(response.statusCode == 200) {
+      return OrderModel.fromJson(jsonDecode(response.body));
+    }
+    else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to create album.');
     }
   }
+
+
 }

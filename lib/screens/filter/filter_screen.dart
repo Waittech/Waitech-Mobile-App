@@ -5,8 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:waitech/blocs/filter/filter_bloc.dart';
 import 'package:waitech/models/categor_filter_model.dart';
 import 'package:waitech/models/restaurant_model.dart';
-
-import '../../models/Price_model.dart';
+import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
 
 class FilterScreen extends StatelessWidget {
   static const String routeName = '/filter';
@@ -47,9 +46,11 @@ class FilterScreen extends StatelessWidget {
                             .where((restaurant) => categories.any((category) =>
                                 restaurant.tags.contains(category)))
                             .toList();
-                        Navigator.pushNamed(context, '/restaurant-listing',
-                            arguments: Restaurant.restaurants);
-                        print(index);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RestaurantListingScreen(restaurants:  Restaurant.restaurants
+                            .where((restaurant) => categories.any((category) =>
+                            restaurant.tags.contains(category)))
+                            .toList())));
                       },
                       child: Text('Uygula'));
                 } else {

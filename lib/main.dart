@@ -12,6 +12,9 @@ final tokenString = Provider((_) =>'');
 final companyId= Provider((ref) => 0);
 final tableId= Provider((ref) => 0);
 final baseUrl = Provider((ref) => '');
+final basketTotalPrice = Provider((ref) => '');
+final notController =Provider((ref) => TextEditingController());
+final foodsAmount = Provider((ref) => 0);
 
 
 

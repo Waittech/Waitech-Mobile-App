@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:waitech/models/categor_filter_model.dart';
 
 import '../../models/filter_model.dart';
-import '../../models/price_filter_model.dart';
 
 part 'filter_event.dart';
 
@@ -24,16 +23,13 @@ class FiltersBloc extends Bloc<FiltersEvent, FiltersState> {
     if (event is CategoryFilterUpdated) {
       yield* _mapCategoryFilterUpdatedState(event, state);
     }
-    if (event is PriceFilterUpdated) {
-      yield* _mapPriceFilterUpdatedState(event, state);
-    }
   }
 
   Stream<FiltersState> _mapFilterLoadState() async* {
     yield FiltersLoaded(
         filter: Filter(
             categoryFilters: CategoryFilter.filters,
-            priceFilters: PriceFilter.filters));
+            ));
   }
 
   Stream<FiltersState> _mapCategoryFilterUpdatedState(
@@ -47,24 +43,7 @@ class FiltersBloc extends Bloc<FiltersEvent, FiltersState> {
       }).toList();
       yield FiltersLoaded(
           filter: Filter(
-              categoryFilters: updatedCategoryFilters,
-              priceFilters: state.filter.priceFilters));
-    }
-  }
-
-  Stream<FiltersState> _mapPriceFilterUpdatedState(
-      PriceFilterUpdated event, FiltersState state) async* {
-    if (state is FiltersLoaded) {
-      final List<PriceFilter> updatedPriceFilters =
-          state.filter.priceFilters.map((priceFilters) {
-        return priceFilters.id == event.priceFilter.id
-            ? event.priceFilter
-            : priceFilters;
-      }).toList();
-      yield FiltersLoaded(
-          filter: Filter(
-              categoryFilters: state.filter.categoryFilters,
-              priceFilters: updatedPriceFilters));
+              categoryFilters: updatedCategoryFilters));
     }
   }
 }

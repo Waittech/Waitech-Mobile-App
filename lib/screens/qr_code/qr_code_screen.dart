@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -100,7 +99,7 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
           url?.split('/')[8] = ref.read(tableId).toString();
           fetchQr();
           goRestaurant();
-          Navigator.pop(context);
+          dispose();
 
         }
       });

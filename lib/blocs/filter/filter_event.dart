@@ -22,13 +22,4 @@ class CategoryFilterUpdated extends FiltersEvent{
   List<Object> get props => [categoryFilter];
 
 }
-class PriceFilterUpdated extends FiltersEvent{
-  final PriceFilter priceFilter;
 
-  PriceFilterUpdated({
-    required this.priceFilter
-  });
-  @override
-  List<Object> get props => [priceFilter];
-
-}

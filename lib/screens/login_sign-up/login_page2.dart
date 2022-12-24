@@ -39,22 +39,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
               ),
               const SizedBox(height: 30),
-
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Center(
-                  child: Text(
-                    'Welcome back you have been missed!',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.asap(
-                      color: Color(0xff697a8d),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-              ),
               SizedBox(height: 20),
 
               Padding(

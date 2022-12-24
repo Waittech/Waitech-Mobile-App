@@ -67,7 +67,7 @@ class RestaurantCard2 extends StatelessWidget {
                     children: [
                       Text(restaurant.name, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                       SizedBox(height: 3,),
-                      Text('${restaurant.tags}' , style: TextStyle(fontSize: 11, ),),
+                      Text('${restaurant.tags.join(' ').replaceAll(' ' , ', ')}' , style: TextStyle(fontSize: 11, ),),
 
                     ],
                   ),

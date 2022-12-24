@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Text(item.name, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                                     SizedBox(height: 3,),
-                                    Text('${item.tags.join(' ')}' , style: TextStyle(fontSize: 11, ),),
+                                    Text('${item.tags.join(' ').replaceAll(' ', ', ')}' , style: TextStyle(fontSize: 11, ),),
 
                                   ],
                                 ),

@@ -1,13 +1,13 @@
 class OrderModel {
   Data? data;
   bool? success;
-  dynamic message;
+  Null? message;
   int? code;
 
-  OrderModel({required this.data, required this.success, this.message, required this.code});
+  OrderModel({this.data, this.success, this.message, this.code});
 
   OrderModel.fromJson(Map<String, dynamic> json) {
-    data = (json['data'] != null ? new Data.fromJson(json['data']) : null)!;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     success = json['success'];
     message = json['message'];
     code = json['code'];
@@ -16,7 +16,7 @@ class OrderModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
-      data['data'] = this.data?.toJson();
+      data['data'] = this.data!.toJson();
     }
     data['success'] = this.success;
     data['message'] = this.message;
@@ -29,30 +29,33 @@ class Data {
   Company? company;
   String? tableName;
   String? note;
+  String? totalPrice;
   String? status;
   List<Foods>? foods;
   String? createdDate;
   String? createdTime;
 
   Data(
-      {required this.company,
-        required this.tableName,
-        required this.note,
-        required this.status,
-        required this.foods,
-        required this.createdDate,
-        required this.createdTime});
+      {this.company,
+        this.tableName,
+        this.note,
+        this.totalPrice,
+        this.status,
+        this.foods,
+        this.createdDate,
+        this.createdTime});
 
   Data.fromJson(Map<String, dynamic> json) {
     company =
-    (json['company'] != null ? new Company.fromJson(json['company']) : null)!;
+    json['company'] != null ? new Company.fromJson(json['company']) : null;
     tableName = json['table_name'];
     note = json['note'];
+    totalPrice = json['total_price'];
     status = json['status'];
     if (json['foods'] != null) {
       foods = <Foods>[];
       json['foods'].forEach((v) {
-        foods?.add(new Foods.fromJson(v));
+        foods!.add(new Foods.fromJson(v));
       });
     }
     createdDate = json['created_date'];
@@ -62,13 +65,14 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.company != null) {
-      data['company'] = this.company?.toJson();
+      data['company'] = this.company!.toJson();
     }
     data['table_name'] = this.tableName;
     data['note'] = this.note;
+    data['total_price'] = this.totalPrice;
     data['status'] = this.status;
     if (this.foods != null) {
-      data['foods'] = this.foods?.map((v) => v.toJson()).toList();
+      data['foods'] = this.foods!.map((v) => v.toJson()).toList();
     }
     data['created_date'] = this.createdDate;
     data['created_time'] = this.createdTime;
@@ -87,14 +91,14 @@ class Company {
   String? street;
 
   Company(
-      {required this.id,
-        required this.description,
-        required this.image,
-        required this.country,
-        required this.city,
-        required this.district,
-        required this.neighborhood,
-        required this.street});
+      {this.id,
+        this.description,
+        this.image,
+        this.country,
+        this.city,
+        this.district,
+        this.neighborhood,
+        this.street});
 
   Company.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -124,11 +128,11 @@ class Company {
 class Foods {
   int? id;
   String? description;
-  dynamic image;
+  Null? image;
   int? price;
   String? name;
 
-  Foods({required this.id, required this.description, this.image, required this.price, required this.name});
+  Foods({this.id, this.description, this.image, this.price, this.name});
 
   Foods.fromJson(Map<String, dynamic> json) {
     id = json['id'];

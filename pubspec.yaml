@@ -50,7 +50,6 @@ dependencies:
   shared_preferences: ^2.0.15
   flutter_bloc: ^7.2.0
   lottie: ^1.2.1
-  camera: ^0.10.1
 
 dev_dependencies:
   json_serializable: ^4.1.3

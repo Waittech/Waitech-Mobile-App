@@ -1,11 +1,15 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:waitech/models/login_model.dart';
+import 'package:waitech/riverpod/riverpod_management.dart';
+import 'package:waitech/screens/screens.dart';
+import 'package:waitech/tab_bar_page/tab_bar_index.dart';
 
 // Create storage
 final storage = FlutterSecureStorage();
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   static const String routeName = '/profile';
 
   static Route route() {
@@ -15,18 +19,17 @@ class ProfileScreen extends StatefulWidget {
   }
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  late LoginModel loginModel;
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
-  String FullName = 'Metehan Gürgentepe';
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('Profil')),
       body: SafeArea(
         child: Container(
           height: 400,
@@ -40,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Expanded(
                     flex: 6,
-                    child: Text('$FullName',
+                    child: Text(ref.watch(signUpRiverpod).name!.text,
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -52,8 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                   decoration: BoxDecoration(
                     border: Border(
-                      top: BorderSide(width: 3, color: Colors.grey),
-                      bottom: BorderSide(width: 3, color: Colors.grey),
+                      top: BorderSide(width: 1, color: Colors.grey),
+                      bottom: BorderSide(width: 1, color: Colors.grey),
                     ),
                     color: Colors.white,
                   ),
@@ -83,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(width: 3, color: Colors.grey),
+                    bottom: BorderSide(width: 1, color: Colors.grey),
                   ),
                   color: Colors.white,
                 ),
@@ -115,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(width: 3, color: Colors.grey),
+                    bottom: BorderSide(width: 1, color: Colors.grey),
                   ),
                   color: Colors.white,
                 ),
@@ -123,7 +126,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       child:Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -147,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(width: 3, color: Colors.grey),
+                    bottom: BorderSide(width: 1, color: Colors.grey),
                   ),
                   color: Colors.white,
                 ),
@@ -156,7 +161,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     TextButton(
                       style: TextButton.styleFrom(),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child:Row(
                         children: [
                           Icon(Icons.logout,color: Theme.of(context).primaryColor),
