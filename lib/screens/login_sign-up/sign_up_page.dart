@@ -24,6 +24,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
 
   @override
   Widget build(BuildContext context){
+    bool notSubmitted=true;
+    bool _password= true;
+    final _againPassword=TextEditingController();
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -111,7 +114,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                   child: Padding(
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
-
                       controller:ref.read(signUpRiverpod).password ,
                       decoration: InputDecoration(
                         border : InputBorder.none,
@@ -140,6 +142,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                   child:  Padding(
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
+                      controller: _againPassword,
+                      /*onChanged: (value){
+                        value=ref.watch(signUpRiverpod).password!.text;
+                        _password=false;
+                        notSubmitted=true;
+                      },*/
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: "Tekrar Şifre",
@@ -151,10 +159,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                 ),
 
               ),
-             /* _signUpModel == null ? Container():
-                  Text("${_signUpModel!.name} is created succesfully"),*/
+
+
 
               SizedBox(height: 10),
+
 
               //Login button and (register now)
               Padding(
@@ -162,7 +171,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                 child: Container(
                   padding: EdgeInsets.all(25),
                   child:ElevatedButton(
-                    onPressed:()=> ref.read(signUpRiverpod).fetch(),
+                    onPressed:(){
+                        ref.read(signUpRiverpod).fetch();
+
+                      },
                     child: const Text(
                       "Kayıt Ol"
                     ),

@@ -13,7 +13,12 @@ class LoginService {
       var result = LoginModel.fromJson(response.data);
       print(response.data.toString());
       return result;
-    } else {
+    }
+    if(response.statusCode==401) {
+      var result = LoginModel.fromJson(response.data);
+      return result;
+    }
+    else{
       throw ("Bir sorun oluştu ${response.statusCode}");
     }
   }

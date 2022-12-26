@@ -30,13 +30,13 @@ class QRCodeScanner extends ConsumerStatefulWidget {
 }
 
 class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
-  late Future<QrModel> futureQR;
+  /*late Future<QrModel> futureQR;
 
   @override
   void initState() {
     super.initState();
-    futureQR = fetchQr();
-  }
+    futureQR = fetchQr(url);
+  }*/
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
@@ -78,7 +78,7 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
             flex: 1,
             child: Center(
               child: (result != null)
-                  ? TextButton(onPressed:(){ goRestaurant();}, child: Text('Restauranta git'))
+                  ? Text('${result!.code}')
                   : const Text("Scan a code"),
             ),
           ),
@@ -91,51 +91,36 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
   void _onQrViewCreated(QRViewController controller) {
     this.controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
         result = scanData;
         if(result!=null){
           String? url = scanData!.code;
-          url?.split('/')[6] = ref.read(companyId).toString();
-          url?.split('/')[8] = ref.read(tableId).toString();
+          String? companyId = url?.split('/')[6];
+          String? tableId = url?.split('/')[8];
+          /*goRestaurant(companyId);*/
           fetchQr();
-          goRestaurant();
-          dispose();
-
+          goRestaurant(companyId);
         }
-      });
-
-
 
     });
   }
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
-
-
-  Future<http.Response> getTable(){
-    String apiUrl = 'https://amazing-gauss.213-142-157-85.plesk.page/api/qr/company/${ref.watch(companyId)}/table/${ref.watch(tableId)}';
-    return http.get(Uri.parse(apiUrl));
-  }
   Future<QrModel> fetchQr() async{
-    String apiUrl = 'https://amazing-gauss.213-142-157-85.plesk.page/api/qr/company/${ref.watch(companyId)}/table/${ref.watch(tableId)}';
-    final response = await http.get(Uri.parse(apiUrl));
+    String? url =result!.code;
+    final response = await http.get(Uri.parse(url!));
     if (response.statusCode==200){
-      return QrModel.fromJson(jsonDecode(response.body));
+      /*print(QrModel.fromJson(jsonDecode(response.body)));*/
+      var result=QrModel.fromJson(jsonDecode(response.body));
+      return result;
     }
     else{
       throw Exception('Failed to load QR');
     }
   }
 
-  void goRestaurant() {
+  void goRestaurant(String? CompanyId) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
         RestaurantDetailScreen(
-            restaurant: Restaurant.restaurants[ref.watch(companyId)+1]
+            restaurant: Restaurant.restaurants[int.parse(CompanyId!)]
         ),
     ));
    /* Navigator.pop(context);

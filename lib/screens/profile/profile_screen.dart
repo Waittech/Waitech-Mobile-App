@@ -29,6 +29,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+
       appBar: AppBar(title: Text('Profil')),
       body: SafeArea(
         child: Container(
@@ -43,11 +44,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                   Expanded(
                     flex: 6,
-                    child: Text(ref.watch(signUpRiverpod).name!.text,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Segoe_UI')),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(ref.watch(signUpRiverpod).name!.text,
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Segoe_UI')),
+                        Text(ref.watch(loginRiverpod).email!.text.toString().isEmpty ? ref.watch(loginRiverpod).email!.text : ref.watch(signUpRiverpod).email!.text,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Segoe_UI')),
+
+                      ],
+                    )
                   ),
                 ],
               ),

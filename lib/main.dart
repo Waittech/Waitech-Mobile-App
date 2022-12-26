@@ -9,8 +9,8 @@ import 'package:waitech/screens/screens.dart';
 import 'package:waitech/simple_bloc_observer.dart';
 
 final tokenString = Provider((_) =>'');
-final companyId= Provider((ref) => 0);
-final tableId= Provider((ref) => 0);
+final companyId= Provider((ref) => '');
+final tableId= Provider((ref) => '');
 final baseUrl = Provider((ref) => '');
 final basketTotalPrice = Provider((ref) => '');
 final notController =Provider((ref) => TextEditingController());

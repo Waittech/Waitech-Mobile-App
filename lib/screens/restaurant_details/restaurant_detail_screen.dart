@@ -137,7 +137,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                           dense: true,
                           contentPadding: EdgeInsets.zero,
                           title: Text(menuItem.name, style: Theme.of(context).textTheme.titleLarge ,),
-                          subtitle: Text(menuItem.desctioption),
+                          subtitle: Text(menuItem.description),
                           trailing: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             mainAxisSize: MainAxisSize.min,

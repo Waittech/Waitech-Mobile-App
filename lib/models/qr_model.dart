@@ -1,7 +1,7 @@
 class QrModel {
   bool? success;
   Data? data;
-  dynamic? message;
+  Null? message;
   int? code;
 
   QrModel({required this.success, required this.data, this.message, required this.code});
