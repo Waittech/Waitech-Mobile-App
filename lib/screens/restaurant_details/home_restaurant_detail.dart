@@ -10,19 +10,19 @@ import 'package:animated_icon_button/animated_icon_button.dart';
 
 import '../../models/restaurant_model.dart';
 
-class RestaurantDetailScreen extends StatelessWidget {
-  static const String routeName = '/restaurant-detail';
+class HomeRestaurantDetailScreen extends StatelessWidget {
+  static const String routeName = '/home_restaurant-detail';
 
   static Route route({required Restaurant restaurant}) {
     return MaterialPageRoute(
-        builder: (_) =>  RestaurantDetailScreen(restaurant: restaurant),
+        builder: (_) =>  HomeRestaurantDetailScreen(restaurant: restaurant),
         settings: const RouteSettings(name: routeName));
   }
   final Restaurant restaurant;
   List<String> basketItems=[];
 
 
-   RestaurantDetailScreen({Key? key, required this.restaurant}) : super(key: key);
+  HomeRestaurantDetailScreen({Key? key, required this.restaurant}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +42,9 @@ class RestaurantDetailScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  child:GestureDetector(
-                   /* onTap: (){
-                      if(addedSomething==true){
-                        _controller.forward();
-                      }else{
-
-                      }
-
-                    },*/
-
-             child: Lottie.network('https://assets9.lottiefiles.com/packages/lf20_xkraio55.json',height: 70),
-                  )),
+                    child:GestureDetector(
+                      child: Lottie.network('https://assets9.lottiefiles.com/packages/lf20_xkraio55.json',height: 70),
+                    )),
                 OutlinedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -67,8 +58,8 @@ class RestaurantDetailScreen extends StatelessWidget {
                   child: TextButton(
                       onPressed: () { Navigator.pushNamed(context, '/basket'); },
                       child:Center(child:Text(
-                        "Sepet".toUpperCase(),
-                        style: const TextStyle(fontSize: 20,color: Colors.white)))
+                          "Sepet".toUpperCase(),
+                          style: const TextStyle(fontSize: 20,color: Colors.white)))
                   ),
                 )
               ],
@@ -103,21 +94,15 @@ class RestaurantDetailScreen extends StatelessWidget {
                 },
                 itemCount: restaurant.tags.length,
               )
-
-              /* ListView.builder(
-                itemCount: ,
-                itemBuilder:  (context, index) {}) */
             ],
           ),
         )
 
-        );
+    );
   }
 
   Widget _buildMenuItems(
       Restaurant restaurant, BuildContext context, int index) {
-    AnimationController _animationController;
-    bool isPlaying = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -135,37 +120,26 @@ class RestaurantDetailScreen extends StatelessWidget {
           children: restaurant.menuItems
               .where((menuItem) => menuItem.category == restaurant.tags[index])
               .map((menuItem) => Column(
+            children: [
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.symmetric( horizontal: 20),
+                child: ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(menuItem.name, style: Theme.of(context).textTheme.titleLarge ,),
+                  subtitle: Text(menuItem.description),
+                  trailing: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.symmetric( horizontal: 20),
-                        child: ListTile(
-                          dense: true,
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(menuItem.name, style: Theme.of(context).textTheme.titleLarge ,),
-                          subtitle: Text(menuItem.description),
-                          trailing: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                            Text('${menuItem.price} \u{20BA}'),
-                              BlocBuilder<BasketBloc, BasketState>(builder: (context, state){
-                                return IconButton(
-                                  icon: Icon(Icons.add_circle,color:Theme.of(context).primaryColor),
-                                  onPressed: () {
-                                  context.read<BasketBloc>()
-                                      ..add(AddItem(menuItem));
-                                },
-                                );
-
-                              })
-
-                          ],),
-                        ),
-                      ),
-                      Divider(height: 2)
-                    ],
-                  )).toList(),
+                      Text('${menuItem.price} \u{20BA}'),
+                    ],),
+                ),
+              ),
+              Divider(height: 2)
+            ],
+          )).toList(),
         ),
       ],
     );

@@ -10,15 +10,17 @@ class LoginRiverpod extends ChangeNotifier {
   TextEditingController? email = TextEditingController();
   TextEditingController? password = TextEditingController();
 
+
   void fetch() {
     loadingPopUp();
     service
         .loginCall(email: email!.text, password: password!.text)
         .then((value) {
       if (value != null && value.success! == true) {
+
         Grock.back();
         Grock.to(TabBarIndex());
-      }if(value != null && value.success! == false){
+      }if(value != null && value.success == false){
         Grock.back();
         Grock.to(LoginPage());
       }

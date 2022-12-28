@@ -11,7 +11,9 @@ import 'package:waitech/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:waitech/models/models.dart';
 import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/riverpod/riverpod_management.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
+import 'package:waitech/services/login_services.dart';
 
 import '../../services/qr_service.dart';
 
@@ -30,13 +32,6 @@ class QRCodeScanner extends ConsumerStatefulWidget {
 }
 
 class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
-  /*late Future<QrModel> futureQR;
-
-  @override
-  void initState() {
-    super.initState();
-    futureQR = fetchQr(url);
-  }*/
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
@@ -91,87 +86,49 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
   void _onQrViewCreated(QRViewController controller) {
     this.controller;
     controller.scannedDataStream.listen((scanData) {
-        result = scanData;
+      result = scanData;
         if(result!=null){
           String? url = scanData!.code;
           String? companyId = url?.split('/')[6];
           String? tableId = url?.split('/')[8];
-          /*goRestaurant(companyId);*/
-          fetchQr();
           goRestaurant(companyId);
         }
 
     });
   }
 
-  Future<QrModel> fetchQr() async{
-    String? url =result!.code;
-    final response = await http.get(Uri.parse(url!));
-    if (response.statusCode==200){
-      /*print(QrModel.fromJson(jsonDecode(response.body)));*/
-      var result=QrModel.fromJson(jsonDecode(response.body));
-      return result;
-    }
-    else{
-      throw Exception('Failed to load QR');
+  Future<QrModel> fetchQr(String url,String? token) async {
+    final response = await http
+        .get(Uri.parse(url),headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      print('burdasadgdsşlfghmelkihndslkfhnlkfismilkşfmhlgkfimhslkimhdlkifgmlkfismf');
+      print(response.body);
+      String jsonsDataString = response.body.toString(); // Error: toString of Response is assigned to jsonDataString.
+      var _data = QrModel.fromJson(jsonDecode(jsonsDataString));
+      var data=jsonEncode(_data);
+      return QrModel.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
     }
   }
 
   void goRestaurant(String? CompanyId) {
+    Navigator.pop(context);
     Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
         RestaurantDetailScreen(
-            restaurant: Restaurant.restaurants[int.parse(CompanyId!)]
+            restaurant: Restaurant.restaurants[int.parse(CompanyId!)-1]
         ),
     ));
-   /* Navigator.pop(context);
-    Navigator.push(context, MaterialPageRoute(builder: (context) =>
-        RestaurantDetailScreen(
-            restaurant: Restaurant.restaurants[ref.watch(companyId)+1]
-        ),
-    ));*/
-
-
   }
-
-  
   }
-/*class MyCameraApp extends StatefulWidget {
-  const MyCameraApp({super.key});
-
-  @override
-  _MyCameraAppState createState() => _MyCameraAppState();
-}
-
-class _MyCameraAppState extends State<MyCameraApp> {
-  late CameraController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = CameraController(cameras[0], ResolutionPreset.medium);
-    _controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (!_controller.value.isInitialized) {
-      return Container();
-    }
-    return CameraPreview(_controller);
-  }
-}*/
-
 
 
 

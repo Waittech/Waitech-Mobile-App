@@ -97,17 +97,13 @@ class _BasketState extends ConsumerState<BasketScreen> {
                               )),
                           OutlinedButton(
                             onPressed: () {
-
                               List<int> id=[];
                               List <int> amount=[];
-                             /* print(state.basket.itemQuantity(state.basket.items).length);//kaç çeşit ürün olduğunu veriyor
-                              print(BasketLoaded(basket: Basket(items: state.basket.items)).basket.items[0].id);//i değerindeki food_id veriyor
-                              print(state.basket.itemQuantity(state.basket.items).entries.elementAt(0).value);//i değerinde kaç tane ürün olduğunu veriyor*/
+                              List <HashMap> orders=[];
                               print(state.basket.itemQuantity(state.basket.items).keys.length);
                               for(int i=0;i<state.basket.itemQuantity(state.basket.items).length;i++){
                                 amount.add(state.basket.itemQuantity(state.basket.items).entries.elementAt(i).value);
                                 print('${amount} amount değeri');
-
                               }
                               int sum = 0;
                               for (int number in amount) {
@@ -119,15 +115,18 @@ class _BasketState extends ConsumerState<BasketScreen> {
                               Set<int> set = id.toSet();
                               List<int> deduplicated = set.toList();
                               print('${deduplicated} food_id');
-                              HashMap<int,int> hashMap =HashMap();
+
                               for(int i=0;i<amount.length;i++){
-                                hashMap[deduplicated[i]]=amount[i];
+                                HashMap<String,int> hashMap =HashMap();
+                                hashMap['food_id']=deduplicated[i];
+                                hashMap['amount']= amount[i];
+                                orders.add(hashMap);
                                 print(hashMap);
                               }
-                              String price = state.basket.totalString
-                                  .replaceAll('.00', '');
+                              double price = double.parse(state.basket.totalString);
 
-                              postOrder(price,hashMap);
+
+                              postOrder(price,orders);
 
                             },
                             style: ElevatedButton.styleFrom(
@@ -139,16 +138,10 @@ class _BasketState extends ConsumerState<BasketScreen> {
                                     BorderRadius.all(Radius.circular(8)),
                               ),
                             ),
-                            child: TextButton(
-                                onPressed: () {
-                                  print(state.basket
-                                      .itemQuantity(state.basket.items[0].id));
-
-                                },
-                                child: Text("Devam".toUpperCase(),
+                            child: Text("Devam".toUpperCase(),
                                     style: const TextStyle(
                                         fontSize: 18, color: Colors.white))),
-                          )
+
                         ],
                       );
                     } else {
@@ -302,23 +295,28 @@ class _BasketState extends ConsumerState<BasketScreen> {
             ])));
   }
 
-  Future<OrderModel> postOrder(String price,HashMap<int,int> hashMap) async {
+  Future<OrderModel> postOrder(double price,List<HashMap> orders) async {
+    String order=json.encode(orders);
+    print('deneme');
+    print(order);
+    print(price);
+
+
     final response = await http.post(
       Uri.parse(
-          'https://amazing-gauss.213-142-157-85.plesk.page/api/orders?total_price=$price'),
+          'https://amazing-gauss.213-142-157-85.plesk.page/api/orders'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization':'Bearer HJRRVdH1vfUvWaBeq4JzevbNiCP7j0i7x0UcrHP6pUxf4YK85mupm04jU6p7'
       },
-      body: jsonEncode(<String, String>{
-        'table_id': ref.read(tableId).toString(),
-        'company_id': ref.read(companyId).toString(),
+      body: jsonEncode({
+        'table_id': 2,
+        'company_id': 2,
         'note': ref.watch(notController).text,
-        'total_price': price,
-        'user_id':'1',
-        'foods[0][foods_id]':'1',
-        'foods[0][amount]':'2',
-
-
+        'total_price':price,
+        'user_id':7,
+        'foods':orders,
       }),
     );
 
@@ -333,6 +331,9 @@ class _BasketState extends ConsumerState<BasketScreen> {
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
+      print(response.body);
+      print(response.statusCode);
+      print('deneme2');
       throw Exception('Failed to create album.');
     }
   }

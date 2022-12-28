@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       : Restaurant.restaurants[index]!;
                   return InkWell(
                     onTap: (){
-                      Navigator.pushNamed(context, '/restaurant-detail', arguments: item);
+                      Navigator.pushNamed(context, '/home_restaurant-detail', arguments: item);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape:
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         child: InkWell(
-                          onTap: (){Navigator.pushNamed(context, '/restaurant-detail', arguments: item);},
+                          onTap: (){Navigator.pushNamed(context, '/home_restaurant-detail', arguments: item);},
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 150,
                                     fit: BoxFit.cover,
                                     child: InkWell(
-                                      onTap: () {Navigator.pushNamed(context, '/restaurant-detail', arguments: item);},
+                                      onTap: () {Navigator.pushNamed(context, '/home_restaurant-detail', arguments: item);},
                                     ),
                                   ),
 

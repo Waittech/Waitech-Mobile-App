@@ -1,4 +1,5 @@
 /*
+
 import 'package:flutter/widgets.dart';
 import 'package:grock/grock.dart';
 import 'package:waitech/components/loading_popup.dart';
@@ -9,13 +10,12 @@ import '../services/qr_service.dart';
 
 class QrRiverpod extends ChangeNotifier {
   final service = QrService();
-  TextEditingController? email = TextEditingController();
-  TextEditingController? password = TextEditingController();
+  final token= LoginService();
 
   void fetch() {
     loadingPopUp();
     service
-        .qrCall(email: email!.text, password: password!.text)
+        .qrCall(token:token.getToken(string))
         .then((value) {
       if (value != null && value.success! == true) {
         Grock.back();
@@ -31,4 +31,5 @@ class QrRiverpod extends ChangeNotifier {
       }
     });
   }
-}*/
+}
+*/

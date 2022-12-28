@@ -4,11 +4,11 @@ class QrModel {
   Null? message;
   int? code;
 
-  QrModel({required this.success, required this.data, this.message, required this.code});
+  QrModel({this.success, this.data, this.message, this.code});
 
   QrModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = (json['data'] != null ? new Data.fromJson(json['data']) : null)!;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     message = json['message'];
     code = json['code'];
   }
@@ -17,7 +17,7 @@ class QrModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
     if (this.data != null) {
-      data['data'] = this.data?.toJson();
+      data['data'] = this.data!.toJson();
     }
     data['message'] = this.message;
     data['code'] = this.code;
@@ -30,7 +30,7 @@ class Data {
   int? tableId;
   String? tableName;
 
-  Data({required this.companyId, required this.tableId, required this.tableName});
+  Data({this.companyId, this.tableId, this.tableName});
 
   Data.fromJson(Map<String, dynamic> json) {
     companyId = json['company_id'];
