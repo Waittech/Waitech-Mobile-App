@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 
+import '../profile/profile_screen.dart';
+
 class PayScreen extends StatefulWidget {
   static const String routeName = '/pay_screen';
 
@@ -104,7 +106,7 @@ class _PayScreenState extends State<PayScreen> {
                           themeColor: Colors.blue,
                           textColor: Colors.black,
                           cardNumberDecoration: InputDecoration(
-                            labelText: 'Number',
+                            labelText: 'Kart Numarası',
                             hintText: 'XXXX XXXX XXXX XXXX',
                             hintStyle: const TextStyle(color: Colors.black),
                             labelStyle: const TextStyle(color: Colors.black),
@@ -116,7 +118,7 @@ class _PayScreenState extends State<PayScreen> {
                             labelStyle: const TextStyle(color: Colors.black),
                             focusedBorder: border,
                             enabledBorder: border,
-                            labelText: 'Expired Date',
+                            labelText: 'Son Kullanım Tarihi',
                             hintText: 'XX/XX',
                           ),
                           cvvCodeDecoration: InputDecoration(
@@ -132,7 +134,7 @@ class _PayScreenState extends State<PayScreen> {
                             labelStyle: const TextStyle(color: Colors.black),
                             focusedBorder: border,
                             enabledBorder: border,
-                            labelText: 'Card Holder',
+                            labelText: 'Kart Sahibinin Adı',
                           ),
                           onCreditCardModelChange: onCreditCardModelChange,
                         ),
@@ -152,7 +154,7 @@ class _PayScreenState extends State<PayScreen> {
                           child: Container(
                             margin: const EdgeInsets.all(12),
                             child: const Text(
-                              'Validate',
+                              'Onayla ve Bitir',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'halter',
@@ -161,9 +163,37 @@ class _PayScreenState extends State<PayScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              print('valid!');
+                              String? orderSuccess = await storage.read(key: 'orderSuccess');
+                              String? onTapped = await storage.read(key: 'onTapped');
+                              print(orderSuccess);
+                              print(onTapped);
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context)
+                              {
+                                return AlertDialog(
+                                    content: (orderSuccess == true.toString() &&
+                                        onTapped == true.toString())
+                                        ? Text(
+                                        'İşleminiz başarıyla tamamlanmıştır')
+                                        : Text(
+                                        'İşleminiz tamamlanamadı lütfen daha sonra tekrar deneyiniz'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                              'Anasayfaya Dön'))
+                                    ]
+                                );
+                                print('valid!');
+                              });
                             } else {
                               print('invalid!');
                             }

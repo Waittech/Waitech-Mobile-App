@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io';
 
@@ -14,8 +15,7 @@ import 'package:waitech/models/restaurant_model.dart';
 import 'package:waitech/riverpod/riverpod_management.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
 import 'package:waitech/services/login_services.dart';
-
-import '../../services/qr_service.dart';
+import '../profile/profile_screen.dart';
 
 class QRCodeScanner extends ConsumerStatefulWidget {
   static const String routeName = '/qr_code';
@@ -84,20 +84,26 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
 
 
   void _onQrViewCreated(QRViewController controller) {
+    final storage = new FlutterSecureStorage();
     this.controller;
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
       result = scanData;
         if(result!=null){
           String? url = scanData!.code;
           String? companyId = url?.split('/')[6];
           String? tableId = url?.split('/')[8];
+          await storage.write(key: 'url', value: url);
+          await storage.write(key: 'companyId', value: companyId);
+          await storage.write(key: 'tableId', value: tableId);
           goRestaurant(companyId);
+
         }
 
     });
   }
 
-  Future<QrModel> fetchQr(String url,String? token) async {
+  Future<QrModel> fetchQr(String url) async {
+    String? token = await storage.read(key: 'jwt');
     final response = await http
         .get(Uri.parse(url),headers: {
       'Content-Type': 'application/json',
@@ -107,13 +113,13 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      print('burdasadgdsşlfghmelkihndslkfhnlkfismilkşfmhlgkfimhslkimhdlkifgmlkfismf');
       print(response.body);
       String jsonsDataString = response.body.toString(); // Error: toString of Response is assigned to jsonDataString.
       var _data = QrModel.fromJson(jsonDecode(jsonsDataString));
       var data=jsonEncode(_data);
       return QrModel.fromJson(jsonDecode(response.body));
     } else {
+      print(response.body);
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load album');

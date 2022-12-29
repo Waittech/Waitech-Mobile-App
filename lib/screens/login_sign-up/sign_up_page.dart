@@ -22,10 +22,16 @@ class SignUpPage extends ConsumerStatefulWidget{
 }
 class _SignUpPageState extends ConsumerState<SignUpPage>{
 
+  bool isChecked=false;
+  bool successRegister=false;
+  bool onSubmit = false;
+
+  bool _obscureText=false;
+
+
+
   @override
   Widget build(BuildContext context){
-    bool notSubmitted=true;
-    bool _password= true;
     final _againPassword=TextEditingController();
     return Scaffold(
       appBar: AppBar(),
@@ -40,12 +46,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
               SizedBox(height: 30),
 
               Text(
-                  'Create Account',
+                  'Üye Ol',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 42,
-                  fontFamily: 'Segoe_UI',
-                  color: Theme.of(context).primaryColorLight,
+                  color: Colors.black54,
                 ),
               ),
 
@@ -118,9 +123,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: "Şifre",
-                        suffixIcon: Icon(Icons.visibility)
+                        suffix:IconButton(
+                          iconSize: 25,
+                          onPressed:(){ setState(() {
+                            _obscureText=!_obscureText;
+                          });},
+                          icon:_obscureText ? const Icon(Icons.visibility): const Icon(Icons.visibility_off),
+                        ),
                       ),
-                      obscureText: true,
+                      obscureText: _obscureText,
                     ),
                   ),
                 ),
@@ -151,7 +162,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: "Tekrar Şifre",
-                        suffixIcon: Icon(Icons.visibility)
                       ),
                       obscureText: true,
                     ),
@@ -159,6 +169,25 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                 ),
 
               ),
+              SizedBox(height: 10),
+
+              Padding(padding: EdgeInsets.symmetric(horizontal: 19),
+                child: Row(
+                  children: [
+
+                    Checkbox(
+                        value: isChecked,
+                        onChanged:(bool? value){
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        }),
+                    Text('Üyelik Formu Aydınlatma Metnini Okudum.'),
+                  ],
+                )),
+
+              (successRegister && onSubmit) ? Text('Ne yazık ki kayıt olamadınız tekrar deneyiniz') : Text(''),
+
 
 
 
@@ -170,27 +199,38 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                 padding:  EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   padding: EdgeInsets.all(25),
-                  child:ElevatedButton(
+                  child:TextButton(
+                    style: TextButton.styleFrom(
+                      fixedSize: Size(300, 50),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      side: BorderSide(
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)
+                      )
+                    ),
                     onPressed:(){
+                      if(isChecked==true &&_againPassword!=null){
+                        onSubmit =true;
+                        successRegister=true;
                         ref.read(signUpRiverpod).fetch();
-
+                      }
+                      else{
+                        onSubmit =true;
+                        successRegister = false;
+                      }
                       },
-                    child: const Text(
-                      "Kayıt Ol"
+                    child: Text(
+                      "Kayıt Ol",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
                SizedBox(height: 10),
-              TextButton(onPressed: (){
-                Navigator.pushNamed(context, '/forgot_password');},
-                child: Text('Şifrenizi mi unuttunuz?',
-              style: TextStyle(
-                fontSize: 15,
-                color:Theme.of(context).primaryColor,
-              ),
-              ),
-              ),
             ],
           ),
         ),

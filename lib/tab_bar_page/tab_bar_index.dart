@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waitech/screens/login_sign-up/login_page2.dart';
 import '../screens/Home/home_screen.dart';
 import '../screens/basket/basket_screen.dart';
+import '../screens/orders/orders_screen.dart';
 import '../screens/profile/profile_screen.dart';
 
 class TabBarIndex extends StatefulWidget {
@@ -81,7 +82,7 @@ class _TabBarIndexState extends State<TabBarIndex> {
                             SizedBox(
                               height: 3,
                             ),
-                            Text('Home',
+                            Text('Anasayfa',
                                 style: TextStyle(
                                   color: currentTab == 0
                                       ? Theme.of(context).primaryColor
@@ -92,13 +93,13 @@ class _TabBarIndexState extends State<TabBarIndex> {
                         ),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 0,
                       ),
                       MaterialButton(
                         minWidth: 60,
                         onPressed: () {
                           setState(() {
-                            //currentScreen = Profile();
+                            currentScreen = OrdersScreen();
                             currentTab = 1;
                           });
                         },
@@ -106,7 +107,7 @@ class _TabBarIndexState extends State<TabBarIndex> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.question_answer,
+                              Icons.shopping_basket,
                               color: currentTab == 1
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).primaryColorLight,
@@ -114,7 +115,7 @@ class _TabBarIndexState extends State<TabBarIndex> {
                             SizedBox(
                               height: 3,
                             ),
-                            Text('?',
+                            Text('Siparişlerim',
                                 style: TextStyle(
                                   color: currentTab == 1
                                       ? Theme.of(context).primaryColor

@@ -13,16 +13,19 @@ import '../../models/restaurant_model.dart';
 class RestaurantDetailScreen extends StatelessWidget {
   static const String routeName = '/restaurant-detail';
 
+  bool _onTapped=false;
+
   static Route route({required Restaurant restaurant}) {
     return MaterialPageRoute(
-        builder: (_) =>  RestaurantDetailScreen(restaurant: restaurant),
+        builder: (_) => RestaurantDetailScreen(restaurant: restaurant),
         settings: const RouteSettings(name: routeName));
   }
+
   final Restaurant restaurant;
-  List<String> basketItems=[];
+  List<String> basketItems = [];
 
-
-   RestaurantDetailScreen({Key? key, required this.restaurant}) : super(key: key);
+  RestaurantDetailScreen({Key? key, required this.restaurant})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +45,14 @@ class RestaurantDetailScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  child:GestureDetector(
-                   /* onTap: (){
-                      if(addedSomething==true){
-                        _controller.forward();
-                      }else{
+                    child: GestureDetector(
+                  child: Lottie.network(
+                    'https://assets9.lottiefiles.com/packages/lf20_wzMjvV.json',
+                      height: 70,
+                    animate:_onTapped,
 
-                      }
-
-                    },*/
-
-             child: Lottie.network('https://assets9.lottiefiles.com/packages/lf20_xkraio55.json',height: 70),
-                  )),
+                  ),
+                )),
                 OutlinedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -65,11 +64,13 @@ class RestaurantDetailScreen extends StatelessWidget {
                     ),
                   ),
                   child: TextButton(
-                      onPressed: () { Navigator.pushNamed(context, '/basket'); },
-                      child:Center(child:Text(
-                        "Sepet".toUpperCase(),
-                        style: const TextStyle(fontSize: 20,color: Colors.white)))
-                  ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/basket');
+                      },
+                      child: Center(
+                          child: Text("Sepet".toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.white)))),
                 )
               ],
             ),
@@ -77,7 +78,7 @@ class RestaurantDetailScreen extends StatelessWidget {
         ),
         extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
-          child:  Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
@@ -109,9 +110,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                 itemBuilder:  (context, index) {}) */
             ],
           ),
-        )
-
-        );
+        ));
   }
 
   Widget _buildMenuItems(
@@ -138,34 +137,54 @@ class RestaurantDetailScreen extends StatelessWidget {
                     children: [
                       Container(
                         color: Colors.white,
-                        padding: EdgeInsets.symmetric( horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: ListTile(
                           dense: true,
                           contentPadding: EdgeInsets.zero,
-                          title: Text(menuItem.name, style: Theme.of(context).textTheme.titleLarge ,),
+                          title: Text(
+                            menuItem.name,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                           subtitle: Text(menuItem.description),
                           trailing: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                            Text('${menuItem.price} \u{20BA}'),
-                              BlocBuilder<BasketBloc, BasketState>(builder: (context, state){
-                                return IconButton(
-                                  icon: Icon(Icons.add_circle,color:Theme.of(context).primaryColor),
-                                  onPressed: () {
-                                  context.read<BasketBloc>()
+                              Text('${menuItem.price} \u{20BA}'),
+                              BlocBuilder<BasketBloc, BasketState>(
+                                  builder: (context, state) {
+                                return AnimatedIconButton(
+                                  onPressed: (){
+                                    _onTapped=true;
+                                    context.read<BasketBloc>()
                                       ..add(AddItem(menuItem));
-                                },
+                                  },
+                                  icons: [
+                                    AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
+                                      
+                                    )
+                                  ],
                                 );
 
-                              })
 
-                          ],),
+
+                                    /*IconButton(
+                                  icon: Icon(Icons.add_circle,
+                                      color: Theme.of(context).primaryColor),
+                                  onPressed: () {
+                                    context.read<BasketBloc>()
+                                      ..add(AddItem(menuItem));
+                                  },
+                                );*/
+                              })
+                            ],
+                          ),
                         ),
                       ),
                       Divider(height: 2)
                     ],
-                  )).toList(),
+                  ))
+              .toList(),
         ),
       ],
     );

@@ -17,6 +17,8 @@ import 'package:waitech/models/basket_model.dart';
 import 'package:waitech/models/menu_list.dart';
 import 'package:waitech/models/order_model.dart';
 import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/screens/basket/pay_screen.dart';
+import 'package:waitech/screens/profile/profile_screen.dart';
 
 import '../../models/menu_item_model.dart';
 
@@ -36,6 +38,7 @@ class BasketScreen extends ConsumerStatefulWidget {
 }
 
 class _BasketState extends ConsumerState<BasketScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,17 +56,12 @@ class _BasketState extends ConsumerState<BasketScreen> {
               if (state is BasketLoaded) {
                 return IconButton(
                     onPressed: () {
-                      for (int i = 0;
-                          i <
-                              state.basket
-                                  .itemQuantity(state.basket.items[0].id)
-                                  .length;
-                          i++) {
-                        context.read<BasketBloc>().add(RemoveItem(state.basket
-                            .itemQuantity(state.basket.items)
-                            .keys
-                            .elementAt(i)));
+                      for(int i=0;i<state.basket.items.length;i++) {
+                        context.read<BasketBloc>().add(
+                            RemoveItem(state.basket.items[i]
+                            ));
                       }
+
                     },
                     icon: Icon(Icons.delete));
               } else {
@@ -96,52 +94,69 @@ class _BasketState extends ConsumerState<BasketScreen> {
                                 fontWeight: FontWeight.bold,
                               )),
                           OutlinedButton(
-                            onPressed: () {
-                              List<int> id=[];
-                              List <int> amount=[];
-                              List <HashMap> orders=[];
-                              print(state.basket.itemQuantity(state.basket.items).keys.length);
-                              for(int i=0;i<state.basket.itemQuantity(state.basket.items).length;i++){
-                                amount.add(state.basket.itemQuantity(state.basket.items).entries.elementAt(i).value);
-                                print('${amount} amount değeri');
-                              }
-                              int sum = 0;
-                              for (int number in amount) {
-                                sum += number;
-                              }
-                              for(int i = 0; i<sum;i++){
-                                id.add(BasketLoaded(basket: Basket(items: state.basket.items)).basket.items[i].id);
-                              }
-                              Set<int> set = id.toSet();
-                              List<int> deduplicated = set.toList();
-                              print('${deduplicated} food_id');
+                              onPressed: () async {
+                                List<int> id = [];
+                                List<int> amount = [];
+                                List<HashMap> orders = [];
+                                print(state.basket
+                                    .itemQuantity(state.basket.items)
+                                    .keys
+                                    .length);
+                                for (int i = 0;
+                                    i <
+                                        state.basket
+                                            .itemQuantity(state.basket.items)
+                                            .length;
+                                    i++) {
+                                  amount.add(state.basket
+                                      .itemQuantity(state.basket.items)
+                                      .entries
+                                      .elementAt(i)
+                                      .value);
+                                  print('${amount} amount değeri');
+                                }
+                                int sum = 0;
+                                for (int number in amount) {
+                                  sum += number;
+                                }
+                                for (int i = 0; i < sum; i++) {
+                                  id.add(BasketLoaded(
+                                          basket:
+                                              Basket(items: state.basket.items))
+                                      .basket
+                                      .items[i]
+                                      .id);
+                                }
+                                Set<int> set = id.toSet();
+                                List<int> deduplicated = set.toList();
+                                print('${deduplicated} food_id');
 
-                              for(int i=0;i<amount.length;i++){
-                                HashMap<String,int> hashMap =HashMap();
-                                hashMap['food_id']=deduplicated[i];
-                                hashMap['amount']= amount[i];
-                                orders.add(hashMap);
-                                print(hashMap);
-                              }
-                              double price = double.parse(state.basket.totalString);
-
-
-                              postOrder(price,orders);
-
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              foregroundColor: Theme.of(context).canvasColor,
-                              fixedSize: const Size(170, 40),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
+                                for (int i = 0; i < amount.length; i++) {
+                                  HashMap<String, int> hashMap = HashMap();
+                                  hashMap['food_id'] = deduplicated[i];
+                                  hashMap['amount'] = amount[i];
+                                  orders.add(hashMap);
+                                  print(hashMap);
+                                }
+                                double price =
+                                    double.parse(state.basket.totalString);
+                                postOrder(price, orders);
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+                                    PayScreen(),
+                                ));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                foregroundColor: Theme.of(context).canvasColor,
+                                fixedSize: const Size(170, 40),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                ),
                               ),
-                            ),
-                            child: Text("Devam".toUpperCase(),
-                                    style: const TextStyle(
-                                        fontSize: 18, color: Colors.white))),
-
+                              child: Text("Devam".toUpperCase(),
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.white))),
                         ],
                       );
                     } else {
@@ -295,42 +310,53 @@ class _BasketState extends ConsumerState<BasketScreen> {
             ])));
   }
 
-  Future<OrderModel> postOrder(double price,List<HashMap> orders) async {
-    String order=json.encode(orders);
-    print('deneme');
+  Future<OrderModel> postOrder(double price, List<HashMap> orders) async {
+    String order = json.encode(orders);
     print(order);
     print(price);
+    String? token = await storage.read(key: 'jwt');
+    String? id = await storage.read(key: 'id');
+    String? companyId = await storage.read(key: 'companyId');
+    String? tableId = await storage.read(key: 'tableId');
+    bool _orderSuccess = false;
 
+    bool _onTapped = false;
+    print(companyId);
+
+    print('asdasf');
 
     final response = await http.post(
-      Uri.parse(
-          'https://amazing-gauss.213-142-157-85.plesk.page/api/orders'),
+      Uri.parse('https://amazing-gauss.213-142-157-85.plesk.page/api/orders'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization':'Bearer HJRRVdH1vfUvWaBeq4JzevbNiCP7j0i7x0UcrHP6pUxf4YK85mupm04jU6p7'
+        'Authorization': 'Bearer $token'
       },
       body: jsonEncode({
-        'table_id': 2,
-        'company_id': 2,
+        'table_id': int.parse(tableId!),
+        'company_id': int.parse(companyId!)-1,
         'note': ref.watch(notController).text,
-        'total_price':price,
-        'user_id':7,
-        'foods':orders,
+        'total_price': price,
+        'user_id': int.parse(id!),
+        'foods': orders,
       }),
     );
 
     if (response.statusCode == 201) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
+      _orderSuccess = true;
+
+      _onTapped = true;
+
+      await storage.write(key: 'orderSuccess', value: _orderSuccess.toString());
+      await storage.write(key: 'onTapped', value: _onTapped.toString());
       log('burda');
-      return OrderModel.fromJson(jsonDecode(response.body));
-    }
-    if (response.statusCode == 200) {
       return OrderModel.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
+      _onTapped = false;
       print(response.body);
       print(response.statusCode);
       print('deneme2');

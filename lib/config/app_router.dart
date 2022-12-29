@@ -7,6 +7,7 @@ import 'package:waitech/screens/delivery_time/delivery_time_screen.dart';
 import 'package:waitech/screens/filter/filter_screen.dart';
 import 'package:waitech/screens/location/location_screen.dart';
 import 'package:waitech/screens/login_sign-up/sign_up_page.dart';
+import 'package:waitech/screens/orders/orders_detail.dart';
 import 'package:waitech/screens/qr_code/qr_code_screen.dart';
 import 'package:waitech/screens/restaurant_details/restaurant_detail_screen.dart';
 import 'package:waitech/screens/restaurant_listing/restaurant_listing_screen.dart';
@@ -14,6 +15,7 @@ import 'package:waitech/screens/voucher/voucher_screen.dart';
 import 'package:waitech/screens/login_sign-up/login_page2.dart';
 import 'package:waitech/screens/basket/pay_screen.dart';
 import 'package:waitech/tab_bar_page/tab_bar_index.dart';
+import '../screens/orders/orders_screen.dart';
 import '../screens/restaurant_details/home_restaurant_detail.dart';
 import '../screens/splash/splashScreen.dart';
 
@@ -60,6 +62,10 @@ class AppRouter {
       case HomeRestaurantDetailScreen.routeName:
         return HomeRestaurantDetailScreen.route(
             restaurant: settings.arguments as Restaurant);
+      case OrdersScreen.routeName:
+        return OrdersScreen.route();
+      case OrdersDetailScreen.routeName:
+        return OrdersDetailScreen.route();
 
       default:
         return _errorRoute();

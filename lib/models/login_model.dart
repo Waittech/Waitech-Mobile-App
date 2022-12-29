@@ -4,24 +4,20 @@ class LoginModel {
   Null? message;
   int? code;
 
-  LoginModel(
-      {required this.success,
-      required this.data,
-      this.message,
-      required this.code});
+  LoginModel({this.success, this.data, this.message, this.code});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = (json['data'] != null ?  Data.fromJson(json['data']) : null)!;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     message = json['message'];
     code = json['code'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
     if (this.data != null) {
-      data['data'] = this.data?.toJson();
+      data['data'] = this.data!.toJson();
     }
     data['message'] = this.message;
     data['code'] = this.code;
@@ -30,16 +26,25 @@ class LoginModel {
 }
 
 class Data {
+  int? id;
+  String? name;
+  String? email;
   String? token;
 
-  Data({required this.token});
+  Data({this.id, this.name, this.email, this.token});
 
   Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
     token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
     data['token'] = this.token;
     return data;
   }

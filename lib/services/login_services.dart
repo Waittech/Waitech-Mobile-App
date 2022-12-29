@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:waitech/main.dart';
+import 'package:waitech/riverpod/riverpod_management.dart';
 import '../models/login_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -26,20 +27,8 @@ class LoginService {
     }
     else{
       throw Exception('başarısız');
-   /* try{
-    }
-    on DioError catch (e) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx and is also not 304.
-      if (e.response != null) {
-        print(e.response!.statusCode);
-      } else {
-        // Something happened in setting up or sending the request that triggered an Error
-        print(e.requestOptions);
-        print(e.message);
-      }*/
 
-    };
+    }
 
   }
 
