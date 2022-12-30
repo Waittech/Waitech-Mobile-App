@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
+import 'package:waitech/models/get_data_model.dart';
 import 'package:waitech/models/menu_item_model.dart';
 import 'package:waitech/widgets/restaurant_information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:animated_icon_button/animated_icon_button.dart';
 
+import '../../models/get_company.dart';
 import '../../models/restaurant_model.dart';
 
 class RestaurantDetailScreen extends StatelessWidget {
@@ -15,13 +17,13 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   bool _onTapped=false;
 
-  static Route route({required Restaurant restaurant}) {
+  static Route route({required GetDataModel restaurant}) {
     return MaterialPageRoute(
         builder: (_) => RestaurantDetailScreen(restaurant: restaurant),
         settings: const RouteSettings(name: routeName));
   }
 
-  final Restaurant restaurant;
+  final GetDataModel restaurant;
   List<String> basketItems = [];
 
   RestaurantDetailScreen({Key? key, required this.restaurant})
@@ -29,6 +31,7 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     AnimationController _animationController;
     bool isPlaying = false;
     bool addedSomething = false;
@@ -86,7 +89,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.green.shade100,
                   image: DecorationImage(
-                      image: NetworkImage(restaurant.imageUrl),
+                      image: NetworkImage(restaurant.image!),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.vertical(
                       bottom: Radius.elliptical(
@@ -102,7 +105,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return _buildMenuItems(restaurant, context, index);
                 },
-                itemCount: restaurant.tags.length,
+                itemCount: restaurant.menu.toString().length,
               )
 
               /* ListView.builder(
@@ -114,7 +117,7 @@ class RestaurantDetailScreen extends StatelessWidget {
   }
 
   Widget _buildMenuItems(
-      Restaurant restaurant, BuildContext context, int index) {
+      GetDataModel restaurant, BuildContext context, int index) {
     AnimationController _animationController;
     bool isPlaying = false;
     return Column(
@@ -123,7 +126,7 @@ class RestaurantDetailScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
-            restaurant.tags[index],
+            restaurant.description!,
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
@@ -131,8 +134,7 @@ class RestaurantDetailScreen extends StatelessWidget {
           ),
         ),
         Column(
-          children: restaurant.menuItems
-              .where((menuItem) => menuItem.category == restaurant.tags[index])
+          children: restaurant.menu!
               .map((menuItem) => Column(
                     children: [
                       Container(
@@ -161,7 +163,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                                   },
                                   icons: [
                                     AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
-                                      
+
                                     )
                                   ],
                                 );

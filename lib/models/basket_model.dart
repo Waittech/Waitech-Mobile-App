@@ -3,16 +3,16 @@ import 'package:equatable/equatable.dart';
 import 'menu_item_model.dart';
 
 class Basket extends Equatable{
-  final List<MenuItems> items;
+  final List<MenuItems2> items;
 
 
   Basket({
-  this.items = const <MenuItems>[],
+  this.items = const <MenuItems2>[],
 
 });
 
   Basket copyWith({
-     List<MenuItems>? items,
+     List<MenuItems2>? items,
      bool? cutlery
 }){
     return Basket(
