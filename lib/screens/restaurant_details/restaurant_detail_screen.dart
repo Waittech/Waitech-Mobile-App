@@ -134,7 +134,7 @@ class RestaurantDetailScreen extends StatelessWidget {
           ),
         ),
         Column(
-          children: restaurant.menu!
+          children: restaurant.menu!.menuItems!
               .map((menuItem) => Column(
                     children: [
                       Container(
@@ -144,7 +144,7 @@ class RestaurantDetailScreen extends StatelessWidget {
                           dense: true,
                           contentPadding: EdgeInsets.zero,
                           title: Text(
-                            menuItem.name,
+                            menuItem.,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           subtitle: Text(menuItem.description),
