@@ -17,7 +17,6 @@ class SignUpRiverpod extends ChangeNotifier {
     service
         .signUpCall(name: name!.text, email: email!.text, password: password!.text)
         .then((value) async {
-          try{
             if (value != null && value.success == true) {
               await storage.write(key: 'jwt', value: value!.data!.token);
               await storage.write(key: 'username', value: name!.text);
@@ -25,21 +24,16 @@ class SignUpRiverpod extends ChangeNotifier {
               Grock.back();
               Grock.to(TabBarIndex());
             }
-            if(value !=null && value.success == false){
+            if(value ==null){
               print('burası yanlış yer');
-              Grock.back();
-            }
-            else {
               Grock.snackBar(
                   title: "Hata",
                   description: value?.message ?? "Bir sorun oluştu, tekrar deneyin");
+              Grock.back();
             }
+            else {
 
-          }
-          catch (e){
-
-          }
-
+            }
     });
   }
 }

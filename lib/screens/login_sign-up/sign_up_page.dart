@@ -171,7 +171,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
               ),
               SizedBox(height: 10),
 
-              Padding(padding: EdgeInsets.symmetric(horizontal: 19),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 19,vertical: 15),
                 child: Row(
                   children: [
 
@@ -186,7 +186,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                   ],
                 )),
 
-              (successRegister && onSubmit) ? Text('Ne yazık ki kayıt olamadınız tekrar deneyiniz') : Text(''),
+              (successRegister && onSubmit) ? Text('Bilgilerinizi doğru girmediniz tekrar deneyiniz',style: TextStyle(
+                fontSize: 16,fontWeight: FontWeight.bold
+              ),) : Text(''),
 
 
 

@@ -13,22 +13,37 @@ class LoginService {
   final dio = Dio();
   Future<LoginModel?> loginCall(
       {required String email, required String password}) async {
-    Map<String, dynamic> json = {"email": email, "password": password};
-    var response = await dio.post(baseUrl + "login", data: json);
-    if (response.statusCode == 200) {
-      Options (
-        validateStatus: (_) => true,
-        contentType: Headers.jsonContentType,
-        responseType:ResponseType.json,
-      );
-      var result = LoginModel.fromJson(response.data);
-      print(response.data.toString());
-      return result;
-    }
-    else{
-      throw Exception('başarısız');
+    try{
+      Map<String, dynamic> json = {"email": email, "password": password};
+      var response = await dio.post(baseUrl + "login", data: json);
+      if (response!.statusCode == 200) {
+        Options (
+          validateStatus: (_) => true,
+          contentType: Headers.jsonContentType,
+          responseType:ResponseType.json,
+        );
+        var result = LoginModel.fromJson(response.data);
+        print(response!.data.toString());
+        return result;
+    }}
+    on DioError catch(e){
+      if (e.response!.statusCode == 200) {
+        Options (
+          validateStatus: (_) => true,
+          contentType: Headers.jsonContentType,
+          responseType:ResponseType.json,
+        );
+        var result = LoginModel.fromJson(e.response!.data);
+        print(e.response!.data.toString());
+        return result;
+      }
+      else{
+        print(e.response!.data);
+
+      }
 
     }
+
 
   }
 

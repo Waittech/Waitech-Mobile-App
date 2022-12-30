@@ -21,6 +21,10 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   bool _obscureText=true;
 
+  bool success=true;
+
+  bool onSubmit=false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -95,24 +99,39 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
               ),
               const SizedBox(height: 15),
+              (success) ? Text('') : Text('Email veya şifrenizi tekrar giriniz'),
+
               //Login button and (register now)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
                   padding: EdgeInsets.all(25),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                            )
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                        fixedSize: Size(300, 50),
+                        backgroundColor: Theme.of(context).primaryColor,
+                        side: BorderSide(
                         ),
-                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25)
+                        ),
                     ),
-                    onPressed: () => ref.read(loginRiverpod).fetch(),
+                    onPressed: (){
+                      setState(() {
+                        if(ref.read(loginRiverpod).password!.text != '' && ref.read(loginRiverpod).email!.text != ''){
+                          success=true;
+                          ref.read(loginRiverpod).fetch();
+                        }
+                        else{
+                          success=false;
+                        }
+                      });
+
+                      },
                     child: const Text("Giriş Yap",
                     style: TextStyle(
-                      fontSize: 20,
+                      color: Colors.white,
+                      fontSize: 23,
                     ),),
                   ),
                 ),
