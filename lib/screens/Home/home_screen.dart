@@ -2,7 +2,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waitech/models/get_company.dart';
 import 'package:waitech/models/restaurant_model.dart';
+import 'package:waitech/services/company_service.dart';
 import '../../widgets/restaurant_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,9 +21,30 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  final service = CompanyService();
+  final model = GetCompany();
+  List<Data?> company =[];
+
   List<Restaurant> searchRestaurant = [];
   bool isSearch = false;
-  late FocusNode _focusNode;
+
+
+  @override
+  void initState(){
+    super.initState();
+    service.fetchRestaurant().then((value){
+      if(value != null && value.data != null) {
+        setState(() {
+          company = value.data!;
+        });
+      }
+      else{
+        throw Exception('company data null came');
+      }
+    });
+  }
+
+
 
   TextEditingController searchWord = TextEditingController();
 
@@ -110,12 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  var item = searchRestaurant.length > 0
-                      ? searchRestaurant[index]!
-                      : Restaurant.restaurants[index]!;
+
                   return InkWell(
                     onTap: (){
-                      Navigator.pushNamed(context, '/home_restaurant-detail', arguments: item);
+                      Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -125,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape:
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         child: InkWell(
-                          onTap: (){Navigator.pushNamed(context, '/home_restaurant-detail', arguments: item);},
+                          onTap: (){Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,11 +155,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Ink.image(
                                     //image: const NetworkImage("assets/slider/2.jpg"),
-                                    image:  NetworkImage(item.imageUrl,),
+                                    image:  NetworkImage(company[index]!.image!,),
                                     height: 150,
                                     fit: BoxFit.cover,
                                     child: InkWell(
-                                      onTap: () {Navigator.pushNamed(context, '/home_restaurant-detail', arguments: item);},
+                                      onTap: () {Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
                                     ),
                                   ),
 
@@ -168,9 +189,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(item.name, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                                    Text(company[index]!.description!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                                     SizedBox(height: 3,),
-                                    Text('${item.tags.join(' ').replaceAll(' ', ', ')}' , style: TextStyle(fontSize: 11, ),),
+                                    Text(company[index]!.neighborhood! , style: TextStyle(fontSize: 11, ),),
 
                                   ],
                                 ),
