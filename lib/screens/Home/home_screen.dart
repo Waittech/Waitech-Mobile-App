@@ -129,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: ListView.builder(
+                itemCount: company.length,
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -153,15 +154,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Stack(
                                 children: [
-                                  Ink.image(
-                                    //image: const NetworkImage("assets/slider/2.jpg"),
-                                    image:  NetworkImage(company[index]!.image!,),
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                    child: InkWell(
-                                      onTap: () {Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
-                                    ),
-                                  ),
+                                  // Ink.image(
+                                  //   //image: const NetworkImage("assets/slider/2.jpg"),
+                                  //   image:  NetworkImage(company[index]!.image!,),
+                                  //   height: 150,
+                                  //   fit: BoxFit.cover,
+                                  //   child: InkWell(
+                                  //     onTap: () {Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
+                                  //   ),
+                                  // ),
 
 
                                   Container(
@@ -189,9 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(company[index]!.description!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                                    Text(company[index]!.country!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                                     SizedBox(height: 3,),
-                                    Text(company[index]!.neighborhood! , style: TextStyle(fontSize: 11, ),),
+                                    Text(company[index]!.country! , style: TextStyle(fontSize: 11, ),),
 
                                   ],
                                 ),
@@ -204,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
-                itemCount: company.length,
+
               ),)
 
           ],

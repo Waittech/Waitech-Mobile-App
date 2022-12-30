@@ -22,6 +22,8 @@ class CompanyService{
       },
     );
     if(result.statusCode==200){
+      print(result.body);
+      print('burada');
       return GetCompany.fromJson(jsonDecode(result.body));
     }
     else{
