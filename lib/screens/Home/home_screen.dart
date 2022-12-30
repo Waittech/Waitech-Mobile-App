@@ -204,9 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
-                itemCount: searchRestaurant.isNotEmpty
-                    ? searchRestaurant.length
-                    : Restaurant.restaurants.length,
+                itemCount: company.length,
               ),)
 
           ],

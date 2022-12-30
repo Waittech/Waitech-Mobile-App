@@ -20,12 +20,12 @@ class GetCompany {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['code'] = this.code;
+    data['message'] = message;
+    data['code'] = code;
     return data;
   }
 }
@@ -63,14 +63,14 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['description'] = this.description;
-    data['image'] = this.image;
-    data['country'] = this.country;
-    data['city'] = this.city;
-    data['district'] = this.district;
-    data['neighborhood'] = this.neighborhood;
-    data['street'] = this.street;
+    data['id'] = id;
+    data['description'] = description;
+    data['image'] = image;
+    data['country'] = country;
+    data['city'] = city;
+    data['district'] = district;
+    data['neighborhood'] = neighborhood;
+    data['street'] = street;
     return data;
   }
 }
