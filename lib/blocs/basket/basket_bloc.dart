@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../models/basket_model.dart';
+import '../../models/get_data_model.dart';
 import '../../models/menu_item_model.dart';
 
 
@@ -48,7 +49,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState>{
         try {
           yield BasketLoaded(basket: state.basket.copyWith(
               items: List.from(state.basket.items)
-                ..add(event.item)));
+                ..add(event.item as MenuItems2)));
         } catch (_) {}
       }
     }

@@ -133,61 +133,61 @@ class RestaurantDetailScreen extends StatelessWidget {
                 .copyWith(color: Theme.of(context).primaryColor),
           ),
         ),
-        Column(
-          children: restaurant.menu!.menuItems!
-              .map((menuItem) => Column(
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: ListTile(
-                          dense: true,
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(
-                            menuItem.,
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          subtitle: Text(menuItem.description),
-                          trailing: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('${menuItem.price} \u{20BA}'),
-                              BlocBuilder<BasketBloc, BasketState>(
-                                  builder: (context, state) {
-                                return AnimatedIconButton(
-                                  onPressed: (){
-                                    _onTapped=true;
-                                    context.read<BasketBloc>()
-                                      ..add(AddItem(menuItem));
-                                  },
-                                  icons: [
-                                    AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
-
-                                    )
-                                  ],
-                                );
-
-
-
-                                    /*IconButton(
-                                  icon: Icon(Icons.add_circle,
-                                      color: Theme.of(context).primaryColor),
-                                  onPressed: () {
-                                    context.read<BasketBloc>()
-                                      ..add(AddItem(menuItem));
-                                  },
-                                );*/
-                              })
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(height: 2)
-                    ],
-                  ))
-              .toList(),
-        ),
+        // Column(
+        //   children: restaurant.menu!.menuItems!
+        //       .map((menuItem) => Column(
+        //             children: [
+        //               Container(
+        //                 color: Colors.white,
+        //                 padding: EdgeInsets.symmetric(horizontal: 20),
+        //                 child: ListTile(
+        //                   dense: true,
+        //                   contentPadding: EdgeInsets.zero,
+        //                   title: Text(
+        //                     menuItem.,
+        //                     style: Theme.of(context).textTheme.titleLarge,
+        //                   ),
+        //                   subtitle: Text(menuItem.description),
+        //                   trailing: Row(
+        //                     mainAxisAlignment: MainAxisAlignment.end,
+        //                     mainAxisSize: MainAxisSize.min,
+        //                     children: [
+        //                       Text('${menuItem.price} \u{20BA}'),
+        //                       BlocBuilder<BasketBloc, BasketState>(
+        //                           builder: (context, state) {
+        //                         return AnimatedIconButton(
+        //                           onPressed: (){
+        //                             _onTapped=true;
+        //                             context.read<BasketBloc>()
+        //                               ..add(AddItem(menuItem));
+        //                           },
+        //                           icons: [
+        //                             AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
+        //
+        //                             )
+        //                           ],
+        //                         );
+        //
+        //
+        //
+        //                             /*IconButton(
+        //                           icon: Icon(Icons.add_circle,
+        //                               color: Theme.of(context).primaryColor),
+        //                           onPressed: () {
+        //                             context.read<BasketBloc>()
+        //                               ..add(AddItem(menuItem));
+        //                           },
+        //                         );*/
+        //                       })
+        //                     ],
+        //                   ),
+        //                 ),
+        //               ),
+        //               Divider(height: 2)
+        //             ],
+        //           ))
+        //       .toList(),
+        // ),
       ],
     );
   }

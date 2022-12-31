@@ -147,22 +147,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape:
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         child: InkWell(
-                          onTap: (){Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
+                          onTap: (){Navigator.pushNamed(context, '/restaurant-detail', arguments: company[index]?.id);},
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Stack(
                                 children: [
-                                  // Ink.image(
-                                  //   //image: const NetworkImage("assets/slider/2.jpg"),
-                                  //   image:  NetworkImage(company[index]!.image!,),
-                                  //   height: 150,
-                                  //   fit: BoxFit.cover,
-                                  //   child: InkWell(
-                                  //     onTap: () {Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
-                                  //   ),
-                                  // ),
+                                  Ink.image(
+                                    //image: const NetworkImage("assets/slider/2.jpg"),
+                                    image:  NetworkImage(company[index]!.image!,),
+                                    height: 150,
+                                    fit: BoxFit.cover,
+                                    child: InkWell(
+                                      onTap: () {Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
+                                    ),
+                                  ),
 
 
                                   Container(
@@ -190,9 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(company[index]!.country!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                                    Text(company[index]!.name!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                                     SizedBox(height: 3,),
-                                    Text(company[index]!.country! , style: TextStyle(fontSize: 11, ),),
+                                    Text(company[index]!.description! , style: TextStyle(fontSize: 11, ),),
 
                                   ],
                                 ),

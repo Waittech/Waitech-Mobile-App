@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waitech/models/get_data_model.dart';
 import 'package:waitech/models/restaurant_model.dart';
 import 'package:waitech/screens/Home/home_screen.dart';
 import 'package:waitech/screens/basket/basket_screen.dart';
@@ -41,7 +42,7 @@ class AppRouter {
         return FilterScreen.route();
       case RestaurantDetailScreen.routeName:
         return RestaurantDetailScreen.route(
-            restaurant: settings.arguments as List<Data?>);
+            restaurant: settings.arguments as GetDataModel);
       case RestaurantListingScreen.routeName:
         return RestaurantListingScreen.route(restaurants: []);
       case VoucherScreen.routeName:

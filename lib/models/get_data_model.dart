@@ -61,7 +61,7 @@ class Menu {
     if (json['Menu'] != null) {
       menuItems = <HashMap <String, List<MenuItemDetail>>>[];
       json['Menu'].forEach((v) {
-        menuItems!.add(<HashMap <String, List<MenuItemDetail>>>.fromJson(v));
+       // menuItems!.add(<HashMap <String, List<MenuItemDetail>>>.fromJson(v));
       });
     }
   }
@@ -69,7 +69,8 @@ class Menu {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (menuItems != null) {
-      data['Menu'] = menuItems!.map((v) => v.toJson()).toList();
+      print(menuItems);
+      //data['Menu'] = menuItems!.map((v) => v.toJson()).toList();
     }
     return data;
   }

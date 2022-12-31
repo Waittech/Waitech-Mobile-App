@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waitech/main.dart';
 import 'package:waitech/models/basket_model.dart';
+import 'package:waitech/models/get_data_model.dart';
 import 'package:waitech/models/menu_list.dart';
 import 'package:waitech/models/order_model.dart';
 import 'package:waitech/models/restaurant_model.dart';
@@ -58,7 +59,7 @@ class _BasketState extends ConsumerState<BasketScreen> {
                     onPressed: () {
                       for(int i=0;i<state.basket.items.length;i++) {
                         context.read<BasketBloc>().add(
-                            RemoveItem(state.basket.items[i]
+                            RemoveItem(state.basket.items[i] as MenuItems
                             ));
                       }
 
