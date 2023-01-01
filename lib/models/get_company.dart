@@ -1,7 +1,6 @@
 import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
-import 'package:waitech/models/get_data_model.dart';
 
 class GetCompany {
   bool? success;
@@ -101,6 +100,7 @@ class Data {
 class MenuItem {
   String? category;
   String? food;
+  int? foodId;
   String? description;
   String? image;
   int? sales_price;
@@ -109,6 +109,7 @@ class MenuItem {
   MenuItem({
     this.category,
     this.food,
+    this.foodId,
     this.description,
     this.image,
     this.sales_price,
@@ -118,6 +119,7 @@ class MenuItem {
   MenuItem.fromJson(Map<String, dynamic> json) {
     category = json['category'];
     food = json['food'];
+    foodId = json['food_id'];
     description = json['description'];
     image = json['image'];
     sales_price = json['sales_price'];
@@ -128,6 +130,7 @@ class MenuItem {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['category'] = category;
     data['food'] = food;
+    data['food_id'] = foodId;
     data['description'] = description;
     data['image'] = image;
     data['sales_price'] = sales_price;

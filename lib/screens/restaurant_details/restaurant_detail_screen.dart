@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
-import 'package:waitech/models/get_data_model.dart';
 import 'package:waitech/models/menu_item_model.dart';
 import 'package:waitech/widgets/restaurant_information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,31 +10,61 @@ import 'package:animated_icon_button/animated_icon_button.dart';
 
 import '../../models/get_company.dart';
 import '../../models/restaurant_model.dart';
+import '../../services/company_service.dart';
+import '../../services/single_company_service.dart';
+import '../profile/profile_screen.dart';
 
-class RestaurantDetailScreen extends StatelessWidget {
+class RestaurantDetailScreen extends StatefulWidget {
   static const String routeName = '/restaurant-detail';
 
-  bool _onTapped=false;
+  final int companyId;
 
-  static Route route({required GetDataModel restaurant}) {
+
+  static Route route({required int companyId}) {
     return MaterialPageRoute(
-        builder: (_) => RestaurantDetailScreen(restaurant: restaurant),
+        builder: (_) => RestaurantDetailScreen(companyId: companyId),
         settings: const RouteSettings(name: routeName));
   }
 
-  final GetDataModel restaurant;
-  List<String> basketItems = [];
 
-  RestaurantDetailScreen({Key? key, required this.restaurant})
+  RestaurantDetailScreen({Key? key, required this.companyId})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<RestaurantDetailScreen> createState() => _RestaurantDetailScreenState();
+}
 
+class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
+  bool _onTapped=false;
+  final service = SingleCompanyService();
+
+  List<String> basketItems = [];
+  Data? restaurant;
+
+
+
+  @override
+  void initState(){
+    super.initState();
+    service.fetchSingleCompany(widget.companyId).then((value){
+      if(value != null) {
+        setState(() {
+          print('burada123');
+          print(value);
+          restaurant = value;
+        });
+      }
+      else{
+        throw Exception('order data null geldi');
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     AnimationController _animationController;
     bool isPlaying = false;
     bool addedSomething = false;
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -48,14 +77,9 @@ class RestaurantDetailScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                    child: GestureDetector(
-                  child: Lottie.network(
-                    'https://assets9.lottiefiles.com/packages/lf20_wzMjvV.json',
-                      height: 70,
-                    animate:_onTapped,
-
-                  ),
-                )),
+                    child:GestureDetector(
+                      child: Lottie.network('https://assets9.lottiefiles.com/packages/lf20_xkraio55.json',height: 70),
+                    )),
                 OutlinedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -67,13 +91,11 @@ class RestaurantDetailScreen extends StatelessWidget {
                     ),
                   ),
                   child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/basket');
-                      },
-                      child: Center(
-                          child: Text("Sepet".toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 20, color: Colors.white)))),
+                      onPressed: () { Navigator.pushNamed(context, '/basket'); },
+                      child:Center(child:Text(
+                          "Sepet".toUpperCase(),
+                          style: const TextStyle(fontSize: 20,color: Colors.white)))
+                  ),
                 )
               ],
             ),
@@ -81,7 +103,7 @@ class RestaurantDetailScreen extends StatelessWidget {
         ),
         extendBodyBehindAppBar: true,
         body: SingleChildScrollView(
-          child: Column(
+          child:  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
@@ -89,105 +111,107 @@ class RestaurantDetailScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.green.shade100,
                   image: DecorationImage(
-                      image: NetworkImage(restaurant.image!),
+                      image: NetworkImage(restaurant!.image!),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.vertical(
                       bottom: Radius.elliptical(
                           MediaQuery.of(context).size.width, 50)),
                 ),
               ),
-              RestaurantInformation(restaurant: restaurant),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return _buildMenuItems(restaurant, context, index);
-                },
-                itemCount: restaurant.menu.toString().length,
-              )
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Text(
+                  restaurant!.description!,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(color: Theme.of(context).primaryColor),
+                ),
+              ),
+              _buildMenuItems(restaurant!, context)
+              //RestaurantInformation(restaurant: restaurant),
 
-              /* ListView.builder(
-                itemCount: ,
-                itemBuilder:  (context, index) {}) */
             ],
           ),
-        ));
+        )
+
+    );
   }
 
   Widget _buildMenuItems(
-      GetDataModel restaurant, BuildContext context, int index) {
-    AnimationController _animationController;
-    bool isPlaying = false;
+      Data restaurant, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text(
-            restaurant.description!,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: Theme.of(context).primaryColor),
-          ),
-        ),
-        // Column(
-        //   children: restaurant.menu!.menuItems!
-        //       .map((menuItem) => Column(
-        //             children: [
-        //               Container(
-        //                 color: Colors.white,
-        //                 padding: EdgeInsets.symmetric(horizontal: 20),
-        //                 child: ListTile(
-        //                   dense: true,
-        //                   contentPadding: EdgeInsets.zero,
-        //                   title: Text(
-        //                     menuItem.,
-        //                     style: Theme.of(context).textTheme.titleLarge,
-        //                   ),
-        //                   subtitle: Text(menuItem.description),
-        //                   trailing: Row(
-        //                     mainAxisAlignment: MainAxisAlignment.end,
-        //                     mainAxisSize: MainAxisSize.min,
-        //                     children: [
-        //                       Text('${menuItem.price} \u{20BA}'),
-        //                       BlocBuilder<BasketBloc, BasketState>(
-        //                           builder: (context, state) {
-        //                         return AnimatedIconButton(
-        //                           onPressed: (){
-        //                             _onTapped=true;
-        //                             context.read<BasketBloc>()
-        //                               ..add(AddItem(menuItem));
-        //                           },
-        //                           icons: [
-        //                             AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
-        //
-        //                             )
-        //                           ],
-        //                         );
-        //
-        //
-        //
-        //                             /*IconButton(
-        //                           icon: Icon(Icons.add_circle,
-        //                               color: Theme.of(context).primaryColor),
-        //                           onPressed: () {
-        //                             context.read<BasketBloc>()
-        //                               ..add(AddItem(menuItem));
-        //                           },
-        //                         );*/
-        //                       })
-        //                     ],
-        //                   ),
-        //                 ),
-        //               ),
-        //               Divider(height: 2)
-        //             ],
-        //           ))
-        //       .toList(),
-        // ),
+        Column(
+          children: restaurant.menu!
+              .map((listMenuItem) => Column(
+            children: listMenuItem!
+                .map((menuItem) => Column(
+              children: [
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric( horizontal: 20),
+                  child: ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(menuItem.food!, style: Theme.of(context).textTheme.titleLarge ,),
+                    trailing: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('${menuItem.sales_price} \u{20BA}'),
+                        BlocBuilder<BasketBloc, BasketState>(
+                            builder: (context, state) {
+
+                              return AnimatedIconButton(
+
+                                onPressed: () async {
+                                  String? companyId = await storage.read(key: 'companyId');
+                                  _onTapped=true;
+                                  context.read<BasketBloc>()
+                                    ..add(AddItem(MenuItems(name: menuItem.food!,id: menuItem.foodId!, restaurantId:widget.companyId , category:menuItem.category! , description: ' ', price: menuItem.sales_price!.toDouble())));
+                                },
+                                icons: [
+                                  AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
+
+                                  )
+                                ],
+                              );
+                            })
+                      ],),
+                  ),
+                ),
+                Divider(height: 2),
+
+              ],
+            )).toList(),
+          )).toList(),
+        )
+        /*Column(
+           children: restaurant.menu!
+               .map((menuItem) => Column(
+             children: [
+               Container(
+                 color: Colors.white,
+                 padding: EdgeInsets.symmetric( horizontal: 20),
+                 child: ListTile(
+                   dense: true,
+                   contentPadding: EdgeInsets.zero,
+                   title: Text(menuItem.name, style: Theme.of(context).textTheme.titleLarge ,),
+                   subtitle: Text(menuItem.description),
+                   trailing: Row(
+                     mainAxisAlignment: MainAxisAlignment.end,
+                     mainAxisSize: MainAxisSize.min,
+                     children: [
+                       Text('${menuItem.price} \u{20BA}'),
+                     ],),
+                 ),
+               ),
+               Divider(height: 2)
+             ],
+           )).toList(),
+         ),*/
       ],
     );
   }

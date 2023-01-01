@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:waitech/models/get_data_model.dart';
 import 'package:waitech/models/restaurant_model.dart';
 import 'package:waitech/screens/Home/home_screen.dart';
 import 'package:waitech/screens/basket/basket_screen.dart';
@@ -43,7 +42,7 @@ class AppRouter {
         return FilterScreen.route();
       case RestaurantDetailScreen.routeName:
         return RestaurantDetailScreen.route(
-            restaurant: settings.arguments as GetDataModel);
+            companyId: settings.arguments as int);
       case RestaurantListingScreen.routeName:
         return RestaurantListingScreen.route(restaurants: []);
       case VoucherScreen.routeName:
@@ -52,8 +51,8 @@ class AppRouter {
         return MySplashScreen.route();
       case SignUpPage.routeName:
         return SignUpPage.route();
-      // case QRCodeScanner.routeName:
-      //   return QRCodeScanner.route();
+       case QRCodeScanner.routeName:
+         return QRCodeScanner.route();
       // case QrCode.routeName:
       //   return QrCode.route();
       case TabBarIndex.routeName:
@@ -63,11 +62,14 @@ class AppRouter {
       case PayScreen.routeName:
         return PayScreen.route();
        case HomeRestaurantDetailScreen.routeName:
-         return HomeRestaurantDetailScreen.route(restaurant: settings.arguments as Data);
+         return HomeRestaurantDetailScreen.route(
+             restaurant: settings.arguments as Data);
       case OrdersScreen.routeName:
         return OrdersScreen.route();
       case OrdersDetailScreen.routeName:
-        return OrdersDetailScreen.route();
+        return OrdersDetailScreen.route(
+          orderId: settings.arguments as int
+        );
 
       default:
         return _errorRoute();

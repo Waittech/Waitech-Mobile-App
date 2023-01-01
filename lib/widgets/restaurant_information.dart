@@ -1,5 +1,5 @@
+/*
 import 'package:flutter/material.dart';
-import 'package:waitech/models/get_data_model.dart';
 import 'package:waitech/widgets/restaurant_tags.dart';
 
 import '../models/get_company.dart';
@@ -39,3 +39,4 @@ class _RestaurantInformationState extends State<RestaurantInformation> {
     );
   }
 }
+*/

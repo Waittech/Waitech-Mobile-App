@@ -21,6 +21,7 @@ class SignUpRiverpod extends ChangeNotifier {
               await storage.write(key: 'jwt', value: value!.data!.token);
               await storage.write(key: 'username', value: name!.text);
               await storage.write(key: 'email', value: email!.text);
+              await storage.write(key: 'id', value:value.data!.id.toString());
               Grock.back();
               Grock.to(TabBarIndex());
             }

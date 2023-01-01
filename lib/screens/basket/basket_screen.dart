@@ -14,7 +14,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:waitech/main.dart';
 import 'package:waitech/models/basket_model.dart';
-import 'package:waitech/models/get_data_model.dart';
 import 'package:waitech/models/menu_list.dart';
 import 'package:waitech/models/order_model.dart';
 import 'package:waitech/models/restaurant_model.dart';

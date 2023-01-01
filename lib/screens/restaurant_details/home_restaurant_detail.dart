@@ -17,7 +17,7 @@ import '../../models/get_company.dart';
    static Route route({required Data restaurant}) {
      return MaterialPageRoute(
          builder: (_) =>  HomeRestaurantDetailScreen(restaurant: restaurant),
-         settings: const RouteSettings(name: routeName));
+         settings:  RouteSettings(name: routeName));
    }
    final Data restaurant;
    List<String> basketItems=[];
@@ -111,7 +111,7 @@ import '../../models/get_company.dart';
          Column(
            children: restaurant.menu!
                .map((listMenuItem) => Column(
-             children: listMenuItem!
+             children:(listMenuItem!
                  .map((menuItem) => Column(
                children: [
                  Container(
@@ -131,33 +131,9 @@ import '../../models/get_company.dart';
                  ),
                  Divider(height: 2)
              ],
-           )).toList(),
+           )).toList())
         )).toList(),
          )
-         /*Column(
-           children: restaurant.menu!
-               .map((menuItem) => Column(
-             children: [
-               Container(
-                 color: Colors.white,
-                 padding: EdgeInsets.symmetric( horizontal: 20),
-                 child: ListTile(
-                   dense: true,
-                   contentPadding: EdgeInsets.zero,
-                   title: Text(menuItem.name, style: Theme.of(context).textTheme.titleLarge ,),
-                   subtitle: Text(menuItem.description),
-                   trailing: Row(
-                     mainAxisAlignment: MainAxisAlignment.end,
-                     mainAxisSize: MainAxisSize.min,
-                     children: [
-                       Text('${menuItem.price} \u{20BA}'),
-                     ],),
-                 ),
-               ),
-               Divider(height: 2)
-             ],
-           )).toList(),
-         ),*/
        ],
      );
    }
