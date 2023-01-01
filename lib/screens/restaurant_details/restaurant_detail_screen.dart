@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
 import 'package:waitech/models/menu_item_model.dart';
@@ -180,7 +181,12 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
 
             ],
           ),
-        ):const Center(child: CircularProgressIndicator())
+        ): Center(
+          child: LoadingAnimationWidget.inkDrop(
+            color: Color(0xff696cff),
+
+            size: 110,
+          ),)
 
     );
   }

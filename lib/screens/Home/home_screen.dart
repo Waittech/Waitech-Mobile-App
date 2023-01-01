@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:waitech/models/get_company.dart';
 import 'package:waitech/models/restaurant_model.dart';
 import 'package:waitech/services/company_service.dart';
@@ -207,7 +208,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
 
-              ),): const Center(child: CircularProgressIndicator())
+              ),): Align(
+              alignment: Alignment.center,
+              child: LoadingAnimationWidget.inkDrop(
+                color: Color(0xff696cff),
+
+                size: 110,
+              ),)
 
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:waitech/services/orders_service.dart';
 
@@ -88,7 +89,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     )
                 );
               }),
-        ): const Center(child: CircularProgressIndicator())
+        ):  Center(
+          child: LoadingAnimationWidget.inkDrop(
+            color: Color(0xff696cff),
+
+            size: 110,
+          ),)
     );
   }
 }
