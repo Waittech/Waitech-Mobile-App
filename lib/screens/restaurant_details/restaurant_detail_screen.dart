@@ -75,19 +75,25 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    child:GestureDetector(
-                      child: Lottie.network('https://assets9.lottiefiles.com/packages/lf20_xkraio55.json',height: 70),
-                    )),
-                OutlinedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    foregroundColor: Theme.of(context).canvasColor,
-                    fixedSize: const Size(120, 40),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                    ),
+                BlocBuilder<BasketBloc, BasketState>(
+                builder: (context, state) {
+                  if(state is BasketLoaded){
+                    return Text(state.basket.items.length.toString());
+            }
+                  else{
+                    return Text('');
+            }}),
+            Container(
+            child:OutlinedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Theme.of(context).canvasColor,
+            fixedSize: const Size(120, 40),
+            shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+
                   ),
                   child: TextButton(
                       onPressed: () { Navigator.pushNamed(context, '/basket'); },
@@ -96,7 +102,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                           style: const TextStyle(fontSize: 20,color: Colors.white)))
                   ),
                 )
-              ],
+            )]
             ),
           ),
         ),
