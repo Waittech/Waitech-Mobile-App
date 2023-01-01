@@ -47,7 +47,7 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Sipariş Detay')),
-        body: Column(mainAxisAlignment: MainAxisAlignment.start,
+        body:(ordersDetail!=null) ? Column(mainAxisAlignment: MainAxisAlignment.start,
             children: [
           Text(
             '',
@@ -70,22 +70,21 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
                         padding: EdgeInsets.only(top: 5),
                         itemCount: ordersDetail!.foods!.length,
                         itemBuilder: (context, index) {
-                          if (ordersDetail!.note == null) {
-                            emptyNote == true;
-                          }
-                          return Column(
-                            children:[ListTile(
-                              title: Text('${
-                                  ordersDetail!.foods![index].name}' ?? ''),
-                              subtitle: Text(
-                                  '${ordersDetail!.foods![index].description ??
-                                      ''}'),
-                              trailing: Text(
-                                  '${ordersDetail!.foods![index].price}₺ '),
-                            ),
-                              Divider(height: 2,color: Colors.grey[600],)
-                          ]
-                          );
+                            return Column(
+                                children:[ListTile(
+                                  title: Text('${
+                                      ordersDetail!.foods![index].name}' ?? ''),
+                                  subtitle: Text(
+                                      '${ordersDetail!.foods![index].description ??
+                                          ''}'),
+                                  trailing: Text(
+                                      '${ordersDetail!.foods![index].price}₺ '),
+                                ),
+                                  Divider(height: 2,color: Colors.grey[600],)
+                                ]
+                            );
+
+
                         }))
 
               ],)
@@ -114,6 +113,7 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
           ))
 
 
-        ]));
+        ]): Center(child: CircularProgressIndicator())
+    );
   }
 }

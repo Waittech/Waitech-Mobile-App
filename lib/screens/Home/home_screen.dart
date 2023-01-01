@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Padding(
+            (company.length!=0) ? Padding(
               padding: const EdgeInsets.all(10),
               child: ListView.builder(
                 itemCount: company.length,
@@ -156,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Ink.image(
                                     //image: const NetworkImage("assets/slider/2.jpg"),
-                                    image:  NetworkImage(company[index]!.image!,),
+                                    image:  NetworkImage(company[index]!.image ?? '') ,
                                     height: 150,
                                     fit: BoxFit.cover,
                                     child: InkWell(
@@ -206,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
 
-              ),)
+              ),): const Center(child: CircularProgressIndicator())
 
           ],
         ),

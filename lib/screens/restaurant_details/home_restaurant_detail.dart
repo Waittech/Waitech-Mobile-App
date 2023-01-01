@@ -96,28 +96,36 @@ import '../../models/get_company.dart';
          Column(
            children: restaurant.menu!
                .map((listMenuItem) => Column(
-             children:(listMenuItem!
-                 .map((menuItem) => Column(
                children: [
-                 Container(
-                   color: Colors.white,
-                   padding: EdgeInsets.symmetric( horizontal: 20),
-                   child: ListTile(
-                     dense: true,
-                     contentPadding: EdgeInsets.zero,
-                     title: Text(menuItem.food!, style: Theme.of(context).textTheme.titleLarge ,),
-                     trailing: Row(
-                       mainAxisAlignment: MainAxisAlignment.end,
-                       mainAxisSize: MainAxisSize.min,
-                       children: [
-                         Text('${menuItem.sales_price} \u{20BA}'),
-                       ],),
-                   ),
+                 Padding(
+                   padding: EdgeInsets.symmetric(vertical: 15),
+                   child:  Text(listMenuItem[0].category!,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 18)),
                  ),
-                 Divider(height: 2)
-             ],
-           )).toList())
-        )).toList(),
+                 Column(
+                   children: listMenuItem!
+                       .map((menuItem) => Column(
+                     children: [
+                       Container(
+                         color: Colors.white,
+                         padding: EdgeInsets.symmetric( horizontal: 20),
+                         child: ListTile(
+                           dense: true,
+                           contentPadding: EdgeInsets.zero,
+                           title: Text(menuItem.food!, style: Theme.of(context).textTheme.titleLarge ,),
+                           trailing: Row(
+                             mainAxisAlignment: MainAxisAlignment.end,
+                             mainAxisSize: MainAxisSize.min,
+                             children: [
+                               Text('${menuItem.sales_price} \u{20BA}',style:TextStyle(fontSize:16)),
+                             ],),
+                         ),
+                       ),
+                       Divider(height: 2)
+                     ],
+                   )).toList(),
+                 )
+               ]
+           )).toList(),
          )
        ],
      );

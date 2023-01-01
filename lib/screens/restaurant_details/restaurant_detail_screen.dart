@@ -62,10 +62,9 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AnimationController _animationController;
-    bool isPlaying = false;
-    bool addedSomething = false;
+
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColorDark,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -102,7 +101,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
           ),
         ),
         extendBodyBehindAppBar: true,
-        body: SingleChildScrollView(
+        body:restaurant != null ? SingleChildScrollView(
           child:  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -124,7 +123,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                   restaurant!.description!,
                   style: Theme.of(context)
                       .textTheme
-                      .headlineSmall!
+                      .headline4!
                       .copyWith(color: Theme.of(context).primaryColor),
                 ),
               ),
@@ -133,7 +132,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
 
             ],
           ),
-        )
+        ):const Center(child: CircularProgressIndicator())
 
     );
   }
@@ -146,72 +145,57 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
         Column(
           children: restaurant.menu!
               .map((listMenuItem) => Column(
-            children: listMenuItem!
-                .map((menuItem) => Column(
-              children: [
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric( horizontal: 20),
-                  child: ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(menuItem.food!, style: Theme.of(context).textTheme.titleLarge ,),
-                    trailing: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('${menuItem.sales_price} \u{20BA}'),
-                        BlocBuilder<BasketBloc, BasketState>(
-                            builder: (context, state) {
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child:  Text(listMenuItem[0].category!,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 22)),
+              ),
+              Column(
+                children: listMenuItem!
+                    .map((menuItem) => Column(
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric( horizontal: 20),
+                      child: ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(menuItem.food!, style: Theme.of(context).textTheme.titleLarge ,),
+                        trailing: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('${menuItem.sales_price} \u{20BA}',style:TextStyle(fontSize:16)),
+                            BlocBuilder<BasketBloc, BasketState>(
+                                builder: (context, state) {
 
-                              return AnimatedIconButton(
+                                  return AnimatedIconButton(
 
-                                onPressed: () async {
-                                  String? companyId = await storage.read(key: 'companyId');
-                                  _onTapped=true;
-                                  context.read<BasketBloc>()
-                                    ..add(AddItem(MenuItems(name: menuItem.food!,id: menuItem.foodId!, restaurantId:widget.companyId , category:menuItem.category! , description: ' ', price: menuItem.sales_price!.toDouble())));
-                                },
-                                icons: [
-                                  AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
+                                    onPressed: () async {
+                                      String? companyId = await storage.read(key: 'companyId');
+                                      _onTapped=true;
+                                      context.read<BasketBloc>()
+                                        ..add(AddItem(MenuItems(name: menuItem.food!,id: menuItem.foodId!, restaurantId:widget.companyId , category:menuItem.category! , description: ' ', price: menuItem.sales_price!.toDouble())));
+                                    },
+                                    icons: [
+                                      AnimatedIconItem(icon: Icon(Icons.add_circle,color: Theme.of(context).primaryColor)
 
-                                  )
-                                ],
-                              );
-                            })
-                      ],),
-                  ),
-                ),
-                Divider(height: 2),
+                                      )
+                                    ],
+                                  );
+                                })
+                          ],),
+                      ),
+                    ),
+                    Divider(height: 2),
 
-              ],
-            )).toList(),
+                  ],
+                )).toList(),
+              )
+            ]
           )).toList(),
         )
-        /*Column(
-           children: restaurant.menu!
-               .map((menuItem) => Column(
-             children: [
-               Container(
-                 color: Colors.white,
-                 padding: EdgeInsets.symmetric( horizontal: 20),
-                 child: ListTile(
-                   dense: true,
-                   contentPadding: EdgeInsets.zero,
-                   title: Text(menuItem.name, style: Theme.of(context).textTheme.titleLarge ,),
-                   subtitle: Text(menuItem.description),
-                   trailing: Row(
-                     mainAxisAlignment: MainAxisAlignment.end,
-                     mainAxisSize: MainAxisSize.min,
-                     children: [
-                       Text('${menuItem.price} \u{20BA}'),
-                     ],),
-                 ),
-               ),
-               Divider(height: 2)
-             ],
-           )).toList(),
-         ),*/
+
       ],
     );
   }

@@ -49,7 +49,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Scaffold(
         appBar: AppBar(title:
         Text('Siparişlerim')),
-        body:SafeArea(
+        body: (orders.length!=0) ?SafeArea(
           child:ListView.builder(
               padding: EdgeInsets.only(top:10),
               itemCount: orders.length,
@@ -62,7 +62,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)
                       ),
-                      color: Colors.white38,
+                      color: Colors.grey[300],
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child:Row(
@@ -87,7 +87,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     )
                 );
               }),
-        )
+        ): const Center(child: CircularProgressIndicator())
     );
   }
 }
