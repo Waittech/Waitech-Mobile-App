@@ -66,7 +66,8 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColorDark,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          foregroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.transparent.withOpacity(0.2),
           elevation: 0,
         ),
         bottomNavigationBar: BottomAppBar(
