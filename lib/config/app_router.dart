@@ -61,11 +61,13 @@ class AppRouter {
         return PayScreen.route();
       case HomeRestaurantDetailScreen.routeName:
         return HomeRestaurantDetailScreen.route(
-            restaurant: settings.arguments as Restaurant);
+            companyId: settings.arguments as int);
+      case OrdersDetailScreen.routeName:
+        return OrdersDetailScreen.route(
+          orderId : settings.arguments as int,
+        );
       case OrdersScreen.routeName:
         return OrdersScreen.route();
-      case OrdersDetailScreen.routeName:
-        return OrdersDetailScreen.route();
 
       default:
         return _errorRoute();

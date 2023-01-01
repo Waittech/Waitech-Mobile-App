@@ -42,12 +42,7 @@ class LoginRiverpod extends ChangeNotifier {
            }
            else {
              print('value null değil ama false geldi');
-
            }
-
-
-
-
     });
   }
 }

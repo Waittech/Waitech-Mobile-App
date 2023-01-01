@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:waitech/services/orders_service.dart';
 
 import '../../models/get_order_model.dart';
@@ -53,24 +54,37 @@ class _OrdersScreenState extends State<OrdersScreen> {
           itemCount: orders.length,
             itemBuilder:(context,index){
             return InkWell(
-              onTap:(){ Navigator.pushNamed(context, '/orders_detail', arguments: orders[index] );},
+              onTap:(){ Navigator.pushNamed(context, '/orders_detail', arguments: orders[index]!.orderId );},
               child: Card(
+                margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)
+                ),
+                color: Colors.white38,
                 child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.all(10.0),
+                  child:Row(
                     children: [
-                      Text('${orders[index]!.company!.description}', style: Theme.of(context).textTheme.headline5),
-                      Text('Sipariş Tarihi:${orders[index]!.createdDate}'),
-                      Text('Sepet tutarı: ${orders[index]!.totalPrice}'),
+                      Lottie.network(
+                        width: 50,
+                        'https://assets9.lottiefiles.com/private_files/lf30_lnlbyoqx.json',
+                        animate: false
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${orders[index]!.company!.companyName} (${orders[index]!.company!.neighborhood} Mah.)', style:TextStyle(fontSize: 18)),
+                          Text('Sipariş Tarihi:${orders[index]!.createdDate}'),
+                          Text('Sepet tutarı: ${orders[index]!.totalPrice}₺'),
                     ],
+                  ),
+                  ]
                   ),
                 ),
               )
             );
             }),
       )
-
     );
   }
 }

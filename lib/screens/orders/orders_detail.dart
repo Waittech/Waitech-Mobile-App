@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:waitech/models/get_orders_detail.dart';
 import 'package:waitech/services/orders_service.dart';
 
-import '../../models/get_order_model.dart';
-import '../../models/get_order_model.dart';
+import '../../services/get_orders_detail.dart';
+import 'orders_screen.dart';
+
 
 class OrdersDetailScreen extends StatefulWidget {
+  final int orderId;
   static const String routeName = '/orders_detail';
 
-  const OrdersDetailScreen({Key? key}) : super(key: key);
+  const OrdersDetailScreen({Key? key, required this.orderId}) : super(key: key);
 
-  static Route route() {
+  static Route route({required int orderId}) {
     return MaterialPageRoute(
-        builder: (_) => OrdersDetailScreen(),
+        builder: (_) => OrdersDetailScreen(orderId: orderId),
         settings: const RouteSettings(name: routeName));
   }
 
@@ -20,17 +23,20 @@ class OrdersDetailScreen extends StatefulWidget {
 }
 
 class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
-  final service = OrderService();
-  final model = GetOrderModel();
-  List<Data?> orders = [];
+  final service = GetOrdersDetailService();
+  final model = GetOrdersDetail();
+  Data? ordersDetail;
+  final emptyNote=false;
+
+  bool emptyDetail = true;
 
   @override
   void initState() {
     super.initState();
-    service.createOrder().then((value) {
-      if (value != null && value.data != null) {
+    service.showOrder(widget.orderId).then((value) {
+      if (value.data != null) {
         setState(() {
-          orders = value.data!;
+          ordersDetail = value!.data;
         });
       } else {
         throw Exception('order data null geldi');
@@ -44,7 +50,7 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
         appBar: AppBar(title: Text('Sipariş Detay')),
         body: Column(children: [
           Text(
-            'Restaurant Adı',
+            '',
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -59,15 +65,35 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       padding: EdgeInsets.only(top: 10),
-                      itemCount: orders[1]!.foods!.length,
+                      itemCount: ordersDetail!.foods!.length,
                       itemBuilder: (context, index) {
+                        if (ordersDetail!.note == null) {
+                          emptyNote == true;
+                        }
                         return ListTile(
-                          title: Text('${orders[1]!.foods![index].name}'),
-                          subtitle: Text('${orders[1]!.foods![index].description}'),
-                          trailing: Text('${orders[1]!.foods![index].price}'),
+                          title: Text('${
+                              ordersDetail!.foods![index].name}' ?? ''),
+                          subtitle: Text(
+                              '${ordersDetail!.foods![index].description ??
+                                  ''}'),
+                          trailing: Text(
+                              '${ordersDetail!.foods![index].price ?? ''}'),
                         );
-                      }))),
-          Text('Toplam tutar: ${orders[1]!.totalPrice}')
+                      }))
+          ),
+          Container(
+            height: 50,
+            width: 360,
+            decoration: BoxDecoration(
+              color: Colors.blueGrey,
+              borderRadius: BorderRadius.circular(20)
+            ),
+            alignment: Alignment.center,
+            child:emptyNote ? Text('${ordersDetail!.note}') : Text('Sipariş notu bulunmamaktadır.'),
+          ),
+          Text('${ordersDetail!.createdDate}'),
+          Text('${ordersDetail!.createdTime}'),
+          Text('Toplam tutar: ${ordersDetail!.totalPrice}',style: TextStyle(fontWeight: FontWeight.bold),)
         ]));
   }
 }
