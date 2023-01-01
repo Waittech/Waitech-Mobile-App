@@ -26,7 +26,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
   bool successRegister=false;
   bool onSubmit = false;
 
-  bool _obscureText=false;
+  bool _obscureText=true;
 
 
 
@@ -154,11 +154,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage>{
                     padding: EdgeInsets.only(left:20.0),
                     child: TextField(
                       controller: _againPassword,
-                      /*onChanged: (value){
-                        value=ref.watch(signUpRiverpod).password!.text;
-                        _password=false;
-                        notSubmitted=true;
-                      },*/
                       decoration: InputDecoration(
                         border : InputBorder.none,
                         hintText: "Tekrar Şifre",

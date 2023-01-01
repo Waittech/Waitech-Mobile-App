@@ -91,7 +91,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
                         ),
                         border: InputBorder.none,
-                        hintText: "Password",
+                        hintText: "Şifre",
                       ),
                         obscureText: _obscureText,
                     ),
