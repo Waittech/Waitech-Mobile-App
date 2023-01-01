@@ -60,13 +60,14 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
           Expanded(
             flex: 5,
             child: QRView(
-              /*overlay: QrScannerOverlayShape(
+              overlay: QrScannerOverlayShape(
+                borderColor: Theme.of(context).backgroundColor,
                 borderRadius: 10,
                 borderLength: 20,
                 borderWidth: 10,
                 cutOutSize: MediaQuery.of(context).size.width*0.8,
 
-              ),*/
+              ),
               key: qrKey,
               onQRViewCreated: _onQrViewCreated,
             ),
@@ -76,7 +77,7 @@ class _QRCodeScanner extends ConsumerState<QRCodeScanner> {
             child: Center(
               child: (result != null)
                   ? Text('${result!.code}')
-                  : const Text("Scan a code"),
+                  : const Text("QR Kodu Okutunuz"),
             ),
           ),
         ],

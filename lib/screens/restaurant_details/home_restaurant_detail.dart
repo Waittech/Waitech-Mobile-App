@@ -32,7 +32,8 @@ import '../../models/get_company.dart';
     print(restaurant.name);
      return Scaffold(
          appBar: AppBar(
-           backgroundColor: Colors.transparent,
+           foregroundColor: Theme.of(context).primaryColor,
+           backgroundColor: Colors.transparent.withOpacity(0.2),
            elevation: 0,
          ),
          bottomNavigationBar: BottomAppBar(
@@ -71,7 +72,7 @@ import '../../models/get_company.dart';
                Padding(
                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                  child: Text(
-                   restaurant!.description!,
+                   restaurant!.name!,
                    style: Theme.of(context)
                        .textTheme
                        .headlineSmall!
