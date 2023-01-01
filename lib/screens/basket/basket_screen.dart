@@ -72,9 +72,8 @@ class _BasketState extends ConsumerState<BasketScreen> {
         ),
         bottomNavigationBar: BottomAppBar(
           child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+            margin: EdgeInsets.all(10),
+            child:
                 BlocBuilder<BasketBloc, BasketState>(
                   builder: (context, state) {
                     if (state is BasketLoading) {
@@ -87,6 +86,8 @@ class _BasketState extends ConsumerState<BasketScreen> {
                             .itemQuantity(state.basket.items)
                             .isNotEmpty) {
                       return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                         children: [
                           Text('Toplam Fiyat: ${state.basket.totalString}₺',
                               style: GoogleFonts.openSans(
@@ -164,8 +165,7 @@ class _BasketState extends ConsumerState<BasketScreen> {
                     }
                   },
                 ),
-              ],
-            ),
+
           ),
         ),
         body: SingleChildScrollView(

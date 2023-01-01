@@ -31,39 +31,35 @@ import '../../models/get_company.dart';
      bool addedSomething = false;
     print(restaurant.name);
      return Scaffold(
+
+       floatingActionButton: FloatingActionButton(
+         backgroundColor: Theme.of(context).primaryColor,
+           onPressed: () {},
+           child: IconButton(
+               onPressed: () { Navigator.pushNamed(context, '/qr_code'); },
+               icon:Icon(Icons.qr_code_scanner_sharp, color: Colors.white,   )
+           )
+       ),
          appBar: AppBar(
            foregroundColor: Theme.of(context).primaryColor,
            backgroundColor: Colors.transparent.withOpacity(0.2),
            elevation: 0,
          ),
-         bottomNavigationBar: BottomAppBar(
-           child: Container(
-             margin: EdgeInsets.fromLTRB(0, 8, 11, 8),
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.end,
-               children: [
-                 FloatingActionButton(
-                   onPressed: () {},
-                   child: IconButton(
-                       onPressed: () { Navigator.pushNamed(context, '/qr_code'); },
-                       icon:Icon(Icons.qr_code_scanner_sharp,color: Theme.of(context).primaryColor,)
-                 )
-                 )],
-             ),
-           ),
-         ),
+
          extendBodyBehindAppBar: true,
          body: SingleChildScrollView(
            child:  Column(
              crossAxisAlignment: CrossAxisAlignment.start,
              children: <Widget>[
                Container(
+
                  height: 230,
                  decoration: BoxDecoration(
-                   color: Colors.green.shade100,
+                   color: Colors.black12,
                    image: DecorationImage(
+
                        image: NetworkImage(restaurant!.image!),
-                       fit: BoxFit.cover),
+                       fit: BoxFit.fitHeight),
                    borderRadius: BorderRadius.vertical(
                        bottom: Radius.elliptical(
                            MediaQuery.of(context).size.width, 50)),

@@ -76,8 +76,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('${orders[index]!.company!.companyName}', style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
-                                  Text('Sipariş Tarihi:${orders[index]!.createdDate}'),
+                                  Text('Sipariş Tarihi: ${orders[index]!.createdDate}'),
                                   Text('Sepet tutarı: ${orders[index]!.totalPrice}₺'),
+                                  Text('Masa Numarası: ${orders[index]!.tableName}'),
                                   Text('${orders[index]!.status}')
                                 ],
                               ),

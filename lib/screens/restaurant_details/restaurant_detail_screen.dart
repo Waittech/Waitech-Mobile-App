@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:waitech/blocs/basket/basket_bloc.dart';
 import 'package:waitech/models/menu_item_model.dart';
+import 'package:waitech/screens/basket/basket_screen.dart';
 import 'package:waitech/widgets/restaurant_information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
@@ -76,15 +77,55 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                BlocBuilder<BasketBloc, BasketState>(
-                builder: (context, state) {
-                  if(state is BasketLoaded){
-                    return Text(state.basket.items.length.toString());
+
+                Container(
+                  margin: EdgeInsets.only(left: 10,top: 10),
+                  child: BlocBuilder<BasketBloc, BasketState>(
+                  builder: (context, state) {
+                    if(state is BasketLoaded){
+                      return Positioned(
+                        child: Stack(
+
+                          children: [
+
+                            IconButton(
+                              icon: Icon(
+                                Icons.shopping_cart,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) =>  const BasketScreen()));
+                                //send user to cart screen
+                              },
+                            ),
+                            Stack(
+                             // alignment: Alignment.topRight,
+                              children:  [
+                                Icon(
+                                  Icons.brightness_1,
+                                  size: 19.0,
+                                  color: Colors.red,
+                                ),
+                                Positioned(
+                                  top: 3,
+                                  right: 5,
+                                  //child: Text('0', style: TextStyle(color: Colors.white, fontSize: 12),),
+                                  child: Center(
+                                    child: Text(state.basket.items.length.toString()),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                     // return Text(state.basket.items.length.toString());
             }
-                  else{
-                    return Text('');
+                    else{
+                      return Text('');
             }}),
-            Container(
+                ),
+                Container(
             child:OutlinedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -127,7 +168,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
-                  restaurant!.description!,
+                  restaurant!.name!,
                   style: Theme.of(context)
                       .textTheme
                       .headline4!
