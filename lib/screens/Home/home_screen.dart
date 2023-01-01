@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   return InkWell(
                     onTap: (){
-                      Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);
+                      Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index] );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape:
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         child: InkWell(
-                          onTap: (){Navigator.pushNamed(context, '/restaurant-detail', arguments: company[index]?.id);},
+                          onTap: (){Navigator.pushNamed(context, '/home_restaurant-detail', arguments: company[index]);},
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,

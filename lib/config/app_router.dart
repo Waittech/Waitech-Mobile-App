@@ -23,6 +23,7 @@ import '../screens/splash/splashScreen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
+    final arguments = settings.arguments;
     ('The Router is: ${settings.name}');
 
     switch (settings.name) {
@@ -61,9 +62,8 @@ class AppRouter {
         return LoginPage.route();
       case PayScreen.routeName:
         return PayScreen.route();
-      // case HomeRestaurantDetailScreen.routeName:
-      //   return HomeRestaurantDetailScreen.route(
-      //       restaurant: settings.arguments as Restaurant);
+       case HomeRestaurantDetailScreen.routeName:
+         return HomeRestaurantDetailScreen.route(restaurant: settings.arguments as Data);
       case OrdersScreen.routeName:
         return OrdersScreen.route();
       case OrdersDetailScreen.routeName:
