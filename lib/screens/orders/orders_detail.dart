@@ -27,7 +27,6 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
   final model = GetOrdersDetail();
   Data? ordersDetail;
   final emptyNote=false;
-
   bool emptyDetail = true;
 
   @override
@@ -48,7 +47,8 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Sipariş Detay')),
-        body: Column(children: [
+        body: Column(mainAxisAlignment: MainAxisAlignment.start,
+            children: [
           Text(
             '',
             textAlign: TextAlign.left,
@@ -56,44 +56,64 @@ class _OrdersDetailScreenState extends State<OrdersDetailScreen> {
           ),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey,
-                      shape: BoxShape.rectangle),
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.only(top: 10),
-                      itemCount: ordersDetail!.foods!.length,
-                      itemBuilder: (context, index) {
-                        if (ordersDetail!.note == null) {
-                          emptyNote == true;
-                        }
-                        return ListTile(
-                          title: Text('${
-                              ordersDetail!.foods![index].name}' ?? ''),
-                          subtitle: Text(
-                              '${ordersDetail!.foods![index].description ??
-                                  ''}'),
-                          trailing: Text(
-                              '${ordersDetail!.foods![index].price ?? ''}'),
-                        );
-                      }))
+              child:Column(children: [
+                Padding(padding: EdgeInsets.only(bottom:15),child:Text('${ordersDetail!.company!.name}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+                ),
+                Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey[300],
+                        shape: BoxShape.rectangle),
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(top: 5),
+                        itemCount: ordersDetail!.foods!.length,
+                        itemBuilder: (context, index) {
+                          if (ordersDetail!.note == null) {
+                            emptyNote == true;
+                          }
+                          return Column(
+                            children:[ListTile(
+                              title: Text('${
+                                  ordersDetail!.foods![index].name}' ?? ''),
+                              subtitle: Text(
+                                  '${ordersDetail!.foods![index].description ??
+                                      ''}'),
+                              trailing: Text(
+                                  '${ordersDetail!.foods![index].price}₺ '),
+                            ),
+                              Divider(height: 2,color: Colors.grey[600],)
+                          ]
+                          );
+                        }))
+
+              ],)
           ),
           Container(
             height: 50,
             width: 360,
             decoration: BoxDecoration(
-                color: Colors.blueGrey,
+                color: Colors.grey[300],
                 borderRadius: BorderRadius.circular(20)
             ),
             alignment: Alignment.center,
             child:emptyNote ? Text('${ordersDetail!.note}') : Text('Sipariş notu bulunmamaktadır.'),
           ),
-          Text('${ordersDetail!.createdDate}'),
-          Text('${ordersDetail!.createdTime}'),
-          Text('Toplam tutar: ${ordersDetail!.totalPrice}',style: TextStyle(fontWeight: FontWeight.bold),)
+          Padding(padding:EdgeInsets.only(top:10), child:  Column(
+            children: [
+              Text('${ordersDetail!.status}'),
+              SizedBox(height: 7),
+              Text('${ordersDetail!.createdDate}'),
+              SizedBox(height: 7),
+              Text('${ordersDetail!.createdTime}'),
+              SizedBox(height: 7),
+              Text('Toplam tutar: ${ordersDetail!.totalPrice}₺',style: TextStyle(fontWeight: FontWeight.bold),)
+
+            ],
+          ))
+
+
         ]));
   }
 }

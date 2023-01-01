@@ -32,6 +32,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     service.createOrder().then((value){
       if(value != null && value.data != null) {
         setState(() {
+
           orders = value.data!;
         });
       }
@@ -53,8 +54,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
               padding: EdgeInsets.only(top:10),
               itemCount: orders.length,
               itemBuilder:(context,index){
+
                 return InkWell(
-                    onTap:(){ Navigator.pushNamed(context, '/orders_detail', arguments: orders[index]!.orderId );},
+                    onTap:(){Navigator.pushNamed(context, '/orders_detail', arguments: orders[index]!.orderId );},
                     child: Card(
                       margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                       shape: RoundedRectangleBorder(
@@ -68,14 +70,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               Lottie.network(
                                   width: 50,
                                   'https://assets9.lottiefiles.com/private_files/lf30_lnlbyoqx.json',
-                                  animate: false
+                                  repeat: false,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('${orders[index]!.company!.companyName}', style:TextStyle(fontSize: 18)),
+                                  Text('${orders[index]!.company!.companyName}', style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
                                   Text('Sipariş Tarihi:${orders[index]!.createdDate}'),
                                   Text('Sepet tutarı: ${orders[index]!.totalPrice}₺'),
+                                  Text('${orders[index]!.status}')
                                 ],
                               ),
                             ]

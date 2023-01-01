@@ -39,30 +39,15 @@ import '../../models/get_company.dart';
            child: Container(
              margin: EdgeInsets.fromLTRB(0, 8, 11, 8),
              child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               mainAxisAlignment: MainAxisAlignment.end,
                children: [
-                 Container(
-                     child:GestureDetector(
-                       child: Lottie.network('https://assets9.lottiefiles.com/packages/lf20_xkraio55.json',height: 70),
-                     )),
-                 OutlinedButton(
+                 FloatingActionButton(
                    onPressed: () {},
-                   style: ElevatedButton.styleFrom(
-                     backgroundColor: Theme.of(context).primaryColor,
-                     foregroundColor: Theme.of(context).canvasColor,
-                     fixedSize: const Size(120, 40),
-                     shape: const RoundedRectangleBorder(
-                       borderRadius: BorderRadius.all(Radius.circular(8)),
-                     ),
-                   ),
-                   child: TextButton(
-                       onPressed: () { Navigator.pushNamed(context, '/basket'); },
-                       child:Center(child:Text(
-                           "Sepet".toUpperCase(),
-                           style: const TextStyle(fontSize: 20,color: Colors.white)))
-                   ),
+                   child: IconButton(
+                       onPressed: () { Navigator.pushNamed(context, '/qr_code'); },
+                       icon:Icon(Icons.qr_code_scanner_sharp,color: Theme.of(context).primaryColor,)
                  )
-               ],
+                 )],
              ),
            ),
          ),

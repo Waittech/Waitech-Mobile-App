@@ -25,8 +25,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Profil')),
-      body: SafeArea(
-          child: Column(
+      body: Column(
             children: <Widget>[
               Row(
                 children:[
@@ -181,8 +180,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               ),
             ],
           ),
-        ),
-    );
+        );
   }
 
   Future<Widget> ProfileWidget() async {
