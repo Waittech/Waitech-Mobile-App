@@ -65,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          automaticallyImplyLeading: false,
         title: const Text("Waitech"),
         actions: <Widget>[
           const Icon(Icons.location_on_outlined),
