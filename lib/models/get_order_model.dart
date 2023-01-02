@@ -55,7 +55,7 @@ class Data {
   Company? company;
   int? orderId;
   String? tableName;
-  Null? note;
+  String? note;
   String? totalPrice;
   String? status;
   List<Foods>? foods;
